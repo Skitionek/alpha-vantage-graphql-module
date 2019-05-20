@@ -1,5 +1,6 @@
 # AlphaVantage
 
+## Outdated readme
 [![Build Status](https://travis-ci.org/zackurben/alphavantage.svg?branch=master)](https://travis-ci.org/zackurben/alphavantage)
 [![Coverage Status](https://coveralls.io/repos/github/zackurben/alphavantage/badge.svg?branch=master)](https://coveralls.io/github/zackurben/alphavantage?branch=master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/zackurben/alphavantage.svg)](https://greenkeeper.io/)
@@ -162,7 +163,8 @@ alpha.performance.sector()
 
 All contributions are welcome! The purpose of this library is to keep function parity with the Alpha Vantage API, while keeping a slim and intuitive programming interface. Before any pull requests are made, please run `npm run lint` to fix style issues and ensure that all test are passing `npm test`. The codebase should always remain at 100% test coverage.
 
-## Contact
+Core has been forked from:
   - Author: Zack Urben
   - Twitter: https://twitter.com/zackurben (better)
   - Contact: zackurben@gmail.com
+yet greatest part in common is it's structure. Current version support full API coverage, requests cache and  non duck-type keys normalisation.
