@@ -2,7 +2,7 @@
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 jest.unmock('request-promise-native');
-const alpha = require('../')();
+const alpha = require('../../src/dataSource')({key:'demo'});
 const delay = require('delay');
 const TIME = 1000;
 
