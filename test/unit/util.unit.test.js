@@ -1,6 +1,6 @@
 'use strict';
 
-const alpha = require('../../src/dataSource')({key:'demo'});
+const alpha = require('../../src')({key:'demo'});
 
 test(`the url builder properly builds urls`, () => {
   expect.assertions(7);

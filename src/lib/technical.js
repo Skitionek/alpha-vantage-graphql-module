@@ -29,7 +29,7 @@ module.exports = AlphaVantageAPI => {
 		                                     slowmatype,
 		                                     signalmatype
 	                                     }) {
-		return this.util.fn(fn).call(this, {
+		return this.util.fn(fn, 'time_series').call(this, {
 			symbol,
 			interval,
 			series_type,
@@ -49,7 +49,7 @@ module.exports = AlphaVantageAPI => {
 	 *   The apo-like function to use
 	 */
 	const APO_LIKE = fn => function ({ symbol, interval, series_type, fastperiod, slowperiod, matype }) {
-		return this.util.fn(fn).call(this, { symbol, interval, series_type, fastperiod, slowperiod, matype });
+		return this.util.fn(fn, 'time_series').call(this, { symbol, interval, series_type, fastperiod, slowperiod, matype });
 	}
 
 	/**
@@ -59,7 +59,7 @@ module.exports = AlphaVantageAPI => {
 	 *   The ht-like function to use
 	 */
 	const HT_LIKE = fn => function ({ symbol, interval, series_type }) {
-		return this.util.fn(fn).call(this, { symbol, interval, series_type });
+		return this.util.fn(fn, 'time_series').call(this, { symbol, interval, series_type });
 	};
 
 	return {
@@ -71,14 +71,14 @@ module.exports = AlphaVantageAPI => {
 		trima: SMA_LIKE('TRIMA'),
 		kama: SMA_LIKE('KAMA'),
 		mama: function ({ symbol, interval, series_type, fastlimit, slowlimit }) {
-			return this.util.fn('MAMA').call(this, { symbol, interval, series_type, fastlimit, slowlimit })
+			return this.util.fn('MAMA', 'time_series').call(this, { symbol, interval, series_type, fastlimit, slowlimit })
 		},
 		vwap: SMA_LIKE('VWAP'),
 		t3: SMA_LIKE('T3'),
 		macd: MACDEXT_LIKE('MACD'),
 		macdext: MACDEXT_LIKE('MACDEXT'),
 		stoch: function ({ symbol, interval, fastkperiod, slowkperiod, slowdperiod, slowkmatype, slowdmatype }) {
-			return this.util.fn('STOCH').call(this, {
+			return this.util.fn('STOCH', 'time_series').call(this, {
 				symbol,
 				interval,
 				fastkperiod,
@@ -89,11 +89,11 @@ module.exports = AlphaVantageAPI => {
 			});
 		},
 		stochf: function ({ symbol, interval, fastkperiod, fastdperiod, fastdmatype }) {
-			return this.util.fn('STOCHF').call(this, { symbol, interval, fastkperiod, fastdperiod, fastdmatype });
+			return this.util.fn('STOCHF', 'time_series').call(this, { symbol, interval, fastkperiod, fastdperiod, fastdmatype });
 		},
 		rsi: SMA_LIKE('RSI'),
 		stochrsi: function ({ symbol, interval, time_period, series_type, fastkperiod, fastdperiod, fastdmatype }) {
-			return this.util.fn('STOCHRSI').call(this, {
+			return this.util.fn('STOCHRSI', 'time_series').call(this, {
 				symbol,
 				interval,
 				time_period,
@@ -119,7 +119,7 @@ module.exports = AlphaVantageAPI => {
 		mfi: SMA_LIKE('MFI'),
 		trix: SMA_LIKE('TRIX'),
 		ultosc: function ({ symbol, interval, timeperiod1, timeperiod2, timeperiod3 }) {
-			return this.util.fn('ULTOSC').call(this, { symbol, interval, timeperiod1, timeperiod2, timeperiod3 })
+			return this.util.fn('ULTOSC', 'time_series').call(this, { symbol, interval, timeperiod1, timeperiod2, timeperiod3 })
 		},
 		dx: SMA_LIKE('DX'),
 		minus_di: SMA_LIKE('MINUS_DI'),
@@ -127,7 +127,7 @@ module.exports = AlphaVantageAPI => {
 		minus_dm: SMA_LIKE('MINUS_DM'),
 		plus_dm: SMA_LIKE('PLUS_DM'),
 		bbands: function ({ symbol, interval, time_period, series_type, nbdevup, nbdevdn, matype }) {
-			return this.util.fn('BBANDS').call(this, {
+			return this.util.fn('BBANDS', 'time_series').call(this, {
 				symbol,
 				interval,
 				time_period,
@@ -140,7 +140,7 @@ module.exports = AlphaVantageAPI => {
 		midpoint: SMA_LIKE('MIDPOINT'),
 		midprice: SMA_LIKE('MIDPRICE'),
 		sar: function ({ symbol, interval, acceleration, maximum }) {
-			return this.util.fn('SAR').call(this, {
+			return this.util.fn('SAR', 'time_series').call(this, {
 				symbol,
 				interval,
 				acceleration,
@@ -152,7 +152,7 @@ module.exports = AlphaVantageAPI => {
 		natr: SMA_LIKE('NATR'),
 		ad: SMA_LIKE('AD'),
 		adosc: function ({ symbol, interval, fastperiod, slowperiod }) {
-			return this.util.fn('ADOSC').call(this, {
+			return this.util.fn('ADOSC', 'time_series').call(this, {
 				symbol,
 				interval,
 				fastperiod,
@@ -165,6 +165,6 @@ module.exports = AlphaVantageAPI => {
 		ht_trendmode: HT_LIKE('HT_TRENDMODE'),
 		ht_dcperiod: HT_LIKE('HT_DCPERIOD'),
 		ht_dcphase: HT_LIKE('HT_DCPHASE'),
-		ht_dcphasor: HT_LIKE('HT_PHASOR')
+		ht_phasor: HT_LIKE('HT_PHASOR')
 	};
 };

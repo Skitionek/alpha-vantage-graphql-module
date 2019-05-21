@@ -3,7 +3,14 @@
 	- Email:    Skitionek@gmail.com
 	- Created:  2019-04-26
 */
-import { GraphQLList, GraphQLObjectType, GraphQLScalarType, GraphQLSchema, GraphQLInterfaceType, GraphQLNonNull } from 'graphql';
+import {
+	GraphQLInterfaceType,
+	GraphQLList,
+	GraphQLNonNull,
+	GraphQLObjectType,
+	GraphQLScalarType,
+	GraphQLSchema
+} from 'graphql';
 
 const okObject = {
 	message: () => "Ok",
@@ -17,12 +24,12 @@ expect.extend({
 			return okObject;
 		if (received instanceof argument) {
 			return okObject;
-		} 
+		}
 		return {
 			message: () => `expected ${received} to be ${argument} type or null`,
 			pass: false
 		};
-		
+
 	},
 
 	toBeTypeOrNull(received, argument) {
@@ -57,7 +64,7 @@ expect.extend({
 					expect(data[queryName]).toMatchSchema(queriesSchemas[queryName], depth);
 				});
 			} else if (node instanceof GraphQLList) {
-				if(received===null) return okObject;
+				if (received === null) return okObject;
 				expect(received).toEqual(expect.arrayContaining([expect.toMatchSchema(node.ofType, depth)]));
 			} else if (node instanceof GraphQLObjectType) {
 				const fragment = {};
@@ -66,7 +73,7 @@ expect.extend({
 				});
 				expect(received).toEqual(expect.customObjectContaining(fragment)); // return undefined or throws
 			} else if (node instanceof GraphQLNonNull) {
-				if(received === null) throw Error(`Found null in field of type ${node.inspect()}`)
+				if (received === null) throw Error(`Found null in field of type ${node.inspect()}`)
 				expect(received).toMatchSchema(node.ofType, depth);
 			} else if (node instanceof GraphQLScalarType) {
 				node.parseValue(received);
@@ -79,3 +86,17 @@ expect.extend({
 		return okObject
 	}
 });
+
+export function obtainStructure(obj) {
+	if (Array.isArray(obj)) {
+		return [obtainStructure(obj[0])]
+	}
+	if (typeof obj === 'object') {
+		const result = {};
+		Object.entries(obj).forEach(([k,v])=> {
+			result[k] = obtainStructure(v);
+		});
+		return result
+	}
+	return null
+}

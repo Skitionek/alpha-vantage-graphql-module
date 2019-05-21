@@ -11,15 +11,14 @@
  * @returns {Function}
  *   A timeseries function to accept user data that returns a promise.
  */
-const series = (fn, polisher = 'time_series') => function ({ symbol, outputsize, datatype, interval }) {
+const series = (fn, polisher = 'time_series') => function ({ symbol, outputsize, interval }) {
 	return this.util.fn(
 		fn,
 		polisher
 	).call(this, {
 		symbol,
 		interval,
-		outputsize,
-		datatype
+		outputsize
 	});
 };
 
@@ -69,12 +68,21 @@ module.exports = {
 	monthly_adjusted: series('TIME_SERIES_MONTHLY_ADJUSTED'),
 	quote: series('GLOBAL_QUOTE', polish_global_quote),
 	search: search('SYMBOL_SEARCH'),
-	batch: function ({ symbols }) {
-		// Convert array to csv string.
-		if (symbols instanceof Array) {
-			symbols = symbols.join(',');
-		}
 
-		return this.util.fn('BATCH_STOCK_QUOTES').call(this, { symbols });
+	exchangeTimeSeries: function ({ symbol, interval, outputsize }) {
+		const intraday = interval.match(/\d+min/);
+		if (intraday)
+			return this.util.fn('TIME_SERIES_INTRADAY',
+				'time_series'
+			).call(this, { symbol, interval, outputsize });
+		return this.util.fn(`TIME_SERIES_${interval.toUpperCase()}`,
+			'time_series'
+		).call(this, { symbol, outputsize });
+	},
+
+	exchangeTimeSeries_adjusted: function ({ symbol, interval, outputsize }) {
+		return this.util.fn(`TIME_SERIES_${interval.toUpperCase()}_ADJUSTED`,
+			'time_series'
+		).call(this, { symbol, outputsize });
 	}
 };

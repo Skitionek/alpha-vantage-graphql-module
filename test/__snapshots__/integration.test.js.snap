@@ -1,0 +1,2092 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`alphaVantage.module crypto daily {"symbol":"BTC","market":"CNY"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a_close_cny": null,
+      "a_high_cny": null,
+      "a_low_cny": null,
+      "a_open_cny": null,
+      "b_close_usd": null,
+      "b_high_usd": null,
+      "b_low_usd": null,
+      "b_open_usd": null,
+      "date": null,
+      "market_cap_usd": null,
+      "volume": null,
+    },
+  ],
+  "digital_currency_code": null,
+  "digital_currency_name": null,
+  "information": null,
+  "last_refreshed": null,
+  "market_code": null,
+  "market_name": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module crypto exchangeRates {"from_currency":"BTC","to_currency":"CNY"} 1`] = `
+Object {
+  "ask_price": null,
+  "bid_price": null,
+  "exchange_rate": null,
+  "from_currency_code": null,
+  "from_currency_name": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_currency_code": null,
+  "to_currency_name": null,
+}
+`;
+
+exports[`alphaVantage.module crypto exchangeRates {"from_currency":"USD","to_currency":"JPY"} 1`] = `
+Object {
+  "ask_price": null,
+  "bid_price": null,
+  "exchange_rate": null,
+  "from_currency_code": null,
+  "from_currency_name": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_currency_code": null,
+  "to_currency_name": null,
+}
+`;
+
+exports[`alphaVantage.module crypto exchangeTimeSeries {"symbol":"BTC","market":"CNY","interval":"daily","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a_close_cny": null,
+      "a_high_cny": null,
+      "a_low_cny": null,
+      "a_open_cny": null,
+      "b_close_usd": null,
+      "b_high_usd": null,
+      "b_low_usd": null,
+      "b_open_usd": null,
+      "date": null,
+      "market_cap_usd": null,
+      "volume": null,
+    },
+  ],
+  "digital_currency_code": null,
+  "digital_currency_name": null,
+  "information": null,
+  "last_refreshed": null,
+  "market_code": null,
+  "market_name": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module crypto exchangeTimeSeries {"symbol":"BTC","market":"CNY","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a_close_cny": null,
+      "a_high_cny": null,
+      "a_low_cny": null,
+      "a_open_cny": null,
+      "b_close_usd": null,
+      "b_high_usd": null,
+      "b_low_usd": null,
+      "b_open_usd": null,
+      "date": null,
+      "market_cap_usd": null,
+      "volume": null,
+    },
+  ],
+  "digital_currency_code": null,
+  "digital_currency_name": null,
+  "information": null,
+  "last_refreshed": null,
+  "market_code": null,
+  "market_name": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module crypto exchangeTimeSeries {"symbol":"BTC","market":"CNY","interval":"monthly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a_close_cny": null,
+      "a_high_cny": null,
+      "a_low_cny": null,
+      "a_open_cny": null,
+      "b_close_usd": null,
+      "b_high_usd": null,
+      "b_low_usd": null,
+      "b_open_usd": null,
+      "date": null,
+      "market_cap_usd": null,
+      "volume": null,
+    },
+  ],
+  "digital_currency_code": null,
+  "digital_currency_name": null,
+  "information": null,
+  "last_refreshed": null,
+  "market_code": null,
+  "market_name": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module crypto exchangeTimeSeries {"symbol":"BTC","market":"CNY","interval":"weekly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a_close_cny": null,
+      "a_high_cny": null,
+      "a_low_cny": null,
+      "a_open_cny": null,
+      "b_close_usd": null,
+      "b_high_usd": null,
+      "b_low_usd": null,
+      "b_open_usd": null,
+      "date": null,
+      "market_cap_usd": null,
+      "volume": null,
+    },
+  ],
+  "digital_currency_code": null,
+  "digital_currency_name": null,
+  "information": null,
+  "last_refreshed": null,
+  "market_code": null,
+  "market_name": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module crypto monthly {"symbol":"BTC","market":"CNY"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a_close_cny": null,
+      "a_high_cny": null,
+      "a_low_cny": null,
+      "a_open_cny": null,
+      "b_close_usd": null,
+      "b_high_usd": null,
+      "b_low_usd": null,
+      "b_open_usd": null,
+      "date": null,
+      "market_cap_usd": null,
+      "volume": null,
+    },
+  ],
+  "digital_currency_code": null,
+  "digital_currency_name": null,
+  "information": null,
+  "last_refreshed": null,
+  "market_code": null,
+  "market_name": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module crypto weekly {"symbol":"BTC","market":"CNY"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a_close_cny": null,
+      "a_high_cny": null,
+      "a_low_cny": null,
+      "a_open_cny": null,
+      "b_close_usd": null,
+      "b_high_usd": null,
+      "b_low_usd": null,
+      "b_open_usd": null,
+      "date": null,
+      "market_cap_usd": null,
+      "volume": null,
+    },
+  ],
+  "digital_currency_code": null,
+  "digital_currency_name": null,
+  "information": null,
+  "last_refreshed": null,
+  "market_code": null,
+  "market_name": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data daily {"symbol":"MSFT","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data daily {"symbol":"MSFT"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data daily_adjusted {"symbol":"MSFT","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "split_coefficient": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data daily_adjusted {"symbol":"MSFT"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "split_coefficient": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries {"symbol":"MSFT","interval":"5min","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries {"symbol":"MSFT","interval":"5min"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries {"symbol":"MSFT","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries {"symbol":"MSFT","interval":"monthly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries {"symbol":"MSFT","interval":"weekly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries {"symbol":"MSFT","outputsize":"full","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries_adjusted {"symbol":"MSFT","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "split_coefficient": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries_adjusted {"symbol":"MSFT","interval":"monthly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries_adjusted {"symbol":"MSFT","interval":"weekly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data exchangeTimeSeries_adjusted {"symbol":"MSFT","outputsize":"full","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "split_coefficient": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data intraday {"symbol":"MSFT","interval":"5min","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data intraday {"symbol":"MSFT","interval":"5min"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data monthly {"symbol":"MSFT"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data monthly_adjusted {"symbol":"MSFT"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data quote {"symbol":"300135.SZ"} 1`] = `
+Object {
+  "change": null,
+  "change_percent": null,
+  "close": null,
+  "date": null,
+  "high": null,
+  "low": null,
+  "open": null,
+  "previous_close": null,
+  "price": null,
+  "symbol": null,
+  "volume": null,
+}
+`;
+
+exports[`alphaVantage.module data quote {"symbol":"MSFT"} 1`] = `
+Object {
+  "change": null,
+  "change_percent": null,
+  "close": null,
+  "date": null,
+  "high": null,
+  "low": null,
+  "open": null,
+  "previous_close": null,
+  "price": null,
+  "symbol": null,
+  "volume": null,
+}
+`;
+
+exports[`alphaVantage.module data search {"keywords":"BA"} 1`] = `
+Array [
+  Object {
+    "currency": null,
+    "marketclose": null,
+    "marketopen": null,
+    "matchscore": null,
+    "name": null,
+    "region": null,
+    "symbol": null,
+    "timezone": null,
+    "type": null,
+  },
+]
+`;
+
+exports[`alphaVantage.module data search {"keywords":"Micro"} 1`] = `
+Array [
+  Object {
+    "currency": null,
+    "marketclose": null,
+    "marketopen": null,
+    "matchscore": null,
+    "name": null,
+    "region": null,
+    "symbol": null,
+    "timezone": null,
+    "type": null,
+  },
+]
+`;
+
+exports[`alphaVantage.module data search {"keywords":"sony"} 1`] = `
+Array [
+  Object {
+    "currency": null,
+    "marketclose": null,
+    "marketopen": null,
+    "matchscore": null,
+    "name": null,
+    "region": null,
+    "symbol": null,
+    "timezone": null,
+    "type": null,
+  },
+]
+`;
+
+exports[`alphaVantage.module data search {"keywords":"xiaomi"} 1`] = `
+Array [
+  Object {
+    "currency": null,
+    "marketclose": null,
+    "marketopen": null,
+    "matchscore": null,
+    "name": null,
+    "region": null,
+    "symbol": null,
+    "timezone": null,
+    "type": null,
+  },
+]
+`;
+
+exports[`alphaVantage.module data weekly {"symbol":"MSFT"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module data weekly_adjusted {"symbol":"MSFT"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "adjusted_close": null,
+      "close": null,
+      "date": null,
+      "dividend_amount": null,
+      "high": null,
+      "low": null,
+      "open": null,
+      "volume": null,
+    },
+  ],
+  "information": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module forex daily {"from_symbol":"EUR","to_symbol":"USD","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex daily {"from_symbol":"EUR","to_symbol":"USD"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeRates {"from_currency":"BTC","to_currency":"CNY"} 1`] = `
+Object {
+  "ask_price": null,
+  "bid_price": null,
+  "exchange_rate": null,
+  "from_currency_code": null,
+  "from_currency_name": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_currency_code": null,
+  "to_currency_name": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeRates {"from_currency":"USD","to_currency":"JPY"} 1`] = `
+Object {
+  "ask_price": null,
+  "bid_price": null,
+  "exchange_rate": null,
+  "from_currency_code": null,
+  "from_currency_name": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_currency_code": null,
+  "to_currency_name": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeTimeSeries {"from_symbol":"EUR","to_symbol":"USD","interval":"5min","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeTimeSeries {"from_symbol":"EUR","to_symbol":"USD","interval":"5min"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeTimeSeries {"from_symbol":"EUR","to_symbol":"USD","interval":"daily","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeTimeSeries {"from_symbol":"EUR","to_symbol":"USD","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeTimeSeries {"from_symbol":"EUR","to_symbol":"USD","interval":"monthly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex exchangeTimeSeries {"from_symbol":"EUR","to_symbol":"USD","interval":"weekly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex intraday {"from_symbol":"EUR","to_symbol":"USD","interval":"5min","outputsize":"full"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex intraday {"from_symbol":"EUR","to_symbol":"USD","interval":"5min"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "interval": null,
+  "last_refreshed": null,
+  "output_size": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex monthly {"from_symbol":"EUR","to_symbol":"USD"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module forex weekly {"from_symbol":"EUR","to_symbol":"USD"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "close": null,
+      "date": null,
+      "high": null,
+      "low": null,
+      "open": null,
+    },
+  ],
+  "from_symbol": null,
+  "information": null,
+  "last_refreshed": null,
+  "time_zone": null,
+  "to_symbol": null,
+}
+`;
+
+exports[`alphaVantage.module performance sector {} 1`] = `
+Object {
+  "meta_data": Object {
+    "information": null,
+    "last_refreshed": null,
+  },
+  "rank_a_real_time_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "real_estate": null,
+    "utilities": null,
+  },
+  "rank_b_day_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "real_estate": null,
+    "utilities": null,
+  },
+  "rank_c_day_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "real_estate": null,
+    "utilities": null,
+  },
+  "rank_d_month_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "real_estate": null,
+    "utilities": null,
+  },
+  "rank_e_month_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "real_estate": null,
+    "utilities": null,
+  },
+  "rank_f_year_to_date_ytd_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "real_estate": null,
+    "utilities": null,
+  },
+  "rank_g_year_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "real_estate": null,
+    "utilities": null,
+  },
+  "rank_h_year_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "utilities": null,
+  },
+  "rank_i_year_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "utilities": null,
+  },
+  "rank_j_year_performance": Object {
+    "communication_services": null,
+    "consumer_discretionary": null,
+    "consumer_staples": null,
+    "energy": null,
+    "financials": null,
+    "health_care": null,
+    "industrials": null,
+    "information_technology": null,
+    "materials": null,
+    "utilities": null,
+  },
+}
+`;
+
+exports[`alphaVantage.module technical ad {"symbol":"MSFT","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical adosc {"symbol":"MSFT","interval":"daily","fastperiod":5} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "fastk_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "slowk_period": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical adx {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical adxr {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical apo {"symbol":"MSFT","interval":"daily","series_type":"close","fastperiod":10,"matype":1} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "fast_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "ma_type": null,
+  "series_type": null,
+  "slow_period": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical aroon {"symbol":"MSFT","interval":"daily","time_period":14} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "aroon_down": null,
+      "aroon_up": null,
+      "date": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical aroonosc {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical atr {"symbol":"MSFT","interval":"daily","time_period":14} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical bbands {"symbol":"MSFT","interval":"weekly","time_period":5,"series_type":"close","nbdevup":3,"nbdevdn":3} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "real_lower_band": null,
+      "real_middle_band": null,
+      "real_upper_band": null,
+    },
+  ],
+  "deviation_multiplier_for_lower_band": null,
+  "deviation_multiplier_for_upper_band": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "ma_type": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical bop {"symbol":"MSFT","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical cci {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical cmo {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical dema {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical dx {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ema {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ht_dcperiod {"symbol":"MSFT","interval":"daily","series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ht_dcphase {"symbol":"MSFT","interval":"daily","series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ht_phasor {"symbol":"MSFT","interval":"weekly","series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "phase": null,
+      "quadrature": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ht_sine {"symbol":"MSFT","interval":"daily","series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "lead_sine": null,
+      "sine": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ht_trendline {"symbol":"MSFT","interval":"daily","series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ht_trendmode {"symbol":"MSFT","interval":"weekly","series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical kama {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical macd {"symbol":"MSFT","interval":"daily","series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "macd": null,
+      "macd_hist": null,
+      "macd_signal": null,
+    },
+  ],
+  "fast_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "signal_period": null,
+  "slow_period": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical macdext {"symbol":"MSFT","interval":"daily","series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "macd": null,
+      "macd_hist": null,
+      "macd_signal": null,
+    },
+  ],
+  "fast_ma_type": null,
+  "fast_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "signal_ma_type": null,
+  "signal_period": null,
+  "slow_ma_type": null,
+  "slow_period": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical mama {"symbol":"MSFT","interval":"daily","series_type":"close","fastlimit":0.02} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "fama": null,
+      "mama": null,
+    },
+  ],
+  "fast_limit": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "slow_limit": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical mfi {"symbol":"MSFT","interval":"weekly","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical midpoint {"symbol":"MSFT","interval":"daily","time_period":10,"series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical midprice {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical minus_di {"symbol":"MSFT","interval":"weekly","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical minus_dm {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical mom {"symbol":"MSFT","interval":"daily","time_period":10,"series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical natr {"symbol":"MSFT","interval":"weekly","time_period":14} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical obv {"symbol":"MSFT","interval":"weekly"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical plus_di {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical plus_dm {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ppo {"symbol":"MSFT","interval":"daily","series_type":"close","fastperiod":10,"matype":1} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "fast_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "ma_type": null,
+  "series_type": null,
+  "slow_period": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical roc {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical rocr {"symbol":"MSFT","interval":"daily","time_period":10,"series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical rsi {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical sar {"symbol":"MSFT","interval":"weekly","acceleration":0.05,"maximum":0.25} 1`] = `
+Object {
+  "acceleration": null,
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "maximum": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical sma {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical stoch {"symbol":"MSFT","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "slowd": null,
+      "slowk": null,
+    },
+  ],
+  "fastk_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "slowd_ma_type": null,
+  "slowd_period": null,
+  "slowk_ma_type": null,
+  "slowk_period": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical stochf {"symbol":"MSFT","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "fastd": null,
+      "fastk": null,
+    },
+  ],
+  "fastd_ma_type": null,
+  "fastd_period": null,
+  "fastk_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical stochrsi {"symbol":"MSFT","interval":"daily","time_period":10,"series_type":"close","fastkperiod":6,"fastdmatype":1} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "fastd": null,
+      "fastk": null,
+    },
+  ],
+  "fastd_ma_type": null,
+  "fastd_period": null,
+  "fastk_period": null,
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical t3 {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+  "volume_factor_vfactor": null,
+}
+`;
+
+exports[`alphaVantage.module technical tema {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical trange {"symbol":"MSFT","interval":"daily"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical trima {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical trix {"symbol":"MSFT","interval":"daily","time_period":10,"series_type":"close"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical ultosc {"symbol":"MSFT","interval":"daily","timeperiod":8} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical vwap {"symbol":"MSFT","interval":"15min"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical willr {"symbol":"MSFT","interval":"daily","time_period":10} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;
+
+exports[`alphaVantage.module technical wma {"symbol":"MSFT","interval":"weekly","time_period":10,"series_type":"open"} 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "date": null,
+      "value": null,
+    },
+  ],
+  "indicator": null,
+  "interval": null,
+  "last_refreshed": null,
+  "series_type": null,
+  "symbol": null,
+  "time_period": null,
+  "time_zone": null,
+}
+`;

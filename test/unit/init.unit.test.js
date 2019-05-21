@@ -1,7 +1,7 @@
 'use strict';
 
 const env = process.env;
-const Alpha = require('../../src/dataSource');
+const Alpha = require('../../src');
 
 // Clear the current environment variables for testing.
 process.env = {};

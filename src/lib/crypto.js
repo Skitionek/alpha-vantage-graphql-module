@@ -21,25 +21,23 @@ module.exports = AlphaVantageAPI => {
 		})
 	};
 
+	const polish_realtime_currency_exchange_rate = data => data.realtime_currency_exchange_rate;
+
 	return {
+		exchangeRates: function ({ from_currency, to_currency }) {
+			return this.util.fn('CURRENCY_EXCHANGE_RATE', polish_realtime_currency_exchange_rate).call(this, {
+				from_currency,
+				to_currency
+			})
+		},
 		daily: series('DIGITAL_CURRENCY_DAILY'),
 		weekly: series('DIGITAL_CURRENCY_WEEKLY'),
 		monthly: series('DIGITAL_CURRENCY_MONTHLY'),
 
-		cryptoExchangeTimeSeries: function ({ interval, ...rest }) {
-			const intraday = interval.match(/\d+min/);
-			if (intraday)
-				return this.util.fn('FX_INTRADAY',
-					'time_series',
-					'data',
-					'meta_data'
-				).call(this, { ...rest, interval });
-			return this.util.fn(`FX_${interval.toUpperCase()}`,
-				'time_series',
-				'data',
-				'meta_data'
-			).call(this, rest);
-		},
-		cryptoExchangeQuote: AlphaVantageAPI.prototype.forex.rate
+		exchangeTimeSeries: function ({ symbol, market, interval }) {
+			return this.util.fn(`DIGITAL_CURRENCY_${interval.toUpperCase()}`,
+				'time_series'
+			).call(this, { symbol, market });
+		}
 	};
 };
