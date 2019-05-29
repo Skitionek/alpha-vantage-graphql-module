@@ -6,3 +6,14 @@ export function required(argumentsObj) {
 	});
 	return (argumentMap.length === 1) ? argumentMap[0][1] : argumentsObj;
 }
+
+export function tryAccess(obj, arg, ...args) {
+	switch (typeof arg) {
+		case 'function':
+			return tryAccess(obj.find(arg) || [], ...args);
+		case 'undefined':
+			return obj;
+		default:
+			return obj && tryAccess(obj[arg], ...args);
+	}
+}

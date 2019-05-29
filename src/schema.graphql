@@ -1,10 +1,9 @@
 type Query {
 	stock(symbol: String!, outputsize: String, datatype: String, interval: String): Stock,
 	symbolSearch(keywords: String!,datatype: String): [SymbolSerachResult],
-	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!, from_symbol: String, to_symbol: String, interval: String): CryptocurrencyExchangeRate
+	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!): CryptocurrencyExchangeRate
 
-	cryptocurrency(symbol: String!,market:String!): Cryptocurrency
-
+	cryptocurrency(symbol: String!,market:String!, interval: String): Cryptocurrency
 
 
 	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange
@@ -44,9 +43,9 @@ extend type Stock implements StockData {
 	low: String,
 	price: String,
 	volume: String,
-#	latest_trading_day => date
+	latest_trading_day: String,
 #	previous_close => close
-	date: String!,
+	date: String,
 	close: String
 
 	change: String,
@@ -90,7 +89,7 @@ interface StockData {
 	high: String,
 	low: String,
 	volume: String
-	date: String!,
+	date: String,
 	close: String,
 }
 
@@ -188,89 +187,108 @@ type SymbolSerachResult {
 
 
 interface ExchangeRate {
-	information: String,
-	from_symbol: String,
-	to_symbol: String,
-	last_refreshed: String,
-	#    interval: String, //not all provides
-	#    output_size: String, //not all provides
-	zone: String
+	from_currency_code: String
+	from_currency_name: String
+	to_currency_code: String
+	to_currency_name: String
+	exchange_rate: String
+	last_refreshed: String
+	time_zone: String
+	bid_price: String
+	ask_price: String
 }
 
 type CryptocurrencyExchangeRate implements ExchangeRate {
-	#	{ from_currency: 'BTC',
-	#	  from_currency_name: 'Bitcoin',
-	#	  to_currency: 'USD',
-	#	  to_currency_name: 'United States Dollar',
-	#	  value: '5462.11000000',
-	#	  updated: '2019-04-25 13:43:03',
-	#	  zone: 'UTC' }
+	#	{
+	#	  "Realtime Currency Exchange Rate": {
+	#	    "1. From_Currency Code": null,
+	#	    "2. From_Currency Name": null,
+	#	    "3. To_Currency Code": null,
+	#	    "4. To_Currency Name": null,
+	#	    "5. Exchange Rate": null,
+	#	    "6. Last Refreshed": null,
+	#	    "7. Time Zone": null,
+	#	    "8. Bid Price": null,
+	#	    "9. Ask Price": null
+	#	  }
+	#	}
 
-	from_currency: String
+	from_currency_code: String
 	from_currency_name: String
-	to_currency: String
+	to_currency_code: String
 	to_currency_name: String
-	value: String
-	#    updated: String
-	#    zone: String
-	data: [ForeignExchangeData]
-
-	information: String,
-	from_symbol: String,
-	to_symbol: String,
-	last_refreshed: String,
-	#    interval: String,
-	#    output_size: String,
-	zone: String
+	exchange_rate: String
+	last_refreshed: String
+	time_zone: String
+	bid_price: String
+	ask_price: String
 }
-
 
 type Cryptocurrency {
 	exchangeRate(from_currency: String, to_currency: String!): CryptocurrencyExchangeRate
 
-	#        "1. Information": "Daily Prices and Volumes for Digital Currency",
-	#        "2. Digital Currency Code": "BTC",
-	#        "3. Digital Currency Name": "Bitcoin",
-	#        "4. Market Code": "CNY",
-	#        "5. Market Name": "Chinese Yuan",
-	#        "6. Last Refreshed": "2019-04-24 (end of day)",
-	#        "7. Time Zone": "UTC"
-	#
-	# Polished to:
-	#
-	#        {
-	#            "information": "Daily Prices and Volumes for Digital Currency",
-	#            "coin": "BTC",
-	#            "coin_name": "Bitcoin",
-	#            "market": "CNY",
-	#            "market_name": "Chinese Yuan",
-	#            "updated": "2019-04-24 (end of day)",
-	#            "zone": "UTC"
-	#        }
-	information: String,
-	coin: String,
-	coin_name: String,
-	market: String,
-	market_name: String,
-	updated: String,
-	zone: String
+	#	{
+	#	  "Meta Data": {
+	#	    "1. Information": null,
+	#	    "2. Digital Currency Code": null,
+	#	    "3. Digital Currency Name": null,
+	#	    "4. Market Code": null,
+	#	    "5. Market Name": null,
+	#	    "6. Last Refreshed": null,
+	#	    "7. Time Zone": null
+	#	  },
+	#	  "Time Series (Digital Currency Daily)": {
+	#	    "2019-05-23": {
+	#	      "1a. open (CNY)": null,
+	#	      "1b. open (USD)": null,
+	#	      "2a. high (CNY)": null,
+	#	      "2b. high (USD)": null,
+	#	      "3a. low (CNY)": null,
+	#	      "3b. low (USD)": null,
+	#	      "4a. close (CNY)": null,
+	#	      "4b. close (USD)": null,
+	#	      "5. volume": null,
+	#	      "6. market cap (USD)": null
+	#	    }
+	#	  }
+	#	}
 
-	data: [CryptocurrencyData]
+	information: String
+	digital_currency_code: String
+	digital_currency_name: String
+	market_code: String
+	market_name: String
+#	last_refreshed: String
+	data: [ForeignExchangeData]
 }
 
 type CryptocurrencyData {
-	#        "2019-04-24T00:00:00.000Z": {
-	#            "1a. open (CNY)": "37195.55292646",
-	#            "1b. open (USD)": "5530.21621307",
-	#            "2a. high (CNY)": "37716.62198389",
-	#            "2b. high (USD)": "5610.58890896",
-	#            "3a. low (CNY)": "36647.78504227",
-	#            "3b. low (USD)": "5451.99789652",
-	#            "4a. close (CNY)": "36912.34390959",
-	#            "4b. close (USD)": "5491.35564724",
-	#            "5. volume": "316.09347100",
-	#            "6. market cap (USD)": "1735781.66703230"
-	#       }
+
+	#	{
+	#	  "Meta Data": {
+	#	    "1. Information": null,
+	#	    "2. Digital Currency Code": null,
+	#	    "3. Digital Currency Name": null,
+	#	    "4. Market Code": null,
+	#	    "5. Market Name": null,
+	#	    "6. Last Refreshed": null,
+	#	    "7. Time Zone": null
+	#	  },
+	#	  "Time Series (Digital Currency Daily)": {
+	#	    "2019-05-23": {
+	#	      "1a. open (CNY)": null,
+	#	      "1b. open (USD)": null,
+	#	      "2a. high (CNY)": null,
+	#	      "2b. high (USD)": null,
+	#	      "3a. low (CNY)": null,
+	#	      "3b. low (USD)": null,
+	#	      "4a. close (CNY)": null,
+	#	      "4b. close (USD)": null,
+	#	      "5. volume": null,
+	#	      "6. market cap (USD)": null
+	#	    }
+	#	  }
+	#	}
 	#
 	# Polished to:
 	#        {
@@ -311,10 +329,22 @@ type ForeignExchangeData {
 }
 
 type ForeignExchange implements ExchangeRate {
+	from_currency_code: String
+	from_currency_name: String
+	to_currency_code: String
+	to_currency_name: String
+	exchange_rate: String
+	last_refreshed: String
+	time_zone: String
+	bid_price: String
+	ask_price: String
+
 	information: String,
 	from_symbol: String,
 	to_symbol: String,
-	last_refreshed: String,
+	interval: String
+	output_size: String
+#	last_refreshed: String,
 	#    interval: String,
 	#    output_size: String,
 	zone: String

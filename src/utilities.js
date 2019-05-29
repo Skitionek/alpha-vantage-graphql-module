@@ -3,7 +3,7 @@
 	- Email:    Skitionek@gmail.com
 	- Created:  2019-05-01
 */
-import AlphaVantageAPI from "./dataSource";
+import AlphaVantageAPI from "alpha-vantage-data-source";
 
 export const production_flag = process.env.NODE_ENV === 'production';
 
@@ -13,13 +13,9 @@ export const contains = (array, element) => array.indexOf(element) !== -1;
 const fieldResolver = (call, alias, field) => (p,a,c,i) => {
 	if(p[field]) return p[field];
 	if (!(p instanceof Object)) throw new Error("Fragment resolver can be only called within associated parent object.");
-	const result = p[alias] ||
-		(p[alias] = call(p,{...p,...a},c,i)
-		// 	.then(r =>
-		// 	Object.assign(p, r)
-		// )
-		);
-	return result.then(r=>r[field]);
+	if(typeof p[alias] === 'undefined') p[alias] = call(p,{...p,...a},c,i);
+	if(p[alias]===null) return null;
+	else return p[alias].then(r=>r[field]);
 };
 
 export const fragmentResolver = (
