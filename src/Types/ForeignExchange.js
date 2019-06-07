@@ -4,9 +4,8 @@
 	- Created:  2019-05-29
 */
 
-import { alphaVantageInterface } from "./constants";
-import { required } from "./utils";
-import { fragmentResolver } from "./utilities";
+import { alphaVantageInterface } from "../constants";
+import { required, fragmentResolver } from "../utilities";
 
 export const quoteFields = ['from_currency_code', 'from_currency_name', 'to_currency_code', 'to_currency_name', 'exchange_rate', 'last_refreshed', 'time_zone', 'bid_price', 'ask_price'];
 

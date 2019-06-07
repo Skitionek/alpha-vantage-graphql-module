@@ -4,4 +4,6 @@
 	- Created:  2019-05-01
 */
 
-export const alphaVantageInterface = 'alphaVantage';
+export const API_TOKEN = 'demo';
+
+export const alphaVantageInterface = 'AlphaVantage';

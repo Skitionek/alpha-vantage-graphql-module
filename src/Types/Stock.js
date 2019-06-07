@@ -4,11 +4,10 @@
 	- Created:  2019-05-29
 */
 
-import { contains, fragmentResolver } from "./utilities";
-import { alphaVantageInterface } from "./constants";
-import { required, tryAccess } from "./utils";
+import { required, tryAccess, contains, fragmentResolver } from "../utilities";
+import { alphaVantageInterface } from "../constants";
 
-const stockTimeSeriesFields = ['information', 'updated', 'size', 'zone', 'data'];
+const stockTimeSeriesFields = ['information', 'last_refreshed', 'size', 'time_zone', 'data'];
 
 function getStockTimeSeries(parent, args, { injector }, info) {
 	const { symbol, interval, ...rest } = {
