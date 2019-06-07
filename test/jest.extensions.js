@@ -26,8 +26,9 @@ expect.extend({
 	},
 
 	toBeTypeOrNull(received, argument) {
-		if (received === null)
+		if (received === null) {
 			return okObject;
+		}
 		expect(received).toBeType(argument);
 		return okObject;
 	},
@@ -44,9 +45,10 @@ expect.extend({
 		return okObject;
 	},
 
-	toMatchSchema(received, node, depth) {
+	toMatchSchema(received, node, depth, path=[]) {
 		// schema.getQueryType().getFields().Stock.type.getFields().data.type.ofType.getFields().adjustedClose.type.name
 		if (!(--depth < 0)) { // for >=0 or undefined true
+			const rest = [depth,path];
 			if (node instanceof GraphQLSchema) {
 				expect(received).toHaveProperty('data');
 				const { data } = received;
@@ -54,26 +56,27 @@ expect.extend({
 				const queriesSchemas = node.getQueryType().getFields();
 				queriesNames.forEach(queryName => {
 					expect(queriesSchemas).toHaveProperty(queryName);
-					expect(data[queryName]).toMatchSchema(queriesSchemas[queryName], depth);
+					expect(data[queryName]).toMatchSchema(queriesSchemas[queryName], depth,path.concat([queryName]));
 				});
 			} else if (node instanceof GraphQLList) {
 				if(received===null) return okObject;
-				expect(received).toEqual(expect.arrayContaining([expect.toMatchSchema(node.ofType, depth)]));
+				expect(received).toEqual(expect.arrayContaining([expect.toMatchSchema(node.ofType, ...rest)]));
 			} else if (node instanceof GraphQLObjectType) {
 				const fragment = {};
 				Object.entries(node.getFields()).forEach(([name, field]) => {
-					fragment[name] = expect.toMatchSchema(field, depth)
+					fragment[name] = expect.toMatchSchema(field, depth,path.concat(name))
 				});
 				expect(received).toEqual(expect.customObjectContaining(fragment)); // return undefined or throws
 			} else if (node instanceof GraphQLNonNull) {
-				if(received === null) throw Error(`Found null in field of type ${node.inspect()}`)
-				expect(received).toMatchSchema(node.ofType, depth);
+				if(received === null) throw Error(`Found null in field of type ${node.inspect()}`);
+				expect(received).toMatchSchema(node.ofType, ...rest);
 			} else if (node instanceof GraphQLScalarType) {
+				if(received===null) console.warn(`Field of type ${node} has value equal null`,path);
 				node.parseValue(received);
 			} else if (node instanceof GraphQLInterfaceType) {
-				expect(received).toMatchSchema(node.getFields(), depth);
+				expect(received).toMatchSchema(node.getFields(), ...rest);
 			} else if (node instanceof Object) {
-				expect(received).toMatchSchema(node.type, depth);
+				expect(received).toMatchSchema(node.type, ...rest);
 			}
 		}
 		return okObject

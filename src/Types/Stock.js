@@ -4,10 +4,9 @@
 	- Created:  2019-05-29
 */
 
-import { required, tryAccess, contains, fragmentResolver } from "../utilities";
-import { alphaVantageInterface } from "../constants";
-
-const stockTimeSeriesFields = ['information', 'last_refreshed', 'size', 'time_zone', 'data'];
+import { contains, fragmentResolver, required } from "../utilities";
+import { alphaVantageInterface, fields, snaps } from "../constants";
+import graphqlFields from "graphql-fields";
 
 function getStockTimeSeries(parent, args, { injector }, info) {
 	const { symbol, interval, ...rest } = {
@@ -15,17 +14,13 @@ function getStockTimeSeries(parent, args, { injector }, info) {
 		...args
 	};
 	if (!interval) return null;
-	const adjusted_fields = ['adjusted_close', 'volume', 'dividend_amount', 'split_coefficient'];
-	const adj_fields = (tryAccess(info, 'fieldNodes', 0, 'selectionSet', 'selections',
-		e => tryAccess(e, 'name', 'value') === 'data',
-		'selectionSet', 'selections') || [])
-		.map(e => tryAccess(e, 'name', 'value'))
-		.filter(e => contains(adjusted_fields, e));
+	console.log(graphqlFields(info));
+	const adj_fields = Object.keys(graphqlFields(info))
+		.filter(e => contains(fields(snaps.data.exchangeTimeSeries_adjusted), e));
+
 	const func = adj_fields.length ? 'exchangeTimeSeries_adjusted' : 'exchangeTimeSeries';
 	return injector.get(alphaVantageInterface).data[func]({ ...required({ symbol, interval }), ...rest })
 }
-
-const stockQuoteFields = ['open', 'high', 'low', 'price', 'volume', 'date', 'close', 'change', 'change_percent'];
 
 function getStockQuote(parent, args, { injector }, info) {
 	const { symbol, ...rest } = { ...parent, ...args };
@@ -33,6 +28,6 @@ function getStockQuote(parent, args, { injector }, info) {
 }
 
 export default {
-	...fragmentResolver(getStockQuote, undefined, stockQuoteFields),
-	...fragmentResolver(getStockTimeSeries, undefined, stockTimeSeriesFields)
+	...fragmentResolver(getStockQuote, undefined, fields(snaps.data.quote)),
+	...fragmentResolver(getStockTimeSeries, undefined, fields(snaps.data.exchangeTimeSeries))
 }

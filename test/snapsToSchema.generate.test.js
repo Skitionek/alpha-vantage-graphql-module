@@ -180,7 +180,7 @@ output += "type Query {\n";
 Object.values(ordered_types).forEach(type => {
 	Array.from(type.v.keys()).forEach(key => {
 		queries[key] = type.name;
-		output += `\t${key}: ${type.name}\n`;
+		output += `\t${key}:\t ${type.name}\n`;
 	})
 });
 output += "}\n";
@@ -192,8 +192,8 @@ Object.values(interfaceList).forEach(inter => {
 		jsonic.stringify(inter.fields,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
 			.replace(/\[/g, '{\n\t')
-			.replace(/,/g, ': String,\n\t')
-			.replace(/\]/, ': String\n}')
+			.replace(/,/g, ':\t String,\n\t')
+			.replace(/\]/, ':\t String\n}')
 		}\n`;
 });
 
@@ -206,7 +206,7 @@ Object.values(ordered_types).forEach(type => {
 		jsonic.stringify(type.keyRecalculated,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
 			.replace(/([\{,])/g, '$1\n\t')
-			.replace(/null/g, 'String')
+			.replace(/null/g, '\t String')
 			.replace(/\}/, '\n}')
 		}\n`;
 });

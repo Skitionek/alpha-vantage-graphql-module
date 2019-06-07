@@ -15,7 +15,7 @@ const fieldResolver = (call, alias, field) => (p,a,c,i) => {
 	if (!(p instanceof Object)) throw new Error("Fragment resolver can be only called within associated parent object.");
 	if(typeof p[alias] === 'undefined') p[alias] = call(p,{...p,...a},c,i);
 	if(p[alias]===null) return null;
-	else return p[alias].then(r=>r[field]);
+	else return p[alias].then(r=>r[field]=r[field]||r[field]);
 };
 
 export const fragmentResolver = (
@@ -27,7 +27,7 @@ export const fragmentResolver = (
 	),
 	fields
 ) => {
-	if (!Array.isArray(fields)) return fieldResolver(call, alias, fields);
+	if (!fields instanceof Array) return fieldResolver(call, alias, fields);
 	const typeResolver = {};
 	fields.forEach(field => {
 		typeResolver[field] = fieldResolver(call, alias, field)

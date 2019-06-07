@@ -39,6 +39,7 @@
 	"scripts": {
 		"start": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./src/index.js",
 		"test": "jest",
+		"spawnServer": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./test/spawnServer.js",
 		"prebuild": "npm run clean",
 		"build": "babel src --out-dir ./dist --source-maps --copy-files",
 		"clean": "rimraf scripts/dist/",
@@ -76,7 +77,9 @@
 		"alpha-vantage-data-source": "^0.3.2",
 		"apollo-datasource-rest": "^0.3.2",
 		"auto-bind": "^2.1.0",
+		"d3-time-format": "^2.1.3",
 		"dotenv": "^7.0.0",
+		"graphql-fields": "^2.0.3",
 		"http-status-codes": "^1.3.2",
 		"lodash.unzip": "^3.4.0"
 	},

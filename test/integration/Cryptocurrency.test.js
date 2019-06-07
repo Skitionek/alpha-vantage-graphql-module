@@ -18,7 +18,6 @@ describe.each(variables.crypto.exchangeTimeSeries)("%j", CryptocurrencyParams =>
 					...CryptocurrencyExchangeRateParams,
 					...CryptocurrencyParams
 				};
-				if (Array.isArray(variables)) variables = variables[0];
 				response = graphql({ query: cryptocurrency, variables })
 			});
 

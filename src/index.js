@@ -12,6 +12,7 @@ import Cryptocurrency from "./Types/Cryptocurrency";
 import SymbolSearch from "./Types/SymbolSearch"
 import Technical from "./Types/Technical"
 import StockData from "./Types/StockData";
+import Scalars from "./Scalars";
 
 
 export const alphaVantageProviderFactory = (API_TOKEN, params) => ({
@@ -24,6 +25,7 @@ const alphaVantageProvider = alphaVantageProviderFactory(API_TOKEN);
 export default new GraphQLModule({
 	typeDefs,
 	resolvers: {
+		...Scalars,
 		Query: {
 			symbolSearch: SymbolSearch,
 			stock: forward,

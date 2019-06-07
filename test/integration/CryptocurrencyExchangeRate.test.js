@@ -5,7 +5,7 @@
 */
 
 
-import { generatedQueries, graphql, schema, responseMatchesSchema, returnNoErrors, variables } from "./utilities";
+import { generatedQueries, graphql, responseMatchesSchema, returnNoErrors, schema, variables } from "./utilities";
 
 const { cryptocurrencyExchangeRate } = generatedQueries;
 
@@ -22,7 +22,11 @@ function test(variables) {
 	it(returnNoErrors(variables), () => expect(response).resolves.toHaveProperty('errors', undefined));
 };
 
-describe("exchangeRates", () => test({
-	...variables.crypto.exchangeRates[0],
-	...variables.crypto.exchangeTimeSeries[0]
-}));
+describe.each(variables.crypto.exchangeRates)("%j", exchangeRates =>
+	describe.each(variables.crypto.exchangeTimeSeries)("%j", exchangeTimeSeries =>
+		test({
+			...exchangeRates,
+			...exchangeTimeSeries
+		})
+	)
+);

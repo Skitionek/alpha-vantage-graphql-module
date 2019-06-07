@@ -4,12 +4,10 @@
 	- Created:  2019-05-29
 */
 
-import { alphaVantageInterface } from "../constants";
-import { required, fragmentResolver } from "../utilities";
+import { alphaVantageInterface, fields, snaps } from "../constants";
+import { fragmentResolver, required } from "../utilities";
 
-export const quoteFields = ['from_currency_code', 'from_currency_name', 'to_currency_code', 'to_currency_name', 'exchange_rate', 'last_refreshed', 'time_zone', 'bid_price', 'ask_price'];
-
-function requestQuote(parent, args, { injector }, info) {
+function requestExchangeRates(parent, args, { injector }, info) {
 	const { from_currency = parent.Ticker, to_currency } = {
 		...parent,
 		...args
@@ -20,8 +18,6 @@ function requestQuote(parent, args, { injector }, info) {
 		to_currency
 	}));
 }
-
-export const timeSeriesFields = ['information', 'from_symbol', 'to_symbol', 'last_refreshed', 'interval','output_size', 'time_zone', 'data'];
 
 function requestTimeSeries(parent, args, { injector }, info) {
 	const { from_symbol, to_symbol, interval = "daily", outputsize } = {
@@ -39,6 +35,6 @@ function requestTimeSeries(parent, args, { injector }, info) {
 };
 
 export default {
-	...fragmentResolver(requestQuote, undefined, quoteFields),
-	...fragmentResolver(requestTimeSeries, undefined, timeSeriesFields)
+	...fragmentResolver(requestExchangeRates, undefined, fields(snaps.forex.exchangeRates)),
+	...fragmentResolver(requestTimeSeries, undefined, fields(snaps.forex.exchangeTimeSeries))
 }
