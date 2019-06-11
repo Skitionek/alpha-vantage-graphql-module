@@ -104,12 +104,12 @@ expect.extend({
 			const options = { depth, path, customFields };
 			const e = expect(received);
 
-			if (node instanceof GraphQLSchema) e.toMatchGraphQLSchema(received, node, options);
-			else if (node instanceof GraphQLList) e.toMatchGraphQLList(received, node, options);
-			else if (node instanceof GraphQLObjectType) e.toMatchGraphQLObjectType(received, node, options);
-			else if (node instanceof GraphQLNonNull) e.toMatchGraphQLNonNull(received, node, options);
-			else if (node instanceof GraphQLScalarType) e.toMatchGraphQLScalarType(received, node, options);
-			else if (node instanceof GraphQLInterfaceType) e.toMatchGraphQLInterfaceType(received, node, options);
+			if (node instanceof GraphQLSchema) e.toMatchGraphQLSchema(node, options);
+			else if (node instanceof GraphQLList) e.toMatchGraphQLList(node, options);
+			else if (node instanceof GraphQLObjectType) e.toMatchGraphQLObjectType(node, options);
+			else if (node instanceof GraphQLNonNull) e.toMatchGraphQLNonNull(node, options);
+			else if (node instanceof GraphQLScalarType) e.toMatchGraphQLScalarType(node, options);
+			else if (node instanceof GraphQLInterfaceType) e.toMatchGraphQLInterfaceType(node, options);
 			else if (node instanceof Object) {
 				e.toMatchSchema(node.type, options);
 			}

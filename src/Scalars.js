@@ -18,6 +18,9 @@ export const Date_Scalar = new GraphQLScalarType({
 		const result = new Date(value);
 		result.toString = formatDate;
 		return result;
+	},
+	parseLiteral(ast) {
+		return ast.match(/\d{4}-\d{2}-\d{2}/)?this.parseValue(ast):new Error(`Could not parse ${ast}, date should be written in format 'YYYY-MM-DD'`);
 	}
 });
 const formatDateTime = timeFormat("%Y-%m-%d %H:%M:%S");
@@ -31,6 +34,9 @@ export const DateTime = new GraphQLScalarType({
 		const result = new Date(value);
 		result.toString = formatDateTime;
 		return result;
+	},
+	parseLiteral(ast) {
+		return ast.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?this.parseValue(ast):new Error(`Could not parse ${ast}, dateTime should be written in format 'YYYY-MM-DD hh:mm:ss'`);
 	}
 });
 

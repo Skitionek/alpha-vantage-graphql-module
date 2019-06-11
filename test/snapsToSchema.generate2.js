@@ -128,7 +128,7 @@ let graphQLObjectTypes = mapValues(ordered_types, type => new GraphQLObjectType(
 
 relations.forEach(f => f());
 
-mapValues(graphQLObjectTypes, v => console.log(print(v)));
+mapValues(graphQLObjectTypes, v => console.log(print(v.astNode)));
 
 // eslint-disable-next-line no-shadow
 function resolveNestedTypes(graphQLObjectTypes) {
