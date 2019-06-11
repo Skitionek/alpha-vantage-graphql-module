@@ -4,7 +4,6 @@
 	- Created:  2019-05-01
 */
 export { integrationSnapshots as snaps } from 'alpha-vantage-data-source/lib/test';
-import { mapValues } from "lodash";
 
 export const API_TOKEN = 'demo';
 

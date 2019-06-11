@@ -11,8 +11,8 @@ import CryptocurrencyExchangeRate from './Types/CryptocurrencyExchangeRate';
 import Cryptocurrency from "./Types/Cryptocurrency";
 import SymbolSearch from "./Types/SymbolSearch"
 import Technical from "./Types/Technical"
-import StockData from "./Types/StockData";
 import Scalars from "./Scalars";
+import Performance from "./Types/Performance"
 
 
 export const alphaVantageProviderFactory = (API_TOKEN, params) => ({
@@ -30,19 +30,17 @@ export default new GraphQLModule({
 			symbolSearch: SymbolSearch,
 			stock: forward,
 			cryptocurrency: Cryptocurrency,
-			cryptocurrencyExchangeRate: forward,
+			cryptocurrencyExchangeRate: CryptocurrencyExchangeRate,
 			foreignExchange: forward,
-			technical: forward
+			technical: forward,
+			sectorPerformance: Performance
 		},
 		Technical,
+		Performance,
 		Cryptocurrency,
 		ForeignExchange,
 		Stock,
-		StockData,
-		CryptocurrencyExchangeRate,
-		Company: {
-			stock: forward
-		}
+		CryptocurrencyExchangeRate
 	},
 	providers: [
 		alphaVantageProvider

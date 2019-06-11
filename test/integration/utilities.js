@@ -10,15 +10,16 @@ import { createTestClient } from 'apollo-server-testing';
 import { ApolloServer } from 'apollo-server';
 import alphaVantageModule from '../../src';
 // import AlphaVantage from "../src/dataSource";
-import {generateAll as gqlGenerator} from "gql-generator-node";
+import { generateAll as gqlGenerator } from "gql-generator-node";
+import '../jest.extensions';
+import { alphaVantageInterface, fields, snaps } from "../../src/constants";
+
+import { AlphaVantageMock, variables } from "alpha-vantage-data-source/lib/test";
+
 export { generateQuery } from "gql-generator-node";
 
 'gql-generator-node';
-import '../jest.extensions';
-import { alphaVantageInterface } from "../../src/constants";
-
-import {variables, AlphaVantageMock} from "alpha-vantage-data-source/lib/test";
-export {variables, AlphaVantageMock};
+export { variables, AlphaVantageMock };
 
 
 // get module and inject mockup
@@ -56,3 +57,37 @@ export const { queries: generatedQueries } = gqlGenerator(schema, undefined, ({ 
 
 export const returnNoErrors = variables => `returns no errors\t\t${JSON.stringify(variables)}`;
 export const responseMatchesSchema = variables => `response matches schema\t\t${JSON.stringify(variables)}`;
+
+export function queryTesterFactory(query) {
+	return function test(variables, customFields) {
+		if (Array.isArray(variables)) {
+			describe.each(variables)("%j", variables => test(variables, customFields));
+		} else {
+			let response;
+			beforeAll(() =>
+				response = graphql({ query, variables })
+			);
+
+			it(returnNoErrors(variables), () => expect(response).resolves.toHaveProperty('errors', undefined));
+			it(responseMatchesSchema(variables), () => expect(response).resolves.toMatchSchema(schema, { customFields: [customFields] }));
+		}
+	}
+}
+
+export function variablesFieldsTupleByPath(pathStr) {
+	const path = pathStr.split('.');
+	let variable = variables, field = snaps;
+	path.forEach(step => {
+		variable = variable[step];
+		field = field[step];
+	});
+	return [variable, fields(field)];
+}
+
+
+export function getNextLevelFields(field) {
+	if (field.getFields) return field.getFields();
+	if (field.type) return getNextLevelFields(field.type);
+	if (field.ofType) return getNextLevelFields(field.ofType);
+	console.assert(false, "Not reach");
+}

@@ -35,7 +35,7 @@ export const fragmentResolver = (
 	return typeResolver;
 };
 
-export const forward = (parent,args) => ({...parent,...args});
+export const forward = (parent={},args={}) => ({...parent,...args});
 
 export const crossSearch = (arr1, arr2) => arr1.some(r => arr2.includes(r));
 

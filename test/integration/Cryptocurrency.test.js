@@ -4,30 +4,37 @@
 	- Created:  23/04/2019
 */
 
-import { generatedQueries, graphql, responseMatchesSchema, returnNoErrors, variables, schema } from "./utilities";
+import {
+	generatedQueries,
+	generateQuery,
+	queryTesterFactory,
+	schema,
+	variables,
+	variablesFieldsTupleByPath
+} from "./utilities";
+import mapValues from "lodash.mapvalues";
+import { snaps } from "../../src/constants";
 
 
 const { cryptocurrency } = generatedQueries;
 
-describe.each(variables.crypto.exchangeTimeSeries)("%j", CryptocurrencyParams => {
-	describe.each(variables.crypto.exchangeRates)("%j", CryptocurrencyExchangeRateParams => {
-		function test(variables) {
-			let response;
-			beforeAll(() => {
-				let variables = {
-					...CryptocurrencyExchangeRateParams,
-					...CryptocurrencyParams
-				};
-				response = graphql({ query: cryptocurrency, variables })
-			});
+const cryptocurrencySchemaHook = schema.getQueryType().getFields().cryptocurrency;
 
-			it(returnNoErrors(variables), () => expect(response).resolves.toHaveProperty('errors', undefined));
-			it(responseMatchesSchema(variables), () => expect(response).resolves.toMatchSchema(schema));
-		}
-
-		describe("exchangeTimeSeries", () => test(variables.crypto.exchangeTimeSeries));
-		describe("exchangeTimeSeries_adjusted", () => test(variables.crypto.exchangeTimeSeries_adjusted));
-	})
+const exchangeTimeSeriesQuery = generateQuery({
+	field: cryptocurrencySchemaHook,
+	skeleton: mapValues(snaps.crypto.exchangeTimeSeries, () => false)
 });
+const test = queryTesterFactory(cryptocurrency);
 
+describe("crypto.exchangeTimeSeries", () => queryTesterFactory(exchangeTimeSeriesQuery)(...variablesFieldsTupleByPath('crypto.exchangeTimeSeries')));
 
+describe("crypto combined", () =>
+	describe.each(variables.crypto.exchangeRates)("%j", exchangeRates =>
+		describe.each(variables.crypto.exchangeTimeSeries)("%j", exchangeTimeSeries =>
+			test({
+				...exchangeRates,
+				...exchangeTimeSeries
+			})
+		)
+	)
+);

@@ -6,11 +6,11 @@ scalar Interval
 type Query {
 	stock(symbol: String!, outputsize: String, datatype: String, interval: Interval): Stock
 	symbolSearch(keywords: String!,datatype: String): [SymbolSearchResult]
-	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!): CryptocurrencyExchangeRate
-	cryptocurrency(symbol: String!,market:String!, interval: Interval): Cryptocurrency
-	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange
-	technical(symbol: String, interval: Interval, time_period: String, series_type: String): Technical
-	sectorPerformance: PerformanceSector
+	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!): CryptocurrencyExchangeRate!
+	cryptocurrency(symbol: String!,market:String!, interval: Interval): Cryptocurrency!
+	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange!
+	technical(symbol: String, interval: Interval, time_period: String, series_type: String): Technical!
+	sectorPerformance: Performance!
 }
 
 type Company {
@@ -47,15 +47,15 @@ type Cryptocurrency {
 	#	  }
 	#	}
 
-	information: String
-	digital_currency_code: String
-	digital_currency_name: String
-	market_code: String
-	market_name: String
+	information: String!
+	digital_currency_code: String!
+	digital_currency_name: String!
+	market_code: String!
+	market_name: String!
 	data:[CryptocurrencyData]
 
 	last_refreshed:Date!
-	time_zone:String
+	time_zone:String!
 }
 type CryptocurrencyExchangeRate { #} implements ExchangeRate {
 	#	{
@@ -72,13 +72,13 @@ type CryptocurrencyExchangeRate { #} implements ExchangeRate {
 	#	  }
 	#	}
 
-	from_currency_code: String
-	from_currency_name: String
-	to_currency_code: String
-	to_currency_name: String
-	exchange_rate: String
-	last_refreshed: String
-	time_zone: String
+	from_currency_code: String!
+	from_currency_name: String!
+	to_currency_code: String!
+	to_currency_name: String!
+	exchange_rate: String!
+	last_refreshed: String!
+	time_zone: String!
 	bid_price: String
 	ask_price: String
 }
@@ -126,27 +126,27 @@ type CryptocurrencyData {
 	#        }
 
 	date:Date!
-	from_close:Float
-	from_high:Float
-	from_low:Float
-	from_open:Float
-	market_cap:Float
-	to_close:Float
-	to_high:Float
-	to_low:Float
-	to_open:Float
-	volume:Float
+	from_close:Float!
+	from_high:Float!
+	from_low:Float!
+	from_open:Float!
+	market_cap:Float!
+	to_close:Float!
+	to_high:Float!
+	to_low:Float!
+	to_open:Float!
+	volume:Float!
 }
 type ExchangeRates {
-	ask_price:Float
-	bid_price:Float
-	exchange_rate:Float
-	from_currency_code:String
-	from_currency_name:String
-	last_refreshed:Timestamp
-	time_zone:String
-	to_currency_code:String
-	to_currency_name:String
+	ask_price:Float!
+	bid_price:Float!
+	exchange_rate:Float!
+	from_currency_code:String!
+	from_currency_name:String!
+	last_refreshed:Timestamp!
+	time_zone:String!
+	to_currency_code:String!
+	to_currency_name:String!
 }
 
 
@@ -165,16 +165,16 @@ type Stock {
 	#	    "10. change percent": "0.5381%"
 	#	}
 
-	change:Float
-	change_percent:String
+	change:Float!
+	change_percent:String!
 	close:Float
 	date:Date!
-	high:Float
-	low:Float
-	open:Float
-	previous_close:Float
-	price:Float
-	volume:Float
+	high:Float!
+	low:Float!
+	open:Float!
+	previous_close:Float!
+	price:Float!
+	volume:Float!
 
 	adjusted_close:Float
 	dividend_amount:Float
@@ -225,10 +225,10 @@ type StockData {
 
 	close:Float
 	date:Date!
-	high:Float
-	low:Float
-	open:Float
-	volume:Float
+	high:Float!
+	low:Float!
+	open:Float!
+	volume:Float!
 
 	adjusted_close:Float
 	dividend_amount:Float
@@ -249,15 +249,15 @@ type SymbolSearchResult {
 	#		"9. matchScore": "1.0000"
 	#	}
 
-	currency:String
-	marketclose:String
-	marketopen:String
-	matchscore:Float
-	name:String
-	region:String
-	symbol:String
-	timezone:String
-	type:String
+	currency:String!
+	marketclose:String!
+	marketopen:String!
+	matchscore:Float!
+	name:String!
+	region:String!
+	symbol:String!
+	timezone:String!
+	type:String!
 }
 
 
@@ -272,95 +272,75 @@ type ForeignExchange {
 	ask_price: String
 
 	data:[ForeignExchangeData]
-	from_symbol:String
-	information:String
-	interval:Interval
-	last_refreshed:Timestamp
+	from_symbol:String!
+	information:String!
+	interval:Interval!
+	last_refreshed:Timestamp!
 	output_size:String
-	time_zone:String
-	to_symbol:String
+	time_zone:String!
+	to_symbol:String!
 }
 
 type ForeignExchangeData {
-	close:Float
-	date:DateTime
-	high:Float
-	low:Float
-	open:Float
+	close:Float!
+	date:DateTime!
+	high:Float!
+	low:Float!
+	open:Float!
 }
 
 
 
-type Performance implements PerformanceSectorMetaData {
-	information:String
-	last_refreshed:String
-	performance_sector_rank_a_real_time_performance: PerformanceSectorRank
-	performance_sector_rank_b_day_performance: PerformanceSectorRank
-	performance_sector_rank_c_day_performance: PerformanceSectorRank
-	performance_sector_rank_d_month_performance: PerformanceSectorRank
-	performance_sector_rank_e_month_performance: PerformanceSectorRank
-	performance_sector_rank_f_year_to_date_ytd_performance: PerformanceSectorRank
-	performance_sector_rank_g_year_performance: PerformanceSectorRank
-	performance_sector_rank_h_year_performance: PerformanceSectorRankYear
-	performance_sector_rank_i_year_performance: PerformanceSectorRankYear
-	performance_sector_rank_j_year_performance: PerformanceSectorRankYear
-	performance_sector: PerformanceSector
-}
-
-interface PerformanceSectorMetaData {
-	information:String
-	last_refreshed:String
+type Performance {
+	information:String!
+	last_refreshed:String!
+	rank_a_real_time_performance:PerformanceSectorRank!
+	rank_b_day_performance:PerformanceSectorRank!
+	rank_c_day_performance:PerformanceSectorRank!
+	rank_d_month_performance:PerformanceSectorRank!
+	rank_e_month_performance:PerformanceSectorRank!
+	rank_f_year_to_date_ytd_performance:PerformanceSectorRank!
+	rank_g_year_performance:PerformanceSectorRank!
+	rank_h_year_performance:PerformanceSectorRankYear!
+	rank_i_year_performance:PerformanceSectorRankYear!
+	rank_j_year_performance:PerformanceSectorRankYear!
 }
 interface PerformanceSectorRank_Interface {
-	communication_services: String
-	consumer_discretionary: String
-	consumer_staples: String
-	energy: String
-	financials: String
-	health_care: String
-	industrials: String
-	information_technology: String
-	materials: String
-	utilities: String
+	communication_services: String!
+	consumer_discretionary: String!
+	consumer_staples: String!
+	energy: String!
+	financials: String!
+	health_care: String!
+	industrials: String!
+	information_technology: String!
+	materials: String!
+	utilities: String!
 }
 type PerformanceSectorRank implements PerformanceSectorRank_Interface {
-	communication_services:String
-	consumer_discretionary:String
-	consumer_staples:String
-	energy:String
-	financials:String
-	health_care:String
-	industrials:String
-	information_technology:String
-	materials:String
-	real_estate:String
-	utilities:String
+	communication_services:String!
+	consumer_discretionary:String!
+	consumer_staples:String!
+	energy:String!
+	financials:String!
+	health_care:String!
+	industrials:String!
+	information_technology:String!
+	materials:String!
+	real_estate:String!
+	utilities:String!
 }
 type PerformanceSectorRankYear implements PerformanceSectorRank_Interface {
-	communication_services:String
-	consumer_discretionary:String
-	consumer_staples:String
-	energy:String
-	financials:String
-	health_care:String
-	industrials:String
-	information_technology:String
-	materials:String
-	utilities:String
-}
-type PerformanceSector implements PerformanceSectorMetaData {
-	information:String
-	last_refreshed:String
-	rank_a_real_time_performance:PerformanceSectorRank
-	rank_b_day_performance:PerformanceSectorRank
-	rank_c_day_performance:PerformanceSectorRank
-	rank_d_month_performance:PerformanceSectorRank
-	rank_e_month_performance:PerformanceSectorRank
-	rank_f_year_to_date_ytd_performance:PerformanceSectorRank
-	rank_g_year_performance:PerformanceSectorRank
-	rank_h_year_performance:PerformanceSectorRankYear
-	rank_i_year_performance:PerformanceSectorRankYear
-	rank_j_year_performance:PerformanceSectorRankYear
+	communication_services:String!
+	consumer_discretionary:String!
+	consumer_staples:String!
+	energy:String!
+	financials:String!
+	health_care:String!
+	industrials:String!
+	information_technology:String!
+	materials:String!
+	utilities:String!
 }
 
 
@@ -445,8 +425,8 @@ type TechnicalIndexData {
 	value:Float
 }
 type TechnicalIndexAroonData {
-	aroon_down:Float
-	aroon_up:Float
+	aroon_down:Float!
+	aroon_up:Float!
 	date:Date!
 }
 interface TechnicalIndex_Interface {
@@ -489,9 +469,9 @@ type TechnicalIndexC {
 }
 type TechnicalIndexBbandsData {
 	date:Date!
-	real_lower_band:Float
-	real_middle_band:Float
-	real_upper_band:Float
+	real_lower_band:Float!
+	real_middle_band:Float!
+	real_upper_band:Float!
 }
 type TechnicalIndexBbands {
 	data:[TechnicalIndexBbandsData]
@@ -518,13 +498,13 @@ type TechnicalIndexA {
 }
 type TechnicalIndexHtPhasorData {
 	date:Date!
-	phase:Float
-	quadrature:Float
+	phase:Float!
+	quadrature:Float!
 }
 type TechnicalIndexHtSineData {
 	date:Date!
-	lead_sine:Float
-	sine:Float
+	lead_sine:Float!
+	sine:Float!
 }
 interface TechnicalIndexHt_Interface {
 	indicator:String
@@ -563,9 +543,9 @@ type TechnicalIndexHtSine implements TechnicalIndexHt_Interface {
 }
 type TechnicalIndexDataA {
 	date:Date!
-	macd:Float
-	macd_hist:Float
-	macd_signal:Float
+	macd:Float!
+	macd_hist:Float!
+	macd_signal:Float!
 }
 type TechnicalIndexMacd {
 	data:[TechnicalIndexDataA]
@@ -596,8 +576,8 @@ type TechnicalIndexMacdext {
 }
 type TechnicalIndexMamaData {
 	date:Date!
-	fama:Float
-	mama:Float
+	fama:Float!
+	mama:Float!
 }
 type TechnicalIndexMama {
 	data:[TechnicalIndexMamaData]
@@ -622,8 +602,8 @@ type TechnicalIndexSar {
 }
 type TechnicalIndexStochData {
 	date:Date!
-	slowd:Float
-	slowk:Float
+	slowd:Float!
+	slowk:Float!
 }
 type TechnicalIndexStoch {
 	data:[TechnicalIndexStochData]
@@ -640,8 +620,8 @@ type TechnicalIndexStoch {
 }
 type TechnicalIndexDataB {
 	date:Date!
-	fastd:Float
-	fastk:Float
+	fastd:Float!
+	fastk:Float!
 }
 type TechnicalIndexStochf {
 	data:[TechnicalIndexDataB]
