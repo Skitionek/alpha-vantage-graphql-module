@@ -2,7 +2,11 @@
 	"name": "alpha-vantage-graphql",
 	"version": "1.0.0",
 	"description": "",
-	"main": "src/index.js",
+	"main": "lib/index.js",
+	"files": [
+		"lib",
+		"src"
+	],
 	"directories": {
 		"test": "test"
 	},
@@ -41,9 +45,17 @@
 		"test": "jest",
 		"spawnServer": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./test/spawnServer.js",
 		"prebuild": "npm run clean",
-		"build": "babel src --out-dir ./dist --source-maps --copy-files",
-		"clean": "rimraf scripts/dist/",
-		"debug": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./src/index.js"
+		"debug": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./src/index.js",
+		"semantic-release": "semantic-release",
+		"clean": "rimraf lib",
+		"test:prod": "cross-env BABEL_ENV=production npm run test",
+		"test:only": "jest",
+		"test:watch": "npm test -- --watch",
+		"test:examples": "node examples/",
+		"cover": "jest --coverage",
+		"lint": "eslint src test",
+		"build": "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
+		"prepublish": "npm run clean && npm run lint && npm run test && npm run build"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.4.4",
@@ -57,6 +69,13 @@
 		"@graphql-modules/core": "^0.7.1",
 		"apollo-server": "^2.4.8",
 		"apollo-server-testing": "^2.4.8",
+		"babel-eslint": "^10.0.1",
+		"eslint": "^5.16.0",
+		"eslint-config-prettier": "^4.3.0",
+		"eslint-config-uber-es2015": "^3.1.2",
+		"eslint-plugin-babel": "^5.3.0",
+		"eslint-plugin-jest": "^22.6.4",
+		"eslint-plugin-prettier": "^3.1.0",
 		"gql-generator-node": "^2.1.4",
 		"graphql-import-node": "0.0.4",
 		"jest": "^24.7.1",
@@ -65,9 +84,9 @@
 		"jsonic": "^0.3.1",
 		"lodash": "latest",
 		"lodash.intersection": "^4.4.0",
+		"lodash.mapvalues": "latest",
 		"nodemon": "^1.19.0",
-		"reflect-metadata": "^0.1.13",
-		"lodash.mapvalues": "latest"
+		"reflect-metadata": "^0.1.13"
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.4.4",

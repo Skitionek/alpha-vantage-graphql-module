@@ -7,27 +7,13 @@
 import intersection from 'lodash.intersection';
 import { mapValues } from 'lodash';
 
-import { integrationSnapshots as rsponsesSnaps } from 'alpha-vantage-data-source/lib/test';
+import { integrationSnapshots as responsesSnaps } from 'alpha-vantage-data-source/lib/test';
 import { Date_Scalar, DateTime, Interval } from "../src/Scalars";
+import { GraphQLFloat, GraphQLList, GraphQLObjectType, GraphQLString, print } from "graphql";
 
 const jsonic = require('jsonic');
 
-function SNAPtoJS(snap) {
-	return jsonic(
-		snap
-			.replace(/Object {/g, '{')
-			.replace(/Array \[/g, '[')
-	);
-}
-
-let types = {};
-
-function skipObjects(obj) {
-	return Object.entries(obj).reduce((o, [k, v]) => {
-		if (typeof v !== 'object' || v === null) o[k] = v;
-		return o;
-	}, {})
-}
+const types = {};
 
 function mapStructureToType(obj, key) {
 	if (Array.isArray(obj)) {
@@ -37,8 +23,8 @@ function mapStructureToType(obj, key) {
 			obj[k] = mapStructureToType(v, `${key}_${k}`);
 		});
 		const ordered = {};
-		Object.keys(obj).sort().forEach(function (key) {
-			ordered[key] = obj[key];
+		Object.keys(obj).sort().forEach(innerKey => {
+			ordered[innerKey] = obj[innerKey];
 		});
 		const type = jsonic.stringify(obj, { depth: Infinity, maxitems: Infinity, maxchars: Infinity });
 		if (!types[type]) {
@@ -50,21 +36,23 @@ function mapStructureToType(obj, key) {
 	return obj
 }
 
-(function populateBasedOnResponsesSnaps(rsponsesSnaps) {
-	Object.keys(rsponsesSnaps).forEach(key1 => {
-		Object.keys(rsponsesSnaps[key1]).forEach(key2 => {
+// eslint-disable-next-line no-shadow
+(function populateBasedOnResponsesSnaps(responsesSnaps) {
+	Object.keys(responsesSnaps).forEach(key1 => {
+		Object.keys(responsesSnaps[key1]).forEach(key2 => {
 			if (key2.match(/TimeSeries/)) return;
 			let f_key = [key1, key2];
 			if (f_key[0] === 'data') f_key[0] = 'stock';
 			f_key = f_key.join('_');
-			mapStructureToType(rsponsesSnaps[key1][key2], f_key)
+			mapStructureToType(responsesSnaps[key1][key2], f_key)
 		});
 	});
-})(rsponsesSnaps);
+})(responsesSnaps);
 
 const ordered_types = types;
 
 const names = new Map();
+// eslint-disable-next-line no-shadow
 (function resolveNames(ordered_types) {
 
 	function assignName(k, typeName, v) {
@@ -82,7 +70,7 @@ const names = new Map();
 	}
 
 	Object.entries(ordered_types).sort((a, b) => b[1].size - a[1].size).forEach(([k, v]) => {
-		let typeName = intersection(...Array.from(v.keys()).map(d => d.split('_').map(capitalizeFirstLetter))).join('');
+		const typeName = intersection(...Array.from(v.keys()).map(d => d.split('_').map(capitalizeFirstLetter))).join('');
 		assignName(k, typeName, v);
 	});
 })(ordered_types);
@@ -95,48 +83,41 @@ const FIELD_TYPES = {
 	INTERVAL: "Interval"
 };
 
-function object2Type(obj) {
-	const type = jsonic.stringify(obj, { depth: Infinity, maxitems: Infinity, maxchars: Infinity });
-	if (!ordered_types[type]) {
-		console.error("type does not exist", type);
-	} else {
-		return ordered_types[type].name;
-	}
-}
-
 const relations = [];
 
 function typeDescToObject(field) {
 	switch (field) {
-		case FIELD_TYPES.TIMESTAMP:
-			return DateTime;
-		case FIELD_TYPES.STRING:
-			return GraphQLString;
-		case FIELD_TYPES.FLOAT:
-			return GraphQLFloat;
-		case FIELD_TYPES.DATE:
-			return Date_Scalar;
-		case FIELD_TYPES.INTERVAL:
-			return Interval;
-	}
-	if (Array.isArray(field)) return new GraphQLList(typeDescToObject(field[0]));
-	if (typeof field === 'object' && field !== null) {
-		const key = jsonic.stringify(field, {
-			depth: Infinity,
-			maxitems: Infinity,
-			maxchars: Infinity
-		});
-		const type = ordered_types[key];
-		return ordered_types[key].c = ordered_types[key].c || new GraphQLObjectType({
-			name: type.name,
-			fields: mapValues(type.v.values().next().value, field => ({
-				type: typeDescToObject(field)
-			}))
-		})
-	}
-	console.warn("no reach");
-}
+	case FIELD_TYPES.TIMESTAMP:
+		return DateTime;
+	case FIELD_TYPES.STRING:
+		return GraphQLString;
+	case FIELD_TYPES.FLOAT:
+		return GraphQLFloat;
+	case FIELD_TYPES.DATE:
+		return Date_Scalar;
+	case FIELD_TYPES.INTERVAL:
+		return Interval;
+	default:
+		if (Array.isArray(field)) return new GraphQLList(typeDescToObject(field[0]));
+		if (typeof field === 'object' && field !== null) {
+			const key = jsonic.stringify(field, {
+				depth: Infinity,
+				maxitems: Infinity,
+				maxchars: Infinity
+			});
+			const type = ordered_types[key];
+			// eslint-disable-next-line no-return-assign
+			return ordered_types[key].c = ordered_types[key].c || new GraphQLObjectType({
+				name: type.name,
+				fields: mapValues(type.v.values().next().value, inner_field => ({
+					type: typeDescToObject(inner_field)
+				}))
+			})
+		}
+		console.warn("no reach");
 
+	}
+}
 
 let graphQLObjectTypes = mapValues(ordered_types, type => new GraphQLObjectType({
 	name: type.name,
@@ -147,14 +128,14 @@ let graphQLObjectTypes = mapValues(ordered_types, type => new GraphQLObjectType(
 
 relations.forEach(f => f());
 
-mapValues(graphQLObjectTypes,v=>console.log(print(v)));
+mapValues(graphQLObjectTypes, v => console.log(print(v)));
 
+// eslint-disable-next-line no-shadow
 function resolveNestedTypes(graphQLObjectTypes) {
 	function resolveNestedTypesRecursive(obj) {
 		if (typeof obj !== 'object' || obj === null) return obj;
 		if (obj.getFields) {
-			return Object.assign()
-			mapValues(obj.getFields(), field => {
+			return mapValues(obj.getFields(), field => {
 				if (field.type && field.type.parseLiteral) return field;
 				return resolveNestedTypesRecursive(field.type);
 			});
@@ -176,17 +157,14 @@ function resolveNestedTypes(graphQLObjectTypes) {
 	}
 
 	return mapValues(graphQLObjectTypes, resolveNestedTypesRecursive)
-};
-
+}
 graphQLObjectTypes = resolveNestedTypes(graphQLObjectTypes);
 
 console.log(graphQLObjectTypes);
 
-
 function capitalizeFirstLetter(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
 
 function objectSimilarities(a, b) {
 	return Object.keys(a).reduce((o, n) => {
@@ -196,6 +174,7 @@ function objectSimilarities(a, b) {
 }
 
 let interfaces = {};
+// eslint-disable-next-line no-shadow
 (function suggestInterfaces(ordered_types) {
 	Object.entries(ordered_types).forEach(([ka, a]) => {
 		Object.entries(ordered_types).forEach(([kb, b]) => {
@@ -212,7 +191,7 @@ let interfaces = {};
 							types: new Set([a.name, b.name]),
 							multiplier: 1,
 							fields: sim
-						}
+						};
 						a.interfaces.add(key);
 						b.interfaces.add(key);
 					}
@@ -229,7 +208,7 @@ let interfaces = {};
 const interfaceList = Object.values(interfaces).sort((a, b) => b.fields.length - a.fields.length || b.multiplier - a.multiplier);
 
 let output = "";
-let queries = {};
+const queries = {};
 output += "type Query {\n";
 Object.values(ordered_types).forEach(type => {
 	Array.from(type.v.keys()).forEach(key => {
@@ -242,30 +221,29 @@ output += "}\n";
 Object.values(interfaceList).forEach(inter => {
 	output += `interface ${
 		inter.name
-		} ${
+	} ${
 		jsonic.stringify(inter.fields,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
 			.replace(/\[/g, '{\n\t')
 			.replace(/,/g, ':\t String,\n\t')
-			.replace(/\]/, ':\t String\n}')
-		}\n`;
+			.replace(/]/, ':\t String\n}')
+	}\n`;
 });
 
 Object.values(ordered_types).forEach(type => {
 	output += `type ${
 		type.name
-		}${
+	}${
 		type.interfaces.size ? ` implements ${Array.from(type.interfaces).map(key => interfaces[key].name).join(', ')}` : ''
-		} ${
+	} ${
 		jsonic.stringify(type.keyRecalculated,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
-			.replace(/([\{,])/g, '$1\n\t')
+			.replace(/([{,])/g, '$1\n\t')
 			.replace(/null/g, '\t String')
-			.replace(/\}/, '\n}')
-		}\n`;
+			.replace(/}/, '\n}')
+	}\n`;
 });
-
 
 console.log(output);
 
-it("asd", () => undefined);
+it("", () => undefined);

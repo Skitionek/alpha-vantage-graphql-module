@@ -15,15 +15,9 @@ export const Date_Scalar = new GraphQLScalarType({
 		return value instanceof Date? formatDate(value) : value;
 	},
 	parseValue(value) {
-		let result = new Date(value);
+		const result = new Date(value);
 		result.toString = formatDate;
 		return result;
-	},
-	parseLiteral(ast) {
-		if (ast.kind === Kind.INT) {
-			return new Date(ast.value) // ast value is always in string format
-		}
-		return null;
 	}
 });
 const formatDateTime = timeFormat("%Y-%m-%d %H:%M:%S");
@@ -34,15 +28,9 @@ export const DateTime = new GraphQLScalarType({
 		return formatDateTime(value);
 	},
 	parseValue(value) {
-		let result = new Date(value);
+		const result = new Date(value);
 		result.toString = formatDateTime;
 		return result;
-	},
-	parseLiteral(ast) {
-		if (ast.kind === Kind.INT) {
-			return new Date(ast.value) // ast value is always in string format
-		}
-		return null;
 	}
 });
 
@@ -50,19 +38,19 @@ const INTERVALS = [
 	'1min', '5min', '15min' , '30min', '60min', 'daily', 'weekly', 'monthly'
 ];
 function intervalValue(value) {
-  return INTERVALS.indexOf(value)===-1?
-	  new Error(`Interval must be one of predefined values: ${INTERVALS.join(', ')}`)
-	  :
-	  value;
+	return INTERVALS.includes(value)?
+	  value
+		:
+	  new Error(`Interval must be one of predefined values: ${INTERVALS.join(', ')}`);
 }
 export const Interval = new GraphQLScalarType({
-  name: 'Interval',
+	name: 'Interval',
 	description: `One of the preset intervals: [${INTERVALS}]`,
-  serialize: intervalValue,
-  parseValue: intervalValue,
-  parseLiteral(ast) {
-      return intervalValue(ast.value);
-  }
+	serialize: intervalValue,
+	parseValue: intervalValue,
+	parseLiteral(ast) {
+		return intervalValue(ast.value);
+	}
 });
 
 export default {

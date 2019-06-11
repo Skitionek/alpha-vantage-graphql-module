@@ -7,4 +7,4 @@
 import { alphaVantageInterface } from "../constants";
 
 export default (parent, args, { injector }, ...rest) =>
-				injector.get(alphaVantageInterface).data.search(args);
+	injector.get(alphaVantageInterface).data.search(args);

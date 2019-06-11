@@ -15,7 +15,6 @@ import {
 import mapValues from "lodash.mapvalues";
 import { snaps } from "../../src/constants";
 
-
 const { cryptocurrency } = generatedQueries;
 
 const cryptocurrencySchemaHook = schema.getQueryType().getFields().cryptocurrency;

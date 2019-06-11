@@ -18,9 +18,7 @@ import { AlphaVantageMock, variables } from "alpha-vantage-data-source/lib/test"
 
 export { generateQuery } from "gql-generator-node";
 
-'gql-generator-node';
 export { variables, AlphaVantageMock };
-
 
 // get module and inject mockup
 export const { schema, injector } = alphaVantageModule;
@@ -45,8 +43,7 @@ const server = new ApolloServer({
 });
 // use the test server to create a query function
 export const graphql = createTestClient(server).query;
-
-export const queries = schema.getQueryType().getFields();
+schema.getQueryType().getFields();
 export const { queries: generatedQueries } = gqlGenerator(schema, undefined, ({ args }) => {
 	const o = {};
 	(args || []).forEach(arg => {
@@ -55,35 +52,35 @@ export const { queries: generatedQueries } = gqlGenerator(schema, undefined, ({ 
 	return o;
 });
 
-export const returnNoErrors = variables => `returns no errors\t\t${JSON.stringify(variables)}`;
-export const responseMatchesSchema = variables => `response matches schema\t\t${JSON.stringify(variables)}`;
+export const returnNoErrors = innerVariables => `returns no errors\t\t${JSON.stringify(innerVariables)}`;
+export const responseMatchesSchema = innerVariables => `response matches schema\t\t${JSON.stringify(innerVariables)}`;
 
 export function queryTesterFactory(query) {
-	return function test(variables, customFields) {
-		if (Array.isArray(variables)) {
-			describe.each(variables)("%j", variables => test(variables, customFields));
+	return function test(testVariables, customFields) {
+		if (Array.isArray(testVariables)) {
+			describe.each(testVariables)("%j", subTestVariables => test(subTestVariables, customFields));
 		} else {
 			let response;
-			beforeAll(() =>
-				response = graphql({ query, variables })
-			);
+			beforeAll(() => {
+				response = graphql({ query, variables: testVariables })
+			});
 
-			it(returnNoErrors(variables), () => expect(response).resolves.toHaveProperty('errors', undefined));
-			it(responseMatchesSchema(variables), () => expect(response).resolves.toMatchSchema(schema, { customFields: [customFields] }));
+			it(returnNoErrors(testVariables), () => expect(response).resolves.toHaveProperty('errors', undefined));
+			it(responseMatchesSchema(testVariables), () => expect(response).resolves.toMatchSchema(schema, { customFields: [customFields] }));
 		}
 	}
 }
 
 export function variablesFieldsTupleByPath(pathStr) {
 	const path = pathStr.split('.');
-	let variable = variables, field = snaps;
+	let variable = variables;
+	let field = snaps;
 	path.forEach(step => {
 		variable = variable[step];
 		field = field[step];
 	});
 	return [variable, fields(field)];
 }
-
 
 export function getNextLevelFields(field) {
 	if (field.getFields) return field.getFields();

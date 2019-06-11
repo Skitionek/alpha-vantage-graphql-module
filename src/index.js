@@ -2,7 +2,7 @@ import AlphaVantage from "alpha-vantage-data-source";
 import { GraphQLModule } from '@graphql-modules/core';
 import 'graphql-import-node';
 import * as typeDefs from './schema.graphql';
-import { alphaVantageInterface, API_TOKEN } from "./constants";
+import { alphaVantageInterface, API_TOKEN as DEMO_API_TOKEN } from "./constants";
 import { forward } from "./utilities";
 
 import Stock from './Types/Stock';
@@ -14,13 +14,12 @@ import Technical from "./Types/Technical"
 import Scalars from "./Scalars";
 import Performance from "./Types/Performance"
 
-
 export const alphaVantageProviderFactory = (API_TOKEN, params) => ({
 	provide: alphaVantageInterface,
 	useFactory: () => new AlphaVantage({ key: API_TOKEN }), // Init database connector
 	...params
 });
-const alphaVantageProvider = alphaVantageProviderFactory(API_TOKEN);
+const alphaVantageProvider = alphaVantageProviderFactory(DEMO_API_TOKEN);
 
 export default new GraphQLModule({
 	typeDefs,

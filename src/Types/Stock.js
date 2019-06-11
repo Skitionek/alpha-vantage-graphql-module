@@ -23,7 +23,7 @@ function getStockTimeSeries(parent, args, { injector }, info) {
 
 function getStockQuote(parent, args, { injector }, info) {
 	const { symbol, ...rest } = { ...parent, ...args };
-	return injector.get(alphaVantageInterface).data.quote({ symbol: required({ symbol }), ...rest })//.then(setType("StockQuote"));
+	return injector.get(alphaVantageInterface).data.quote({ symbol: required({ symbol }), ...rest })// .then(setType("StockQuote"));
 }
 
 export default {

@@ -14,9 +14,9 @@ import {
 	variables
 } from "./utilities";
 
-describe.each(Object.entries(variables.technical))("%s", (key, variables) => {
+describe.each(Object.entries(variables.technical))("%s", (key, queryVariables) => {
 
-	let response, field;
+	let field; let response;
 	beforeAll(() => {
 		field = schema.getQueryType().getFields().technical;
 		response = graphql({
@@ -26,12 +26,12 @@ describe.each(Object.entries(variables.technical))("%s", (key, variables) => {
 					[key]: false
 				}
 			}),
-			variables
+			variables: queryVariables
 		})
 	});
-	it(returnNoErrors(variables), () => expect(response).resolves.toHaveProperty('errors', undefined));
+	it(returnNoErrors(queryVariables), () => expect(response).resolves.toHaveProperty('errors', undefined));
 
-	it(`test only one field\t\t${responseMatchesSchema(variables)}`, () => expect(response).resolves.toEqual(
+	it(`test only one field\t\t${responseMatchesSchema(queryVariables)}`, () => expect(response).resolves.toEqual(
 		expect.customObjectContaining({
 			data: {
 				technical: expect.customObjectContaining({

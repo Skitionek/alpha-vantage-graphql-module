@@ -10,22 +10,7 @@ import { mapValues, mergeWith } from 'lodash';
 
 import { integrationSnapshots as rsponsesSnaps } from 'alpha-vantage-data-source/lib/test';
 
-function SNAPtoJS(snap) {
-	return jsonic(
-		snap
-			.replace(/Object {/g, '{')
-			.replace(/Array \[/g, '[')
-	);
-}
-
-let types = {};
-
-function skipObjects(obj) {
-	return Object.entries(obj).reduce((o, [k, v]) => {
-		if (typeof v !== 'object' || v === null) o[k] = v;
-		return o;
-	}, {})
-}
+const types = {};
 
 function shallowMapStructureToType(obj, key) {
 	if (Array.isArray(obj)) {
@@ -35,8 +20,8 @@ function shallowMapStructureToType(obj, key) {
 			obj[k] = shallowMapStructureToType(v, `${key}_${k}`);
 		});
 		const ordered = {};
-		Object.keys(obj).sort().forEach(function (key) {
-			ordered[key] = obj[key];
+		Object.keys(obj).sort().forEach( inner_key => {
+			ordered[inner_key] = obj[inner_key];
 		});
 		const type = jsonic.stringify(obj, { depth: 1, maxitems: Infinity, maxchars: Infinity });
 		if (!types[type]) {
@@ -48,6 +33,7 @@ function shallowMapStructureToType(obj, key) {
 	return obj
 }
 
+// eslint-disable-next-line no-shadow
 (function populateBasedOnResponsesSnaps(rsponsesSnaps) {
 	Object.keys(rsponsesSnaps).forEach(key1 => {
 		Object.keys(rsponsesSnaps[key1]).forEach(key2 => {
@@ -62,6 +48,7 @@ function shallowMapStructureToType(obj, key) {
 
 const ordered_types = types;
 
+// eslint-disable-next-line no-shadow
 (function resolveNames(ordered_types) {
 	const names = new Map();
 
@@ -80,15 +67,17 @@ const ordered_types = types;
 	}
 
 	Object.entries(ordered_types).sort((a, b) => b[1].size - a[1].size).forEach(([k, v]) => {
-		let typeName = intersection(...Array.from(v.keys()).map(d => d.split('_').map(capitalizeFirstLetter))).join('');
+		const typeName = intersection(...Array.from(v.keys()).map(d => d.split('_').map(capitalizeFirstLetter))).join('');
 		assignName(k, typeName, v);
 	});
 })(ordered_types);
 
+// eslint-disable-next-line no-shadow
 (function resolveNestedTypes(ordered_types) {
 	Object.values(ordered_types).forEach(typeObject => {
 		const typeArray = Array.from(typeObject.v.values());
 		typeArray.forEach(obj => {
+			// eslint-disable-next-line max-nested-callbacks
 			Object.keys(obj).forEach(param => {
 				if (typeof obj[param] !== 'object' || obj[param] === null) return;
 				if (Array.isArray(obj[param])) {
@@ -122,17 +111,15 @@ const ordered_types = types;
 		}
 
 		typeObject.keyRecalculated = typeArray.reduce((o, n) =>
-				mergeWith(n, o, customizer)
-			, {});
+			mergeWith(n, o, customizer)
+		, {});
 	});
 
 })(ordered_types);
 
-
 function capitalizeFirstLetter(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
 
 function objectSimilarities(a, b) {
 	return Object.keys(a).reduce((o, n) => {
@@ -142,6 +129,7 @@ function objectSimilarities(a, b) {
 }
 
 let interfaces = {};
+// eslint-disable-next-line no-shadow
 (function suggestInterfaces(ordered_types) {
 	Object.entries(ordered_types).forEach(([ka, a]) => {
 		Object.entries(ordered_types).forEach(([kb, b]) => {
@@ -158,7 +146,7 @@ let interfaces = {};
 							types: new Set([a.name, b.name]),
 							multiplier: 1,
 							fields: sim
-						}
+						};
 						a.interfaces.add(key);
 						b.interfaces.add(key);
 					}
@@ -175,7 +163,7 @@ let interfaces = {};
 const interfaceList = Object.values(interfaces).sort((a, b) => b.fields.length - a.fields.length || b.multiplier - a.multiplier);
 
 let output = "";
-let queries = {};
+const queries = {};
 output += "type Query {\n";
 Object.values(ordered_types).forEach(type => {
 	Array.from(type.v.keys()).forEach(key => {
@@ -188,30 +176,29 @@ output += "}\n";
 Object.values(interfaceList).forEach(inter => {
 	output += `interface ${
 		inter.name
-		} ${
+	} ${
 		jsonic.stringify(inter.fields,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
 			.replace(/\[/g, '{\n\t')
 			.replace(/,/g, ':\t String,\n\t')
-			.replace(/\]/, ':\t String\n}')
-		}\n`;
+			.replace(/]/, ':\t String\n}')
+	}\n`;
 });
 
 Object.values(ordered_types).forEach(type => {
 	output += `type ${
 		type.name
-		}${
+	}${
 		type.interfaces.size ? ` implements ${Array.from(type.interfaces).map(key => interfaces[key].name).join(', ')}` : ''
-		} ${
+	} ${
 		jsonic.stringify(type.keyRecalculated,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
-			.replace(/([\{,])/g, '$1\n\t')
+			.replace(/([{,])/g, '$1\n\t')
 			.replace(/null/g, '\t String')
-			.replace(/\}/, '\n}')
-		}\n`;
+			.replace(/}/, '\n}')
+	}\n`;
 });
-
 
 console.log(output);
 
-it("asd", () => undefined);
+it("", () => undefined);
