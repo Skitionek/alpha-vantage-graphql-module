@@ -1,66 +1,52 @@
 # AlphaVantage
 
-## Outdated readme
-[![Build Status](https://travis-ci.org/zackurben/alphavantage.svg?branch=master)](https://travis-ci.org/zackurben/alphavantage)
-[![Coverage Status](https://coveralls.io/repos/github/zackurben/alphavantage/badge.svg?branch=master)](https://coveralls.io/github/zackurben/alphavantage?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/zackurben/alphavantage.svg)](https://greenkeeper.io/)
+[Alpha Vantage API](https://www.alphavantage.co/documentation/) implemented as plug and play GraphQL module. Hosted on [NPM](https://www.npmjs.com/package/alpha-vantage-graphql-module). It is a hobby project, first version was written out of need for my work later polished in overhours (I have no affiliation with AlphaVantage).
 
-This is a simple wrapper around the [Alpha Vantage API](https://www.alphavantage.co/documentation/) hosted on [NPM](https://www.npmjs.com/package/alphavantage). I have no affiliation with AlphaVantage.
+Originally it was fork of [https://github.com/zackurben/alphavantage](https://github.com/zackurben/alphavantage) yet this module does not directly inherit any related source code. Instead I developed a fork of zackurben project (covers whole API, is not )
 
-All contributions are welcome! This is an open source project under the MIT license, see [LICENSE.md](LICENSE.md) for additional information.
 
-`All available functions with this SDK have the same parameters as listed in the the Alpha Vantage Docs, without the "function" or "apikey". Do not include the "function" or "apikey" parameters when using this library. All functions return promises with the response data.`
+
+All contributions are welcome! This is an open source project under the MIT license.
 
 ## Installation
 ```bash
-npm i alphavantage
+npm i alpha-vantage-graphql-module
 ```
 
 ## Usage
 
 ```javascript
-/**
- * Init Alpha Vantage with your API key.
- *
- * @param {String} key
- *   Your Alpha Vantage API key.
- */
-const alpha = require('alphavantage')({ key: 'qweqweqwe' });
+import { GraphQLModule } from '@graphql-modules/core';
+import alphaVantage from 'alpha-vantage-graphql-module';
 
-// Simple examples
-alpha.data.intraday(`msft`).then(data => {
-  console.log(data);
-});
-
-alpha.data.batch([`msft`, `aapl`]).then(data => {
-  console.log(data);
-});
-
-alpha.forex.rate('btc', 'usd').then(data => {
-  console.log(data);
-})
-
-alpha.crypto.daily('btc', 'usd').then(data => {
-  console.log(data);
-})
-
-alpha.technical.sma(`msft`, `daily`, 60, `close`).then(data => {
-  console.log(data);
-})
-
-alpha.performance.sector().then(data => {
-  console.log(data);
+export const AppModule = new GraphQLModule({
+	imports: [
+		alphaVantage,
+		//your modules	
+	]
 });
 ```
+or as standalone application:
+```js
+import { GraphQLServer } from 'graphql-yoga';
+import alphaVantage from 'alpha-vantage-graphql-module';
+const {schema} = alphaVantage;
 
-## Util
+const server = new GraphQLServer({
+	schema,
+	context: r => r
+});
 
-Data polishing
-  - Rewrite weird data keys to be consistent across all api calls. This is an optional utility you can use with the result of any api call.
-
-```javascript
-const polished = alpha.util.polish(data);
+server.start(graphQL_options, ({ port }) =>
+	console.log(`Server is running on http://localhost:${  port}`)
+);
 ```
+
+Please check [graphQL schema](src/schema.graphql) for more documentation.
+
+## Schema
+
+
 
 ## Data
 

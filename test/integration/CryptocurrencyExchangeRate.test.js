@@ -4,7 +4,7 @@
 	- Created:  23/04/2019
 */
 
-import { generatedQueries, queryTesterFactory, variablesFieldsTupleByPath } from "./utilities";
+import { generatedQueries, queryTesterFactory, variablesFieldsTupleByPath } from "./utils";
 
 const { cryptocurrencyExchangeRate } = generatedQueries;
 

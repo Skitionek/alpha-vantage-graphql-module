@@ -3,7 +3,7 @@
 	- Email:    Skitionek@gmail.com
 	- Created:  2019-05-01
 */
-export { integrationSnapshots as snaps } from 'alpha-vantage-data-source/lib/test';
+export snaps from 'alpha-vantage-data-source/ApiTree';
 
 export const API_TOKEN = 'demo';
 

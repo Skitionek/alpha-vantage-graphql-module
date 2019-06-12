@@ -12,7 +12,7 @@ import {
 	returnNoErrors,
 	schema,
 	variables
-} from "./utilities";
+} from "./utils";
 
 describe.each(Object.entries(variables.technical))("%s", (key, queryVariables) => {
 

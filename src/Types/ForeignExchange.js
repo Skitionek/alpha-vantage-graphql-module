@@ -5,7 +5,7 @@
 */
 
 import { alphaVantageInterface, fields, snaps } from "../constants";
-import { fragmentResolver, required } from "../utilities";
+import { fragmentResolver, required } from "../utils";
 
 function requestExchangeRates(parent, args, { injector }, info) {
 	const { from_currency = parent.Ticker, to_currency } = {

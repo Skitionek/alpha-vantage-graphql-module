@@ -7,9 +7,9 @@ import "@babel/polyfill";
 import 'reflect-metadata';
 
 import { ApolloServer } from 'apollo-server';
-import alphaVantageModule from '../src';
+import alphaVantageModule from '../lib';
 import { alphaVantageInterface } from "../src/constants";
-import {AlphaVantageMock} from "alpha-vantage-data-source/lib/test";
+import {AlphaVantageAPIMock as AlphaVantageMock} from "alpha-vantage-data-source/mocks";
 
 // get module and inject mockup
 export const { schema, injector } = alphaVantageModule;

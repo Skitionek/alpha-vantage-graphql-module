@@ -28,7 +28,7 @@ export const DateTime = new GraphQLScalarType({
 	name: 'DateTime',
 	description: 'DateTime - potentially contain contains resolution up to seconds',
 	serialize(value) {
-		return formatDateTime(value);
+		return formatDateTime(value instanceof Date ? value : new Date(value));
 	},
 	parseValue(value) {
 		const result = new Date(value);

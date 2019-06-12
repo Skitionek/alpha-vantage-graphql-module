@@ -7,7 +7,7 @@
 import {
 	generatedQueries,
 	queryTesterFactory, variablesFieldsTupleByPath
-} from "./utilities";
+} from "./utils";
 
 // get all queries to be tested
 const { stock } = generatedQueries;

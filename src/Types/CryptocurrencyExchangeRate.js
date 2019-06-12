@@ -5,7 +5,7 @@
 */
 
 import { alphaVantageInterface } from "../constants";
-import { required } from "../utilities";
+import { required } from "../utils";
 
 export function exchangeRates(parent, args, { injector }, info) {
 	const { from_currency = parent.symbol, to_currency } = {

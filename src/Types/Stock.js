@@ -4,7 +4,7 @@
 	- Created:  2019-05-29
 */
 
-import { contains, fragmentResolver, required } from "../utilities";
+import { contains, fragmentResolver, required } from "../utils";
 import { alphaVantageInterface, fields, snaps } from "../constants";
 import graphqlFields from "graphql-fields";
 

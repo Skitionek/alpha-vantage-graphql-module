@@ -14,7 +14,7 @@ import { generateAll as gqlGenerator } from "gql-generator-node";
 import '../jest.extensions';
 import { alphaVantageInterface, fields, snaps } from "../../src/constants";
 
-import { AlphaVantageMock, variables } from "alpha-vantage-data-source/lib/test";
+import { AlphaVantageAPIMock as AlphaVantageMock, demoVariableSets as variables } from "alpha-vantage-data-source/mocks";
 
 export { generateQuery } from "gql-generator-node";
 

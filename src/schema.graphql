@@ -126,9 +126,9 @@ type CryptocurrencyData {
 	#        }
 
 	date:Date!
-	from_close:Float!
-	from_high:Float!
-	from_low:Float!
+	from_close:Float
+	from_high:Float
+	from_low:Float
 	from_open:Float!
 	market_cap:Float!
 	to_close:Float!

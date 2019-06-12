@@ -5,7 +5,7 @@
 */
 
 import { alphaVantageInterface, fields, snaps } from "../constants";
-import { required } from "../utilities";
+import { required } from "../utils";
 
 export default Array.from(fields(snaps.technical)).reduce((o, n) => {
 	o[n] = (p, a, { injector }, i) => {

@@ -55,7 +55,9 @@
 		"cover": "jest --coverage",
 		"lint": "eslint src test",
 		"build": "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
-		"prepublish": "npm run clean && npm run lint && npm run test && npm run build"
+		"watch:build": "nodemon -e js,graphql --exec 'npm run build'",
+		"prepublish": "npm run clean && npm run lint && npm run test && npm run build",
+	  	"link": "npm link alpha-vantage-data-source"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.4.4",
@@ -63,6 +65,7 @@
 		"@babel/node": "^7.2.2",
 		"@babel/plugin-proposal-class-properties": "^7.4.4",
 		"@babel/plugin-proposal-decorators": "^7.4.4",
+		"@babel/plugin-proposal-export-default-from": "^7.2.0",
 		"@babel/plugin-proposal-export-namespace-from": "^7.2.0",
 		"@babel/plugin-proposal-object-rest-spread": "^7.4.4",
 		"@babel/preset-env": "^7.4.4",
@@ -85,14 +88,15 @@
 		"jsonic": "^0.3.1",
 		"lodash": "latest",
 		"lodash.intersection": "^4.4.0",
-		"lodash.mapvalues": "latest",
+		"lodash.mapvalues": "^4.6.0",
 		"nodemon": "^1.19.0",
 		"reflect-metadata": "^0.1.13"
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.4.4",
-		"alpha-vantage-data-source": "^2.0.0",
+		"alpha-vantage-data-source": "^2.0.1",
 		"d3-time-format": "^2.1.3",
+		"dotenv": "^8.0.0",
 		"graphql-fields": "^2.0.3",
 		"lodash.merge": "^4.6.1"
 	},
@@ -129,7 +133,8 @@
 					"loose": true
 				}
 			],
-			"@babel/plugin-proposal-export-namespace-from"
+			"@babel/plugin-proposal-export-namespace-from",
+			"@babel/plugin-proposal-export-default-from"
 		]
 	},
 	"eslintConfig": {
@@ -200,7 +205,8 @@
 		],
 		"moduleFileExtensions": [
 			"js",
-			"graphql"
+			"graphql",
+			"json"
 		]
 	}
 }

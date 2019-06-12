@@ -5,7 +5,7 @@
 */
 
 import { alphaVantageInterface } from "../constants";
-import { required } from "../utilities";
+import { required } from "../utils";
 import exchangeRates from "./CryptocurrencyExchangeRate"
 
 export function exchangeRatesWrapper(parent, args, ctx, info) {
@@ -25,7 +25,7 @@ export function exchangeTimeSeries(parent, args, { injector }, info) {
 			market,
 			interval
 		})
-	);
+	).then(d=>d);
 };
 
 export default Object.assign(

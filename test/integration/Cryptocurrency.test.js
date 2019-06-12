@@ -11,7 +11,7 @@ import {
 	schema,
 	variables,
 	variablesFieldsTupleByPath
-} from "./utilities";
+} from "./utils";
 import mapValues from "lodash.mapvalues";
 import { snaps } from "../../src/constants";
 

@@ -8,7 +8,7 @@ import {
 	generatedQueries,
 	queryTesterFactory,
 	variablesFieldsTupleByPath
-} from "./utilities";
+} from "./utils";
 
 const { symbolSearch } = generatedQueries;
 
