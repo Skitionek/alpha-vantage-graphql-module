@@ -1,6 +1,6 @@
 {
 	"name": "alpha-vantage-graphql",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "",
 	"main": "lib/index.js",
 	"files": [
@@ -57,7 +57,7 @@
 		"build": "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
 		"watch:build": "nodemon -e js,graphql --exec 'npm run build'",
 		"prepublish": "npm run clean && npm run lint && npm run test && npm run build",
-	  	"link": "npm link alpha-vantage-data-source"
+		"link": "npm link alpha-vantage-data-source"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.4.4",
