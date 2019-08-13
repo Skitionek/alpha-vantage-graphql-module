@@ -55,8 +55,6 @@
 		"cover": "jest --coverage",
 		"lint": "eslint src test",
 		"build": "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
-		"watch:build": "nodemon -e js,graphql --exec 'npm run build'",
-		"prepublish": "npm run clean && npm run lint && npm run test && npm run build",
 		"link": "npm link alpha-vantage-data-source"
 	},
 	"devDependencies": {
@@ -94,9 +92,10 @@
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.4.4",
-		"alpha-vantage-data-source": "^2.0.1",
+		"alpha-vantage-data-source": "^2.1.4",
 		"d3-time-format": "^2.1.3",
 		"dotenv": "^8.0.0",
+		"fsevents": "^2.0.7",
 		"graphql-fields": "^2.0.3",
 		"lodash.merge": "^4.6.1"
 	},
