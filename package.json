@@ -1,8 +1,12 @@
 {
 	"name": "alpha-vantage-graphql",
-	"version": "1.0.0",
+	"version": "1.2.5",
 	"description": "",
-	"main": "src/index.js",
+	"main": "lib/index.js",
+	"files": [
+		"lib",
+		"src"
+	],
 	"directories": {
 		"test": "test"
 	},
@@ -39,37 +43,60 @@
 	"scripts": {
 		"start": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./src/index.js",
 		"test": "jest",
+		"spawnServer": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./test/spawnServer.js",
 		"prebuild": "npm run clean",
-		"build": "babel src --out-dir ./dist --source-maps --copy-files",
-		"clean": "rimraf scripts/dist/",
-		"debug": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./src/index.js"
+		"debug": "nodemon -e js,graphql -r node_modules/dotenv/config --exec babel-node --inspect ./src/index.js",
+		"semantic-release": "semantic-release",
+		"clean": "rimraf lib",
+		"test:prod": "cross-env BABEL_ENV=production npm run test",
+		"test:only": "jest",
+		"test:watch": "npm test -- --watch",
+		"test:examples": "node examples/",
+		"cover": "jest --coverage",
+		"lint": "eslint src test",
+		"build": "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
+		"prepublish": "npm run build"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.4.4",
-		"@babel/core": "^7.4.4",
-		"@babel/node": "^7.2.2",
-		"@babel/plugin-proposal-class-properties": "^7.4.4",
+		"@babel/cli": "^7.5.5",
+		"@babel/core": "^7.5.5",
+		"@babel/node": "^7.5.5",
+		"@babel/plugin-proposal-class-properties": "^7.5.5",
 		"@babel/plugin-proposal-decorators": "^7.4.4",
-		"@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-		"@babel/preset-env": "^7.4.4",
-		"@graphql-modules/core": "^0.7.1",
-		"@graphql-modules/di": "^0.7.1",
-		"apollo-server": "^2.4.8",
-		"apollo-server-testing": "^2.4.8",
-		"gql-generator-node": "^1.0.10",
+		"@babel/plugin-proposal-export-default-from": "^7.5.2",
+		"@babel/plugin-proposal-export-namespace-from": "^7.5.2",
+		"@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+		"@babel/preset-env": "^7.5.5",
+		"@graphql-modules/core": "^0.7.9",
+		"apollo-server": "^2.8.1",
+		"apollo-server-testing": "^2.8.1",
+		"babel-eslint": "^10.0.2",
+		"cross-env": "^5.2.0",
+		"eslint": "^5.16.0",
+		"eslint-config-prettier": "^4.3.0",
+		"eslint-config-uber-es2015": "^3.1.2",
+		"eslint-plugin-babel": "^5.3.0",
+		"eslint-plugin-jest": "^22.15.1",
+		"eslint-plugin-prettier": "^3.1.0",
+		"gql-generator-node": "^2.1.4",
 		"graphql-import-node": "0.0.4",
-		"jest": "^24.7.1",
+		"jest": "^24.8.0",
 		"jest-summary-reporter": "0.0.2",
 		"jest-transform-graphql": "^2.1.0",
-		"nodemon": "^1.19.0",
+		"jsonic": "^0.3.1",
+		"lodash": "latest",
+		"lodash.intersection": "^4.4.0",
+		"lodash.mapvalues": "^4.6.0",
+		"nodemon": "^1.19.1",
 		"reflect-metadata": "^0.1.13"
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.4.4",
-		"apollo-datasource-rest": "^0.3.2",
-		"auto-bind": "^2.1.0",
-		"dotenv": "^7.0.0",
-		"http-status-codes": "^1.3.2"
+		"alpha-vantage-data-source": "latest",
+		"d3-time-format": "^2.1.3",
+		"dotenv": "^8.0.0",
+		"graphql-fields": "^2.0.3",
+		"lodash.merge": "^4.6.2"
 	},
 	"peerDependencies": {
 		"graphql": "^14.2.1"
@@ -103,7 +130,9 @@
 				{
 					"loose": true
 				}
-			]
+			],
+			"@babel/plugin-proposal-export-namespace-from",
+			"@babel/plugin-proposal-export-default-from"
 		]
 	},
 	"eslintConfig": {
@@ -174,7 +203,8 @@
 		],
 		"moduleFileExtensions": [
 			"js",
-			"graphql"
+			"graphql",
+			"json"
 		]
 	}
 }

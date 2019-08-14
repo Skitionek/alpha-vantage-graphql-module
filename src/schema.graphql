@@ -1,438 +1,662 @@
+scalar Date
+scalar Timestamp
+scalar DateTime
+scalar Interval
+
 type Query {
-	stock(symbol: String!, outputsize: String, datatype: String, interval: String): Stock,
-	symbolSearch(keywords: String!,datatype: String): [SymbolSerachResult],
-	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!, from_symbol: String, to_symbol: String, interval: String): CryptocurrencyExchangeRate
-
-	cryptocurrency(symbol: String!,market:String!): Cryptocurrency
-
-
-
-	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange
-	technical(symbol: String, interval: String, time_period: String, series_type: String): Technical
+	stock(symbol: String!, outputsize: String, datatype: String, interval: Interval): Stock
+	symbolSearch(keywords: String!,datatype: String): [SymbolSearchResult]
+	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!): CryptocurrencyExchangeRate!
+	cryptocurrency(symbol: String!,market:String!, interval: Interval): Cryptocurrency!
+	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange!
+	technical(symbol: String, interval: Interval, time_period: String, series_type: String): Technical!
+	sectorPerformance: Performance!
 }
-
 
 type Company {
-	stock(symbol: String, outputsize: String, datatype: String, interval: String): Stock
-}
-
-type Stock {
-	symbol: String!
-}
-
-#type StockQuote
-extend type Stock implements StockData {
-	#	{
-	#	    "01. symbol": "MSFT",
-	#	    "02. open": "129.7000",
-	#	    "03. high": "130.5152",
-	#	    "04. low": "129.0300",
-	#	    "05. price": "129.8450",
-	#	    "06. volume": "12284431",
-	#	    "07. latest trading day": "2019-04-26",
-	#	    "08. previous close": "129.1500",
-	#	    "09. change": "0.6950",
-	#	    "10. change percent": "0.5381%"
-	#	}
-
-	# Sock
-	symbol: String!,
-
-	# StockData
-	open: String,
-	high: String,
-	low: String,
-	price: String,
-	volume: String,
-#	latest_trading_day => date
-#	previous_close => close
-	date: String!,
-	close: String
-
-	change: String,
-	change_percent: String
-}
-
-#type StockTimeSeries
-extend type Stock implements TimeSeriesMetaData {
-	#	{
-	#	    "1. Information": "Daily Prices (open, high, low, close) and Volumes",
-	#	    "2. Symbol": "MSFT",
-	#	    "3. Last Refreshed": "2019-04-26 12:51:19",
-	#	    "4. Output Size": "Compact",
-	#	    "5. Time Zone": "US/Eastern"
-	#	}
-	# OR
-	#	{
-	#        "1. Information": "Intraday (5min) open, high, low, close prices and volume",
-	#        "2. Symbol": "MSFT",
-	#        "3. Last Refreshed": "2019-04-26 12:45:00",
-	#        "4. Interval": "5min",
-	#        "5. Output Size": "Compact",
-	#        "6. Time Zone": "US/Eastern"
-	#    }
-
-	# Sock & TimeSeriesMetaData
-	symbol: String!,
-
-	# TimeSeriesMetaData
-	information: String,
-	updated: String,
-#	interval: String, //TODO
-	size: String,
-	zone: String
-
-	data: [StockData]
-}
-
-interface StockData {
-	open: String,
-	high: String,
-	low: String,
-	volume: String
-	date: String!,
-	close: String,
-}
-
-interface TimeSeriesMetaData {
-	#	{
-	#	    "1. Information": "Daily Prices (open, high, low, close) and Volumes",
-	#	    "2. Symbol": "MSFT",
-	#	    "3. Last Refreshed": "2019-04-26 12:51:19",
-	#	    "4. Output Size": "Compact",
-	#	    "5. Time Zone": "US/Eastern"
-	#	}
-	# OR
-	#	{
-	#        "1. Information": "Intraday (5min) open, high, low, close prices and volume",
-	#        "2. Symbol": "MSFT",
-	#        "3. Last Refreshed": "2019-04-26 12:45:00",
-	#        "4. Interval": "5min",
-	#        "5. Output Size": "Compact",
-	#        "6. Time Zone": "US/Eastern"
-	#    }
-
-	information: String,
-	symbol: String,
-	updated: String,
-#	interval: String, //TODO
-	size: String,
-	zone: String
-}
-
-type StockTimeSeriesData implements StockData {
-	#	{
-	#	    "1. open": "129.7000",
-	#	    "2. high": "130.5152",
-	#	    "3. low": "129.0300",
-	#	    "4. close": "129.8500",
-	#	    "5. volume": "12280289"
-	#	}
-
-	# StockData
-	open: String,
-	high: String,
-	low: String,
-	volume: String,
-	date: String!,
-	close: String,
-}
-
-type StockAdjustedTimeSeriesData implements StockData {
-	#	{
-	#	    "1. open": "118.9500",
-	#	    "2. high": "131.3700",
-	#	    "3. low": "118.1000",
-	#	    "4. close": "129.8470",
-	#	    "5. adjusted close": "129.8470",
-	#	    "6. volume": "379827816",
-	#	    "7. dividend amount": "0.0000"
-	#	}
-
-	# StockData
-	open: String,
-	high: String,
-	low: String,
-	volume: String,
-	date: String!,
-	close: String,
-
-	adjusted_close: String,
-	dividend_amount: String
-}
-
-type SymbolSerachResult {
-	#	{
-	#		"1. symbol": "BA",
-	#		"2. name": "The Boeing Company",
-	#		"3. type": "Equity",
-	#		"4. region": "United States",
-	#		"5. marketOpen": "09:30",
-	#		"6. marketClose": "16:00",
-	#		"7. timezone": "UTC-04",
-	#		"8. currency": "USD",
-	#		"9. matchScore": "1.0000"
-	#	}
-
-	symbol: String,
-	name: String,
-	type: String,
-	region: String,
-	marketOpen: String,
-	marketClose: String,
-	timezone: String,
-	currency: String,
-	matchScore: Float
-}
-
-
-
-interface ExchangeRate {
-	information: String,
-	from_symbol: String,
-	to_symbol: String,
-	last_refreshed: String,
-	#    interval: String, //not all provides
-	#    output_size: String, //not all provides
-	zone: String
-}
-
-type CryptocurrencyExchangeRate implements ExchangeRate {
-	#	{ from_currency: 'BTC',
-	#	  from_currency_name: 'Bitcoin',
-	#	  to_currency: 'USD',
-	#	  to_currency_name: 'United States Dollar',
-	#	  value: '5462.11000000',
-	#	  updated: '2019-04-25 13:43:03',
-	#	  zone: 'UTC' }
-
-	from_currency: String
-	from_currency_name: String
-	to_currency: String
-	to_currency_name: String
-	value: String
-	#    updated: String
-	#    zone: String
-	data: [ForeignExchangeData]
-
-	information: String,
-	from_symbol: String,
-	to_symbol: String,
-	last_refreshed: String,
-	#    interval: String,
-	#    output_size: String,
-	zone: String
+	stock(symbol: String, outputsize: String, datatype: String, interval: Interval): Stock
 }
 
 
 type Cryptocurrency {
 	exchangeRate(from_currency: String, to_currency: String!): CryptocurrencyExchangeRate
 
-	#        "1. Information": "Daily Prices and Volumes for Digital Currency",
-	#        "2. Digital Currency Code": "BTC",
-	#        "3. Digital Currency Name": "Bitcoin",
-	#        "4. Market Code": "CNY",
-	#        "5. Market Name": "Chinese Yuan",
-	#        "6. Last Refreshed": "2019-04-24 (end of day)",
-	#        "7. Time Zone": "UTC"
-	#
-	# Polished to:
-	#
-	#        {
-	#            "information": "Daily Prices and Volumes for Digital Currency",
-	#            "coin": "BTC",
-	#            "coin_name": "Bitcoin",
-	#            "market": "CNY",
-	#            "market_name": "Chinese Yuan",
-	#            "updated": "2019-04-24 (end of day)",
-	#            "zone": "UTC"
-	#        }
-	information: String,
-	coin: String,
-	coin_name: String,
-	market: String,
-	market_name: String,
-	updated: String,
-	zone: String
+	#	{
+	#	  "Meta Data": {
+	#	    "1. Information": null
+	#	    "2. Digital Currency Code": null
+	#	    "3. Digital Currency Name": null
+	#	    "4. Market Code": null
+	#	    "5. Market Name": null
+	#	    "6. Last Refreshed": null
+	#	    "7. Time Zone": null
+	#	  }
+	#	  "Time Series (Digital Currency Daily)": {
+	#	    "2019-05-23": {
+	#	      "1a. open (CNY)": null
+	#	      "1b. open (USD)": null
+	#	      "2a. high (CNY)": null
+	#	      "2b. high (USD)": null
+	#	      "3a. low (CNY)": null
+	#	      "3b. low (USD)": null
+	#	      "4a. close (CNY)": null
+	#	      "4b. close (USD)": null
+	#	      "5. volume": null
+	#	      "6. market cap (USD)": null
+	#	    }
+	#	  }
+	#	}
 
-	data: [CryptocurrencyData]
+	information: String!
+	digital_currency_code: String!
+	digital_currency_name: String!
+	market_code: String!
+	market_name: String!
+	data:[CryptocurrencyData]
+
+	last_refreshed:Date!
+	time_zone:String!
 }
+type CryptocurrencyExchangeRate { #} implements ExchangeRate {
+	#	{
+	#	  "Realtime Currency Exchange Rate": {
+	#	    "1. From_Currency Code": null
+	#	    "2. From_Currency Name": null
+	#	    "3. To_Currency Code": null
+	#	    "4. To_Currency Name": null
+	#	    "5. Exchange Rate": null
+	#	    "6. Last Refreshed": null
+	#	    "7. Time Zone": null
+	#	    "8. Bid Price": null
+	#	    "9. Ask Price": null
+	#	  }
+	#	}
 
+	from_currency_code: String!
+	from_currency_name: String!
+	to_currency_code: String!
+	to_currency_name: String!
+	exchange_rate: String!
+	last_refreshed: String!
+	time_zone: String!
+	bid_price: String
+	ask_price: String
+}
 type CryptocurrencyData {
-	#        "2019-04-24T00:00:00.000Z": {
-	#            "1a. open (CNY)": "37195.55292646",
-	#            "1b. open (USD)": "5530.21621307",
-	#            "2a. high (CNY)": "37716.62198389",
-	#            "2b. high (USD)": "5610.58890896",
-	#            "3a. low (CNY)": "36647.78504227",
-	#            "3b. low (USD)": "5451.99789652",
-	#            "4a. close (CNY)": "36912.34390959",
-	#            "4b. close (USD)": "5491.35564724",
-	#            "5. volume": "316.09347100",
-	#            "6. market cap (USD)": "1735781.66703230"
-	#       }
+
+	#	{
+	#	  "Meta Data": {
+	#	    "1. Information": null
+	#	    "2. Digital Currency Code": null
+	#	    "3. Digital Currency Name": null
+	#	    "4. Market Code": null
+	#	    "5. Market Name": null
+	#	    "6. Last Refreshed": null
+	#	    "7. Time Zone": null
+	#	  }
+	#	  "Time Series (Digital Currency Daily)": {
+	#	    "2019-05-23": {
+	#	      "1a. open (CNY)": null
+	#	      "1b. open (USD)": null
+	#	      "2a. high (CNY)": null
+	#	      "2b. high (USD)": null
+	#	      "3a. low (CNY)": null
+	#	      "3b. low (USD)": null
+	#	      "4a. close (CNY)": null
+	#	      "4b. close (USD)": null
+	#	      "5. volume": null
+	#	      "6. market cap (USD)": null
+	#	    }
+	#	  }
+	#	}
 	#
 	# Polished to:
 	#        {
-	#            "date": "2019-04-24T00:00:00.000Z",
-	#            "market_open": "37195.55292646",
-	#            "usd_open": "5530.21621307",
-	#            "market_high": "37716.62198389",
-	#            "usd_high": "5610.58890896",
-	#            "market_low": "36647.78504227",
-	#            "usd_low": "5451.99789652",
-	#            "market_close": "36912.34390959",
-	#            "usd_close": "5491.35564724",
-	#            "volume": "316.09347100",
+	#            "date": "2019-04-24T00:00:00.000Z"
+	#            "market_open": "37195.55292646"
+	#            "usd_open": "5530.21621307"
+	#            "market_high": "37716.62198389"
+	#            "usd_high": "5610.58890896"
+	#            "market_low": "36647.78504227"
+	#            "usd_low": "5451.99789652"
+	#            "market_close": "36912.34390959"
+	#            "usd_close": "5491.35564724"
+	#            "volume": "316.09347100"
 	#            "cap": "1735781.66703230"
 	#        }
 
-	date: String
-	market_open: String
-	usd_open: String
-	market_high: String
-	usd_high: String
-	market_low: String
-	usd_low: String
-	market_close: String
-	usd_close: String
-	volume: String
-	cap: String
+	date:Date!
+	from_close:Float
+	from_high:Float
+	from_low:Float
+	from_open:Float!
+	market_cap:Float!
+	to_close:Float!
+	to_high:Float!
+	to_low:Float!
+	to_open:Float!
+	volume:Float!
+}
+type ExchangeRates {
+	ask_price:Float!
+	bid_price:Float!
+	exchange_rate:Float!
+	from_currency_code:String!
+	from_currency_name:String!
+	last_refreshed:Timestamp!
+	time_zone:String!
+	to_currency_code:String!
+	to_currency_name:String!
 }
 
 
+
+type Stock {
+	#	{
+	#	    "01. symbol": "MSFT"
+	#	    "02. open": "129.7000"
+	#	    "03. high": "130.5152"
+	#	    "04. low": "129.0300"
+	#	    "05. price": "129.8450"
+	#	    "06. volume": "12284431"
+	#	    "07. latest trading day": "2019-04-26"
+	#	    "08. previous close": "129.1500"
+	#	    "09. change": "0.6950"
+	#	    "10. change percent": "0.5381%"
+	#	}
+
+	change:Float!
+	change_percent:String!
+	close:Float
+	date:Date!
+	high:Float!
+	low:Float!
+	open:Float!
+	previous_close:Float!
+	price:Float!
+	volume:Float!
+
+	adjusted_close:Float
+	dividend_amount:Float
+	split_coefficient:Float
+
+	#	{
+	#	    "1. Information": "Daily Prices (open, high, low, close) and Volumes"
+	#	    "2. Symbol": "MSFT"
+	#	    "3. Last Refreshed": "2019-04-26 12:51:19"
+	#	    "4. Output Size": "Compact"
+	#	    "5. Time Zone": "US/Eastern"
+	#	}
+	# OR
+	#	{
+	#        "1. Information": "Intraday (5min) open, high, low, close prices and volume"
+	#        "2. Symbol": "MSFT"
+	#        "3. Last Refreshed": "2019-04-26 12:45:00"
+	#        "4. Interval": "5min"
+	#        "5. Output Size": "Compact"
+	#        "6. Time Zone": "US/Eastern"
+	#    }
+
+	# Sock & TimeSeriesMetaData
+	symbol: String!
+
+	# TimeSeriesMetaData
+	information:String
+	last_refreshed:DateTime
+	output_size:String
+	time_zone:String
+	interval:Interval
+
+
+
+	data:[StockData]
+}
+
+type StockData {
+	#	{
+	#	    "1. open": "118.9500"
+	#	    "2. high": "131.3700"
+	#	    "3. low": "118.1000"
+	#	    "4. close": "129.8470"
+	#	    "5. adjusted close": "129.8470"
+	#	    "6. volume": "379827816"
+	#	    "7. dividend amount": "0.0000"
+	#	}
+
+	close:Float
+	date:Date!
+	high:Float!
+	low:Float!
+	open:Float!
+	volume:Float!
+
+	adjusted_close:Float
+	dividend_amount:Float
+
+	split_coefficient:String
+}
+
+type SymbolSearchResult {
+	#	{
+	#		"1. symbol": "BA"
+	#		"2. name": "The Boeing Company"
+	#		"3. type": "Equity"
+	#		"4. region": "United States"
+	#		"5. marketOpen": "09:30"
+	#		"6. marketClose": "16:00"
+	#		"7. timezone": "UTC-04"
+	#		"8. currency": "USD"
+	#		"9. matchScore": "1.0000"
+	#	}
+
+	currency:String!
+	marketclose:String!
+	marketopen:String!
+	matchscore:Float!
+	name:String!
+	region:String!
+	symbol:String!
+	timezone:String!
+	type:String!
+}
+
+
+
+type ForeignExchange {
+	from_currency_code: String
+	from_currency_name: String
+	to_currency_code: String
+	to_currency_name: String
+	exchange_rate: String
+	bid_price: String
+	ask_price: String
+
+	data:[ForeignExchangeData]
+	from_symbol:String!
+	information:String!
+	interval:Interval!
+	last_refreshed:Timestamp!
+	output_size:String
+	time_zone:String!
+	to_symbol:String!
+}
 
 type ForeignExchangeData {
-	date: String!,
-	open: String,
-	high: String,
-	low: String,
-	close: String,
+	close:Float!
+	date:DateTime!
+	high:Float!
+	low:Float!
+	open:Float!
 }
 
-type ForeignExchange implements ExchangeRate {
-	information: String,
-	from_symbol: String,
-	to_symbol: String,
-	last_refreshed: String,
-	#    interval: String,
-	#    output_size: String,
-	zone: String
 
-	data: [ForeignExchangeData]
+
+type Performance {
+	information:String!
+	last_refreshed:String!
+	rank_a_real_time_performance:PerformanceSectorRank!
+	rank_b_day_performance:PerformanceSectorRank!
+	rank_c_day_performance:PerformanceSectorRank!
+	rank_d_month_performance:PerformanceSectorRank!
+	rank_e_month_performance:PerformanceSectorRank!
+	rank_f_year_to_date_ytd_performance:PerformanceSectorRank!
+	rank_g_year_performance:PerformanceSectorRank!
+	rank_h_year_performance:PerformanceSectorRankYear!
+	rank_i_year_performance:PerformanceSectorRankYear!
+	rank_j_year_performance:PerformanceSectorRankYear!
 }
+interface PerformanceSectorRank_Interface {
+	communication_services: String!
+	consumer_discretionary: String!
+	consumer_staples: String!
+	energy: String!
+	financials: String!
+	health_care: String!
+	industrials: String!
+	information_technology: String!
+	materials: String!
+	utilities: String!
+}
+type PerformanceSectorRank implements PerformanceSectorRank_Interface {
+	communication_services:String!
+	consumer_discretionary:String!
+	consumer_staples:String!
+	energy:String!
+	financials:String!
+	health_care:String!
+	industrials:String!
+	information_technology:String!
+	materials:String!
+	real_estate:String!
+	utilities:String!
+}
+type PerformanceSectorRankYear implements PerformanceSectorRank_Interface {
+	communication_services:String!
+	consumer_discretionary:String!
+	consumer_staples:String!
+	energy:String!
+	financials:String!
+	health_care:String!
+	industrials:String!
+	information_technology:String!
+	materials:String!
+	utilities:String!
+}
+
+
 
 type Technical {
-	sma(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	ema(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	wma(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	dema(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	tema(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	trima(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	kama(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	mama(symbol: String, interval: String, series_type: String, fastlimit: Float, slowlimit: Float): TypeH,
-	vwap(symbol: String, interval: String): TypeH,
-	t3(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	macd(symbol: String, interval: String, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): Type2,
-	macdext(symbol: String, interval: String, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): Type2,
-	stoch(symbol: String, interval: String, fastkperiod: String, slowkperiod: String, slowdperiod: String, slowkmatype: String, slowdmatype: String): TypeG,
-	stochf(symbol: String, interval: String, fastkperiod: String, fastdperiod: String, fastdmatype: String): TypeF,
-	rsi(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	stochrsi(symbol: String, interval: String, time_period: String, series_type: String, fastkperiod: String, fastdperiod: String, fastdmatype: String): TypeE,
-	willr(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	adx(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	adxr(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	apo(symbol: String, interval: String, series_type: String, fastperiod: String, slowperiod: String, matype: String): Type3,
-	ppo(symbol: String, interval: String, series_type: String, fastperiod: String, slowperiod: String, matype: String): Type3,
-	mom(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	bop(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	cci(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	cmo(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	roc(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	rocr(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	aroon(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	aroonosc(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	mfi(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	trix(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	ultosc(symbol: String, interval: String, timeperiod1: String, timeperiod2: String, timeperiod3: String): TypeD,
-	dx(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	minus_di(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	plus_di(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	minus_dm(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	plus_dm(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	bbands(symbol: String, interval: String, time_period: String, series_type: String, nbdevup: String, nbdevdn: String, matype: String): TypeA,
-	midpoint(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	midprice(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	sar(symbol: String, interval: String, acceleration: String, maximum: String): TypeB,
-	trange(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	atr(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	natr(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	ad(symbol: String, interval: String, time_period: String, series_type: String): Type1,
-	adosc(symbol: String, interval: String, fastperiod: String, slowperiod: String): TypeC,
-	obv(symbol: String, interval: String): Type1,
-	ht_trendline(symbol: String, interval: String, series_type: String): Type4,
-	ht_sine(symbol: String, interval: String, series_type: String): Type4,
-	ht_trendmode(symbol: String, interval: String, series_type: String): Type4,
-	ht_dcperiod(symbol: String, interval: String, series_type: String): Type4,
-	ht_dcphase(symbol: String, interval: String, series_type: String): Type4,
-	ht_dcphasor(symbol: String, interval: String, series_type: String): Type4
+	sma(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	ema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	wma(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	dema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	tema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	trima(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	kama(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	mama(symbol: String, interval: Interval, series_type: String, fastlimit: Float, slowlimit: Float): TechnicalIndexMama
+	vwap(symbol: String, interval: Interval): TechnicalIndexB
+	t3(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexT3
+	macd(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): TechnicalIndexMacd
+	macdext(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): TechnicalIndexMacdext
+	stoch(symbol: String, interval: Interval, fastkperiod: String, slowkperiod: String, slowdperiod: String, slowkmatype: String, slowdmatype: String): TechnicalIndexStoch
+	stochf(symbol: String, interval: Interval, fastkperiod: String, fastdperiod: String, fastdmatype: String): TechnicalIndexStochf
+	rsi(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	stochrsi(symbol: String, interval: Interval, time_period: String, series_type: String, fastkperiod: String, fastdperiod: String, fastdmatype: String): TechnicalIndexStochrsi
+	willr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	adx(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	adxr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	apo(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, matype: String): TechnicalIndexC
+	ppo(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, matype: String): TechnicalIndexC
+	mom(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	bop(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
+	cci(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	cmo(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	roc(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	rocr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	aroon(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	aroonosc(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	mfi(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	trix(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	ultosc(symbol: String, interval: Interval, timeperiod1: String, timeperiod2: String, timeperiod3: String): TechnicalIndex
+	dx(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	minus_di(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	plus_di(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	minus_dm(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	plus_dm(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	bbands(symbol: String, interval: Interval, time_period: String, series_type: String, nbdevup: String, nbdevdn: String, matype: String): TechnicalIndexBbands
+	midpoint(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	midprice(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	sar(symbol: String, interval: Interval, acceleration: String, maximum: String): TechnicalIndexSar
+	trange(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
+	atr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	natr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	ad(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
+	adosc(symbol: String, interval: Interval, fastperiod: Float, slowperiod: Float): TechnicalIndexAdosc
+	obv(symbol: String, interval: Interval): TechnicalIndexB
+	ht_trendline(symbol: String, interval: Interval, series_type: String): TechnicalIndexHt
+	ht_sine(symbol: String, interval: Interval, series_type: String): TechnicalIndexHtSine
+	ht_trendmode(symbol: String, interval: Interval, series_type: String): TechnicalIndexHt
+	ht_dcperiod(symbol: String, interval: Interval, series_type: String): TechnicalIndexHt
+	ht_dcphase(symbol: String, interval: Interval, series_type: String): TechnicalIndexHt
+	ht_dcphasor(symbol: String, interval: Interval, series_type: String): TechnicalIndexHt
+	ht_phasor(symbol: String, interval: Interval, series_type: String): TechnicalIndexHtPhasor
 }
 
-interface TechnicalMetaData {
-	symbol: String,
-	indicatior: String,
-	last_refreshed: String,
-	interval: String,
-	time_period: String,
-	series_type: String,
-	time_zone: String
+type TechnicalIndexB {
+	data:[TechnicalIndexData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	symbol:String
+	time_zone:String
 }
-interface TechnicalData {
-	date: String,
-	value: String
+type TechnicalIndexAdosc {
+	data:[TechnicalIndexData]
+	fastk_period:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	slowk_period:     String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexData {
+	date:Date!
+	value:Float
+}
+type TechnicalIndexAroonData {
+	aroon_down:Float!
+	aroon_up:Float!
+	date:Date!
+}
+interface TechnicalIndex_Interface {
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	symbol:String
+	time_period:String
+	time_zone:String
+}
+type TechnicalIndex implements TechnicalIndex_Interface{
+	data:[TechnicalIndexData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	symbol:String
+	time_period:     String
+	time_zone:String
+}
+type TechnicalIndexAroon implements TechnicalIndex_Interface{
+	data:[TechnicalIndexAroonData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	symbol:String
+	time_period:String
+	time_zone:String
+}
+type TechnicalIndexC {
+	data:[TechnicalIndexData]
+	fast_period:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	ma_type:     String
+	series_type:String
+	slow_period:     String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexBbandsData {
+	date:Date!
+	real_lower_band:Float!
+	real_middle_band:Float!
+	real_upper_band:Float!
+}
+type TechnicalIndexBbands {
+	data:[TechnicalIndexBbandsData]
+	deviation_multiplier_for_lower_band:     String
+	deviation_multiplier_for_upper_band:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	ma_type:     String
+	series_type:String
+	symbol:String
+	time_period:     String
+	time_zone:String
+}
+type TechnicalIndexA {
+	data:[TechnicalIndexData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	symbol:String
+	time_period:     String
+	time_zone:String
+}
+type TechnicalIndexHtPhasorData {
+	date:Date!
+	phase:Float!
+	quadrature:Float!
+}
+type TechnicalIndexHtSineData {
+	date:Date!
+	lead_sine:Float!
+	sine:Float!
+}
+interface TechnicalIndexHt_Interface {
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexHt implements TechnicalIndexHt_Interface {
+	data:[TechnicalIndexData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexHtPhasor implements TechnicalIndexHt_Interface {
+	data:[TechnicalIndexHtPhasorData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexHtSine implements TechnicalIndexHt_Interface {
+	data:[TechnicalIndexHtSineData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexDataA {
+	date:Date!
+	macd:Float!
+	macd_hist:Float!
+	macd_signal:Float!
+}
+type TechnicalIndexMacd {
+	data:[TechnicalIndexDataA]
+	fast_period:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	signal_period:     String
+	slow_period:     String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexMacdext {
+	data:[TechnicalIndexDataA]
+	fast_ma_type:     String
+	fast_period:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	signal_ma_type:     String
+	signal_period:     String
+	slow_ma_type:     String
+	slow_period:     String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexMamaData {
+	date:Date!
+	fama:Float!
+	mama:Float!
+}
+type TechnicalIndexMama {
+	data:[TechnicalIndexMamaData]
+	fast_limit:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	slow_limit:     String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexSar {
+	acceleration:String
+	data:[TechnicalIndexData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	maximum:     String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexStochData {
+	date:Date!
+	slowd:Float!
+	slowk:Float!
+}
+type TechnicalIndexStoch {
+	data:[TechnicalIndexStochData]
+	fastk_period:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	slowd_ma_type:     String
+	slowd_period:     String
+	slowk_ma_type:     String
+	slowk_period:     String
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexDataB {
+	date:Date!
+	fastd:Float!
+	fastk:Float!
+}
+type TechnicalIndexStochf {
+	data:[TechnicalIndexDataB]
+	fastd_ma_type:     String
+	fastd_period:     String
+	fastk_period:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	symbol:String
+	time_zone:String
+}
+type TechnicalIndexStochrsi {
+	data:[TechnicalIndexDataB]
+	fastd_ma_type:     String
+	fastd_period:     String
+	fastk_period:     String
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	symbol:String
+	time_period:     String
+	time_zone:String
+}
+type TechnicalIndexT3 {
+	data:[TechnicalIndexData]
+	indicator:String
+	interval:Interval
+	last_refreshed:Date!
+	series_type:String
+	symbol:String
+	time_period:     String
+	time_zone:String
+	volume_factor_vfactor:     String
 }
 
-type Type1 implements TechnicalMetaData {
-	symbol: String,
-	indicatior: String,
-	last_refreshed: String,
-	interval: String,
-	time_period: String,
-	series_type: String,
-	time_zone: String,
 
-	data: [TechnicalData]
-}
-type Type2{
-	a: String
-}
-type Type3{
-	a: String
-}
-type Type4{
-	a: String
-}
-type TypeA{
-	a: String
-}
-type TypeB{
-	a: String
-}
-type TypeC{
-	a: String
-}
-type TypeD{
-	a: String
-}
-type TypeE{
-	a: String
-}
-type TypeF{
-	a: String
-}
-type TypeG{
-	a: String
-}
-type TypeH{
-	a: String
-}
