@@ -12,10 +12,7 @@ jobs:
       script:  npm run lint
     - stage: test
       name: "Testing"
-      script:  npm run cover
-    - stage: build
-      name: "Building"
-      script:  npm run build
+      script:  npm run test
     - stage: npm publish
       name: "Publish to npm registry"
       script: skip
@@ -23,6 +20,7 @@ jobs:
         provider: npm
         api_key: $NPM_API_KEY
         email: $EMAIL
+        skip_cleanup: true
         on:
           branch: master
           tags: true
