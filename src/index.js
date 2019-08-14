@@ -1,7 +1,6 @@
 import AlphaVantage from "alpha-vantage-data-source";
 import { GraphQLModule } from '@graphql-modules/core';
-import 'graphql-import-node';
-import * as typeDefs from './schema.graphql';
+import typeDefs from './schema.graphql';
 import { alphaVantageInterface } from "./constants";
 import { forward } from "./utils";
 
