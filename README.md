@@ -1,5 +1,7 @@
 # AlphaVantage
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Skitionek/alpha-vantage-graphql-module.svg)](https://greenkeeper.io/)
+
 [Alpha Vantage API](https://www.alphavantage.co/documentation/) implemented as plug and play GraphQL module. Hosted on [NPM](https://www.npmjs.com/package/alpha-vantage-graphql-module). It is a hobby project, first version was written out of need for my work later polished in overhours (I have no affiliation with AlphaVantage).
 
 Originally it was fork of [https://github.com/zackurben/alphavantage](https://github.com/zackurben/alphavantage) yet this module does not directly inherit any related source code. Instead I developed a fork of zackurben project (covers whole API, is not )
