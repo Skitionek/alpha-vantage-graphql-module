@@ -1,5 +1,6 @@
 /node_modules
 /lib
+.idea/**.time
 
 # Created by .ignore support plugin (hsz.mobi)
 ### JetBrains.gitignore template
