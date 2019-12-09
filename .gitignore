@@ -1,6 +1,6 @@
 /node_modules
 /lib
-.idea/**.time
+.idea/alpha-vantage-graphql-module.time
 
 # Created by .ignore support plugin (hsz.mobi)
 ### JetBrains.gitignore template
