@@ -24,16 +24,19 @@ export const Date_Scalar = new GraphQLScalarType({
 	}
 });
 const formatDateTime = timeFormat("%Y-%m-%d %H:%M:%S");
+class CustomDate extends Date {
+	toString() {
+		return formatDateTime(this)
+	}
+}
 export const DateTime = new GraphQLScalarType({
 	name: 'DateTime',
 	description: 'DateTime - potentially contain contains resolution up to seconds',
 	serialize(value) {
-		return formatDateTime(value instanceof Date ? value : new Date(value));
+		return formatDateTime(value instanceof Date ? value : new CustomDate(value));
 	},
 	parseValue(value) {
-		const result = new Date(value);
-		result.toString = formatDateTime;
-		return result;
+		return new CustomDate(value);
 	},
 	parseLiteral(ast) {
 		return ast.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?this.parseValue(ast):new Error(`Could not parse ${ast}, dateTime should be written in format 'YYYY-MM-DD hh:mm:ss'`);
