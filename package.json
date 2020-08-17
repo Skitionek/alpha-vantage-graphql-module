@@ -192,7 +192,7 @@
 	},
 	"jest": {
 		"transform": {
-			".*": "babel-jest"
+			"^.+\\.js$": "babel-jest"
 		},
 		"reporters": [
 			"default",
