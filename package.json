@@ -192,8 +192,9 @@
 	},
 	"jest": {
 		"transform": {
-			"^.+\\.js$": "babel-jest"
+			".*\\.js": "babel-jest"
 		},
+  		"transformIgnorePatterns": ["node_modules/?!(apollo-server)"],
 		"reporters": [
 			"default",
 			[
