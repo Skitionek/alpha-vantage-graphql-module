@@ -5,7 +5,6 @@
 Originally it was fork of [https://github.com/zackurben/alphavantage](https://github.com/zackurben/alphavantage) yet this module does not directly inherit any related source code. Instead I developed a fork of zackurben project (covers whole API, is not )
 
 
-
 All contributions are welcome! This is an open source project under the MIT license.
 
 ## Installation
@@ -45,8 +44,6 @@ server.start(graphQL_options, ({ port }) =>
 Please check [graphQL schema](src/schema.graphql) for more documentation.
 
 ## Schema
-
-
 
 ## Data
 
@@ -149,8 +146,4 @@ alpha.performance.sector()
 
 All contributions are welcome! The purpose of this library is to keep function parity with the Alpha Vantage API, while keeping a slim and intuitive programming interface. Before any pull requests are made, please run `npm run lint` to fix style issues and ensure that all test are passing `npm test`. The codebase should always remain at 100% test coverage.
 
-Core has been forked from:
-  - Author: Zack Urben
-  - Twitter: https://twitter.com/zackurben (better)
-  - Contact: zackurben@gmail.com
-yet greatest part in common is it's structure. Current version support full API coverage, requests cache and  non duck-type keys normalisation.
+Core has been forked from: [zackurben/alphavantage](https://github.com/zackurben/alphavantage)
