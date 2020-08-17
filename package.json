@@ -33,9 +33,9 @@
 		"Zack Urben <zackurben@gmail.com> (http://zackurben.com)"
 	],
 	"license": "MIT",
-	"homepage": "https://github.com/biosustain-gem/alpha-vantage-graphql",
+	"homepage": "https://github.com/Skitionek/alpha-vantage-graphql-module",
 	"bugs": {
-		"web": "https://github.com/biosustain-gem/alpha-vantage-graphql/issues"
+		"web": "https://github.com/Skitionek/alpha-vantage-graphql-module/issues"
 	},
 	"engines": {
 		"node": ">=6.0.0"
