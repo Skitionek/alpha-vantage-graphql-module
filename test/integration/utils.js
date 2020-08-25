@@ -35,9 +35,11 @@ const server = new ApolloServer({
 	schema: alphaVantageModule.schema,
 	context: session => session,
 	formatResponse: r => {
+		console.log(r)
 		return r; // hook for debugging
 	},
 	formatError: r => {
+		console.warn(r)
 		return r; // hook for debugging
 	}
 });

@@ -18,14 +18,14 @@ export function exchangeTimeSeries(parent, args, { injector }, info) {
 		...parent,
 		...args
 	};
-	if (!interval) return null;
+	if (!interval) return undefined;
 	return injector.get(alphaVantageInterface).crypto.exchangeTimeSeries(
 		required({
 			symbol,
 			market,
 			interval
 		})
-	).then(d=>d);
+	);
 };
 
 export default Object.assign(

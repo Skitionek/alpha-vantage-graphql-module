@@ -15,7 +15,7 @@ export default Array.from(fields(snaps.technical)).reduce((o, n) => {
 				symbol, interval
 			}),
 			...rest
-		});
+		}).then(d=>console.log(d)||d);
 	};
 	return o;
 }, {});

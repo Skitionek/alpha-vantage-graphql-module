@@ -9,7 +9,7 @@ type Query {
 	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!): CryptocurrencyExchangeRate!
 	cryptocurrency(symbol: String!,market:String!, interval: Interval): Cryptocurrency!
 	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange!
-	technical(symbol: String, interval: Interval, time_period: String, series_type: String): Technical!
+	technical(symbol: String, interval: Interval, time_period: Int, series_type: String): Technical!
 	sectorPerformance: Performance!
 }
 
@@ -346,51 +346,51 @@ type PerformanceSectorRankYear implements PerformanceSectorRank_Interface {
 
 
 type Technical {
-	sma(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	ema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	wma(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	dema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	tema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	trima(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	kama(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	sma(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	ema(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	wma(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	dema(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	tema(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	trima(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	kama(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
 	mama(symbol: String, interval: Interval, series_type: String, fastlimit: Float, slowlimit: Float): TechnicalIndexMama
 	vwap(symbol: String, interval: Interval): TechnicalIndexB
-	t3(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexT3
+	t3(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexT3
 	macd(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): TechnicalIndexMacd
 	macdext(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): TechnicalIndexMacdext
 	stoch(symbol: String, interval: Interval, fastkperiod: String, slowkperiod: String, slowdperiod: String, slowkmatype: String, slowdmatype: String): TechnicalIndexStoch
 	stochf(symbol: String, interval: Interval, fastkperiod: String, fastdperiod: String, fastdmatype: String): TechnicalIndexStochf
-	rsi(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	stochrsi(symbol: String, interval: Interval, time_period: String, series_type: String, fastkperiod: String, fastdperiod: String, fastdmatype: String): TechnicalIndexStochrsi
-	willr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	adx(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	adxr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	rsi(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	stochrsi(symbol: String, interval: Interval, time_period: Int, series_type: String, fastkperiod: String, fastdperiod: String, fastdmatype: String): TechnicalIndexStochrsi
+	willr(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	adx(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	adxr(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
 	apo(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, matype: String): TechnicalIndexC
 	ppo(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, matype: String): TechnicalIndexC
-	mom(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	bop(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
-	cci(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	cmo(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	roc(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	rocr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	aroon(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	aroonosc(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	mfi(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	trix(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	mom(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	bop(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexB
+	cci(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	cmo(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	roc(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	rocr(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	aroon(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	aroonosc(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	mfi(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	trix(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
 	ultosc(symbol: String, interval: Interval, timeperiod1: String, timeperiod2: String, timeperiod3: String): TechnicalIndex
-	dx(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	minus_di(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	plus_di(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	minus_dm(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	plus_dm(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	bbands(symbol: String, interval: Interval, time_period: String, series_type: String, nbdevup: String, nbdevdn: String, matype: String): TechnicalIndexBbands
-	midpoint(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	midprice(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	dx(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	minus_di(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	plus_di(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	minus_dm(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	plus_dm(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	bbands(symbol: String, interval: Interval, time_period: Int, series_type: String, nbdevup: String, nbdevdn: String, matype: String): TechnicalIndexBbands
+	midpoint(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexA
+	midprice(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
 	sar(symbol: String, interval: Interval, acceleration: String, maximum: String): TechnicalIndexSar
-	trange(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
-	atr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	natr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	ad(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
+	trange(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexB
+	atr(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	natr(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndex
+	ad(symbol: String, interval: Interval, time_period: Int, series_type: String): TechnicalIndexB
 	adosc(symbol: String, interval: Interval, fastperiod: Float, slowperiod: Float): TechnicalIndexAdosc
 	obv(symbol: String, interval: Interval): TechnicalIndexB
 	ht_trendline(symbol: String, interval: Interval, series_type: String): TechnicalIndexHt

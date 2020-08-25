@@ -11,7 +11,7 @@ const fieldResolver = (call, alias, field) => (p,a,c,i) => {
 	if(p[field]) return p[field];
 	if (!(p instanceof Object)) throw new Error("Fragment resolver can be only called within associated parent object.");
 	if(typeof p[alias] === 'undefined') p[alias] = call(p,{...p,...a},c,i);
-	if(p[alias]===null) return null;
+	if(p[alias]===null) return undefined;
 	// eslint-disable-next-line no-return-assign
 	return p[alias].then(r=>r[field]=r[field]||r[field]);
 };

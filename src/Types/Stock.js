@@ -13,7 +13,7 @@ function getStockTimeSeries(parent, args, { injector }, info) {
 		...parent,
 		...args
 	};
-	if (!interval) return null;
+	if (!interval) return undefined;
 	const adj_fields = Object.keys(graphqlFields(info))
 		.filter(e => contains(fields(snaps.data.exchangeTimeSeries_adjusted), e));
 

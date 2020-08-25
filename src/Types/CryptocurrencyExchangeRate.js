@@ -12,7 +12,7 @@ export function exchangeRates(parent, args, { injector }, info) {
 		...parent,
 		...args
 	};
-	if (!from_currency || !to_currency) return null;
+	if (!from_currency || !to_currency) return undefined;
 	return injector.get(alphaVantageInterface).crypto.exchangeRates(required({
 		from_currency,
 		to_currency

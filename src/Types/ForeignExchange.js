@@ -12,7 +12,7 @@ function requestExchangeRates(parent, args, { injector }, info) {
 		...parent,
 		...args
 	};
-	if (!from_currency || !to_currency) return null;
+	if (!from_currency || !to_currency) return undefined;
 	return injector.get(alphaVantageInterface).forex.exchangeRates(required({
 		from_currency,
 		to_currency
@@ -24,7 +24,7 @@ function requestTimeSeries(parent, args, { injector }, info) {
 		...parent,
 		...args
 	};
-	if (!from_symbol || !to_symbol) return null;
+	if (!from_symbol || !to_symbol) return undefined;
 	return injector.get(alphaVantageInterface).forex.exchangeTimeSeries({
 		...required({
 			from_symbol,

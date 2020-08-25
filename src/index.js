@@ -1,7 +1,7 @@
 import AlphaVantage from "alpha-vantage-data-source";
 import { GraphQLModule } from '@graphql-modules/core';
-import typeDefs from './schema.graphql';
 import { alphaVantageInterface } from "./constants";
+import typeDefs from './schema.graphql';
 import { forward } from "./utils";
 
 import Stock from './Types/Stock';
