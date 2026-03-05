@@ -15,31 +15,31 @@ npm i alpha-vantage-graphql-module
 ## Usage
 
 ```javascript
-import { GraphQLModule } from "@graphql-modules/core";
-import alphaVantage from "alpha-vantage-graphql-module";
+import { GraphQLModule } from '@graphql-modules/core';
+import alphaVantage from 'alpha-vantage-graphql-module';
 
 export const AppModule = new GraphQLModule({
-  imports: [
-    alphaVantage,
-    //your modules
-  ],
+	imports: [
+		alphaVantage,
+		//your modules
+	],
 });
 ```
 
 or as standalone application:
 
 ```js
-import { GraphQLServer } from "graphql-yoga";
-import alphaVantage from "alpha-vantage-graphql-module";
+import { GraphQLServer } from 'graphql-yoga';
+import alphaVantage from 'alpha-vantage-graphql-module';
 const { schema } = alphaVantage;
 
 const server = new GraphQLServer({
-  schema,
-  context: (r) => r,
+	schema,
+	context: (r) => r,
 });
 
 server.start(graphQL_options, ({ port }) =>
-  console.log(`Server is running on http://localhost:${port}`),
+	console.log(`Server is running on http://localhost:${port}`)
 );
 ```
 
@@ -96,64 +96,43 @@ alpha.technical.trima(symbol, interval, time_period, series_type);
 alpha.technical.kama(symbol, interval, time_period, series_type);
 alpha.technical.mama(symbol, interval, series_type, fastlimit, slowlimit);
 alpha.technical.t3(symbol, interval, time_period, series_type);
-alpha.technical.macd(
-  symbol,
-  interval,
-  series_type,
-  fastperiod,
-  slowperiod,
-  signalperiod,
-);
+alpha.technical.macd(symbol, interval, series_type, fastperiod, slowperiod, signalperiod);
 alpha.technical.macdext(
-  symbol,
-  interval,
-  series_type,
-  fastperiod,
-  slowperiod,
-  signalperiod,
-  fastmatype,
-  slowmatype,
-  signalmatype,
+	symbol,
+	interval,
+	series_type,
+	fastperiod,
+	slowperiod,
+	signalperiod,
+	fastmatype,
+	slowmatype,
+	signalmatype
 );
 alpha.technical.stoch(
-  symbol,
-  interval,
-  fastkperiod,
-  slowkperiod,
-  slowdperiod,
-  slowkmatype,
-  slowdmatype,
+	symbol,
+	interval,
+	fastkperiod,
+	slowkperiod,
+	slowdperiod,
+	slowkmatype,
+	slowdmatype
 );
 alpha.technical.stochf(symbol, interval, fastkperiod, fastdperiod, fastdmatype);
 alpha.technical.rsi(symbol, interval, time_period, series_type);
 alpha.technical.stochrsi(
-  symbol,
-  interval,
-  time_period,
-  series_type,
-  fastkperiod,
-  slowdperiod,
-  fastdmatype,
+	symbol,
+	interval,
+	time_period,
+	series_type,
+	fastkperiod,
+	slowdperiod,
+	fastdmatype
 );
 alpha.technical.willr(symbol, interval, time_period);
 alpha.technical.adx(symbol, interval, time_period);
 alpha.technical.adxr(symbol, interval, time_period);
-alpha.technical.apo(
-  symbol,
-  interval,
-  series_type,
-  fastperiod,
-  slowperiod,
-  matype,
-);
-alpha.technical.ppo(
-  symbol,
-  interval,
-  series_type,
-  fastperiod,
-  slowperiod,
-  matype,
-);
+alpha.technical.apo(symbol, interval, series_type, fastperiod, slowperiod, matype);
+alpha.technical.ppo(symbol, interval, series_type, fastperiod, slowperiod, matype);
 alpha.technical.mom(symbol, interval, time_period, series_type);
 alpha.technical.bop(symbol, interval);
 alpha.technical.cci(symbol, interval, time_period);
@@ -170,14 +149,7 @@ alpha.technical.minus_di(symbol, interval, time_period);
 alpha.technical.plus_di(symbol, interval, time_period);
 alpha.technical.minus_dm(symbol, interval, time_period);
 alpha.technical.plus_dm(symbol, interval, time_period);
-alpha.technical.bbands(
-  symbol,
-  interval,
-  time_period,
-  series_type,
-  nbdevup,
-  nbdevdn,
-);
+alpha.technical.bbands(symbol, interval, time_period, series_type, nbdevup, nbdevdn);
 alpha.technical.midpoint(symbol, interval, time_period, series_type);
 alpha.technical.midprice(symbol, interval, time_period);
 alpha.technical.sar(symbol, interval, acceleration, maximum);

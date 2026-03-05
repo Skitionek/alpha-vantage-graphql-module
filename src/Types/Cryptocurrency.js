@@ -4,9 +4,9 @@
 	- Created:  2019-05-29
 */
 
-import { alphaVantageInterface } from "../constants";
-import { required } from "../utils";
-import exchangeRates from "./CryptocurrencyExchangeRate";
+import { alphaVantageInterface } from '../constants';
+import { required } from '../utils';
+import exchangeRates from './CryptocurrencyExchangeRate';
 
 export function exchangeRatesWrapper(parent, args, ctx, info) {
 	args.from_symbol = args.from_symbol || parent.symbol;
@@ -17,10 +17,10 @@ export function exchangeTimeSeries(parent, args, { injector }, info) {
 	const {
 		symbol,
 		market,
-		interval = "daily"
+		interval = 'daily',
 	} = {
 		...parent,
-		...args
+		...args,
 	};
 	if (!interval) return null;
 	return injector
@@ -29,12 +29,12 @@ export function exchangeTimeSeries(parent, args, { injector }, info) {
 			required({
 				symbol,
 				market,
-				interval
-			}),
+				interval,
+			})
 		)
 		.then((d) => d);
 }
 
 export default Object.assign(exchangeTimeSeries, {
-	exchangeRate: exchangeRatesWrapper
+	exchangeRate: exchangeRatesWrapper,
 });

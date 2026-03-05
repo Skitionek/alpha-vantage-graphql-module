@@ -3,20 +3,20 @@
 	- Email:    Skitionek@gmail.com
 	- Created:  2019-06-07
 */
-import "@babel/polyfill";
-import "reflect-metadata";
+import '@babel/polyfill';
+import 'reflect-metadata';
 
-import { ApolloServer } from "apollo-server";
-import alphaVantageModule from "../lib";
-import { alphaVantageInterface } from "../src/constants";
-import { AlphaVantageAPIMock as AlphaVantageMock } from "alpha-vantage-data-source/mocks";
+import { ApolloServer } from 'apollo-server';
+import alphaVantageModule from '../lib';
+import { alphaVantageInterface } from '../src/constants';
+import { AlphaVantageAPIMock as AlphaVantageMock } from 'alpha-vantage-data-source/mocks';
 
 // get module and inject mockup
 export const { schema, injector } = alphaVantageModule;
 injector.provide({
 	provide: alphaVantageInterface,
 	useFactory: () => new AlphaVantageMock(),
-	overwrite: true
+	overwrite: true,
 });
 
 // create a test server to test against, using our production typeDefs,
@@ -29,7 +29,7 @@ const server = new ApolloServer({
 	},
 	formatError: (r) => {
 		return r; // hook for debugging
-	}
+	},
 });
 
 server.listen().then(({ url }) => {

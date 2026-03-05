@@ -13,9 +13,9 @@ export default Array.from(fields(snaps.technical)).reduce((o, n) => {
 		return injector.get(alphaVantageInterface).technical[n]({
 			...required({
 				symbol,
-				interval
+				interval,
 			}),
-			...rest
+			...rest,
 		});
 	};
 	return o;
