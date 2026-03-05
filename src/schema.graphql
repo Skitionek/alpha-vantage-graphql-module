@@ -9,7 +9,7 @@ type Query {
 	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!): CryptocurrencyExchangeRate!
 	cryptocurrency(symbol: String!,market:String!, interval: Interval): Cryptocurrency!
 	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange!
-	technical(symbol: String, interval: Interval, time_period: String, series_type: String): Technical!
+	technical(symbol: String, interval: Interval, time_period: Int, series_type: String): Technical!
 	sectorPerformance: Performance!
 }
 
