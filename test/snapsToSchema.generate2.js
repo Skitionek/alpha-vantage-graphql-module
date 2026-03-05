@@ -4,27 +4,21 @@
 	- Created:  2019-06-03
 */
 
-import intersection from "lodash.intersection";
-import { mapValues } from "lodash";
+import intersection from 'lodash.intersection';
+import { mapValues } from 'lodash';
 
-import { integrationSnapshots as responsesSnaps } from "alpha-vantage-data-source/lib/test";
-import { Date_Scalar, DateTime, Interval } from "../src/Scalars";
-import {
-	GraphQLFloat,
-	GraphQLList,
-	GraphQLObjectType,
-	GraphQLString,
-	print
-} from "graphql";
+import { integrationSnapshots as responsesSnaps } from 'alpha-vantage-data-source/lib/test';
+import { Date_Scalar, DateTime, Interval } from '../src/Scalars';
+import { GraphQLFloat, GraphQLList, GraphQLObjectType, GraphQLString, print } from 'graphql';
 
-const jsonic = require("jsonic");
+const jsonic = require('jsonic');
 
 const types = {};
 
 function mapStructureToType(obj, key) {
 	if (Array.isArray(obj)) {
 		return [mapStructureToType(obj[0], key)];
-	} else if (typeof obj === "object" && obj !== null) {
+	} else if (typeof obj === 'object' && obj !== null) {
 		Object.entries(obj).forEach(([k, v]) => {
 			obj[k] = mapStructureToType(v, `${key}_${k}`);
 		});
@@ -37,7 +31,7 @@ function mapStructureToType(obj, key) {
 		const type = jsonic.stringify(obj, {
 			depth: Infinity,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		});
 		if (!types[type]) {
 			types[type] = new Map([[key, obj]]);
@@ -54,8 +48,8 @@ function mapStructureToType(obj, key) {
 		Object.keys(responsesSnaps[key1]).forEach((key2) => {
 			if (key2.match(/TimeSeries/)) return;
 			let f_key = [key1, key2];
-			if (f_key[0] === "data") f_key[0] = "stock";
-			f_key = f_key.join("_");
+			if (f_key[0] === 'data') f_key[0] = 'stock';
+			f_key = f_key.join('_');
 			mapStructureToType(responsesSnaps[key1][key2], f_key);
 		});
 	});
@@ -75,7 +69,7 @@ const names = new Map();
 				name: typeName,
 				v,
 				used: 65,
-				interfaces: new Set()
+				interfaces: new Set(),
 			};
 			names.set(typeName, ordered_types[k]);
 		}
@@ -85,57 +79,54 @@ const names = new Map();
 		.sort((a, b) => b[1].size - a[1].size)
 		.forEach(([k, v]) => {
 			const typeName = intersection(
-				...Array.from(v.keys()).map((d) =>
-					d.split("_").map(capitalizeFirstLetter),
-				),
-			).join("");
+				...Array.from(v.keys()).map((d) => d.split('_').map(capitalizeFirstLetter))
+			).join('');
 			assignName(k, typeName, v);
 		});
 })(ordered_types);
 
 const FIELD_TYPES = {
-	TIMESTAMP: "Timestamp",
-	STRING: "String",
-	FLOAT: "Float",
-	DATE: "Date",
-	INTERVAL: "Interval"
+	TIMESTAMP: 'Timestamp',
+	STRING: 'String',
+	FLOAT: 'Float',
+	DATE: 'Date',
+	INTERVAL: 'Interval',
 };
 
 const relations = [];
 
 function typeDescToObject(field) {
 	switch (field) {
-	case FIELD_TYPES.TIMESTAMP:
-		return DateTime;
-	case FIELD_TYPES.STRING:
-		return GraphQLString;
-	case FIELD_TYPES.FLOAT:
-		return GraphQLFloat;
-	case FIELD_TYPES.DATE:
-		return Date_Scalar;
-	case FIELD_TYPES.INTERVAL:
-		return Interval;
-	default:
-		if (Array.isArray(field))
-			return new GraphQLList(typeDescToObject(field[0]));
-		if (typeof field === "object" && field !== null) {
-			const key = jsonic.stringify(field, {
-				depth: Infinity,
-				maxitems: Infinity,
-				maxchars: Infinity
-			});
-			const type = ordered_types[key];
-			// eslint-disable-next-line no-return-assign
-			return (ordered_types[key].c =
-          ordered_types[key].c ||
-          new GraphQLObjectType({
-          	name: type.name,
-          	fields: mapValues(type.v.values().next().value, (inner_field) => ({
-          		type: typeDescToObject(inner_field)
-          	}))
-          }));
-		}
-		console.warn("no reach");
+		case FIELD_TYPES.TIMESTAMP:
+			return DateTime;
+		case FIELD_TYPES.STRING:
+			return GraphQLString;
+		case FIELD_TYPES.FLOAT:
+			return GraphQLFloat;
+		case FIELD_TYPES.DATE:
+			return Date_Scalar;
+		case FIELD_TYPES.INTERVAL:
+			return Interval;
+		default:
+			if (Array.isArray(field)) return new GraphQLList(typeDescToObject(field[0]));
+			if (typeof field === 'object' && field !== null) {
+				const key = jsonic.stringify(field, {
+					depth: Infinity,
+					maxitems: Infinity,
+					maxchars: Infinity,
+				});
+				const type = ordered_types[key];
+				// eslint-disable-next-line no-return-assign
+				return (ordered_types[key].c =
+					ordered_types[key].c ||
+					new GraphQLObjectType({
+						name: type.name,
+						fields: mapValues(type.v.values().next().value, (inner_field) => ({
+							type: typeDescToObject(inner_field),
+						})),
+					}));
+			}
+			console.warn('no reach');
 	}
 }
 
@@ -145,9 +136,9 @@ let graphQLObjectTypes = mapValues(
 		new GraphQLObjectType({
 			name: type.name,
 			fields: mapValues(type.v.values().next().value, (field) => ({
-				type: typeDescToObject(field)
-			}))
-		}),
+				type: typeDescToObject(field),
+			})),
+		})
 );
 
 relations.forEach((f) => f());
@@ -157,7 +148,7 @@ mapValues(graphQLObjectTypes, (v) => console.log(print(v.astNode)));
 // eslint-disable-next-line no-shadow
 function resolveNestedTypes(graphQLObjectTypes) {
 	function resolveNestedTypesRecursive(obj) {
-		if (typeof obj !== "object" || obj === null) return obj;
+		if (typeof obj !== 'object' || obj === null) return obj;
 		if (obj.getFields) {
 			return mapValues(obj.getFields(), (field) => {
 				if (field.type && field.type.parseLiteral) return field;
@@ -170,10 +161,10 @@ function resolveNestedTypes(graphQLObjectTypes) {
 		const type = jsonic.stringify(obj, {
 			depth: Infinity,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		});
 		if (!graphQLObjectTypes[type]) {
-			console.error("type does not exist", type);
+			console.error('type does not exist', type);
 		} else {
 			return graphQLObjectTypes[type];
 		}
@@ -214,7 +205,7 @@ let interfaces = {};
 						interfaces[key] = {
 							types: new Set([a.name, b.name]),
 							multiplier: 1,
-							fields: sim
+							fields: sim,
 						};
 						a.interfaces.add(key);
 						b.interfaces.add(key);
@@ -225,55 +216,55 @@ let interfaces = {};
 	});
 	interfaces = mapValues(interfaces, (o) => ({
 		...o,
-		name: Array.from(o.types).join("_")
+		name: Array.from(o.types).join('_'),
 	}));
 })(ordered_types);
 
 const interfaceList = Object.values(interfaces).sort(
-	(a, b) => b.fields.length - a.fields.length || b.multiplier - a.multiplier,
+	(a, b) => b.fields.length - a.fields.length || b.multiplier - a.multiplier
 );
 
-let output = "";
+let output = '';
 const queries = {};
-output += "type Query {\n";
+output += 'type Query {\n';
 Object.values(ordered_types).forEach((type) => {
 	Array.from(type.v.keys()).forEach((key) => {
 		queries[key] = type.name;
 		output += `\t${key}:\t ${type.name}\n`;
 	});
 });
-output += "}\n";
+output += '}\n';
 
 Object.values(interfaceList).forEach((inter) => {
 	output += `interface ${inter.name} ${jsonic
 		.stringify(inter.fields, {
 			depth: 1,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		})
-		.replace(/\[/g, "{\n\t")
-		.replace(/,/g, ":\t String,\n\t")
-		.replace(/]/, ":\t String\n}")}\n`;
+		.replace(/\[/g, '{\n\t')
+		.replace(/,/g, ':\t String,\n\t')
+		.replace(/]/, ':\t String\n}')}\n`;
 });
 
 Object.values(ordered_types).forEach((type) => {
 	output += `type ${type.name}${
 		type.interfaces.size
 			? ` implements ${Array.from(type.interfaces)
-				.map((key) => interfaces[key].name)
-				.join(", ")}`
-			: ""
+					.map((key) => interfaces[key].name)
+					.join(', ')}`
+			: ''
 	} ${jsonic
 		.stringify(type.keyRecalculated, {
 			depth: 1,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		})
-		.replace(/([{,])/g, "$1\n\t")
-		.replace(/null/g, "\t String")
-		.replace(/}/, "\n}")}\n`;
+		.replace(/([{,])/g, '$1\n\t')
+		.replace(/null/g, '\t String')
+		.replace(/}/, '\n}')}\n`;
 });
 
 console.log(output);
 
-it("", () => undefined);
+it('', () => undefined);
