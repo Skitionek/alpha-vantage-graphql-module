@@ -5,9 +5,9 @@
 */
 
 import {
-  generatedQueries,
-  queryTesterFactory,
-  variablesFieldsTupleByPath,
+	generatedQueries,
+	queryTesterFactory,
+	variablesFieldsTupleByPath
 } from "./utils";
 
 // get all queries to be tested
@@ -17,6 +17,6 @@ const test = queryTesterFactory(stock);
 
 describe("quote", () => test(...variablesFieldsTupleByPath("data.quote")));
 describe("exchangeTimeSeries", () =>
-  test(...variablesFieldsTupleByPath("data.exchangeTimeSeries")));
+	test(...variablesFieldsTupleByPath("data.exchangeTimeSeries")));
 describe("exchangeTimeSeries_adjusted", () =>
-  test(...variablesFieldsTupleByPath("data.exchangeTimeSeries_adjusted")));
+	test(...variablesFieldsTupleByPath("data.exchangeTimeSeries_adjusted")));

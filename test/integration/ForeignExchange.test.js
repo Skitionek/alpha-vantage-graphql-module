@@ -5,9 +5,9 @@
 */
 
 import {
-  generatedQueries,
-  queryTesterFactory,
-  variablesFieldsTupleByPath,
+	generatedQueries,
+	queryTesterFactory,
+	variablesFieldsTupleByPath
 } from "./utils";
 
 const { foreignExchange } = generatedQueries;
@@ -15,4 +15,4 @@ const { foreignExchange } = generatedQueries;
 const test = queryTesterFactory(foreignExchange);
 
 describe("forex.exchangeTimeSeries", () =>
-  test(...variablesFieldsTupleByPath("forex.exchangeTimeSeries")));
+	test(...variablesFieldsTupleByPath("forex.exchangeTimeSeries")));
