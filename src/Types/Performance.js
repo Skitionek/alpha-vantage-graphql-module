@@ -6,4 +6,5 @@
 
 import { alphaVantageInterface } from "../constants";
 
-export default (p, a, { injector }) => injector.get(alphaVantageInterface).performance.sector();
+export default (p, a, { injector }) =>
+  injector.get(alphaVantageInterface).performance.sector();

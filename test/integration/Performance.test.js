@@ -5,8 +5,9 @@
 */
 
 import {
-	generatedQueries,
-	queryTesterFactory, variablesFieldsTupleByPath
+  generatedQueries,
+  queryTesterFactory,
+  variablesFieldsTupleByPath,
 } from "./utils";
 
 // get all queries to be tested
@@ -14,4 +15,5 @@ const { sectorPerformance } = generatedQueries;
 
 const test = queryTesterFactory(sectorPerformance);
 
-describe("performance", () => test(...variablesFieldsTupleByPath('performance.sector')));
+describe("performance", () =>
+  test(...variablesFieldsTupleByPath("performance.sector")));

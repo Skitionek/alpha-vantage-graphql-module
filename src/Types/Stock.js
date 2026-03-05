@@ -9,24 +9,35 @@ import { alphaVantageInterface, fields, snaps } from "../constants";
 import graphqlFields from "graphql-fields";
 
 function getStockTimeSeries(parent, args, { injector }, info) {
-	const { symbol, interval, ...rest } = {
-		...parent,
-		...args
-	};
-	if (!interval) return null;
-	const adj_fields = Object.keys(graphqlFields(info))
-		.filter(e => contains(fields(snaps.data.exchangeTimeSeries_adjusted), e));
+  const { symbol, interval, ...rest } = {
+    ...parent,
+    ...args,
+  };
+  if (!interval) return null;
+  const adj_fields = Object.keys(graphqlFields(info)).filter((e) =>
+    contains(fields(snaps.data.exchangeTimeSeries_adjusted), e),
+  );
 
-	const func = adj_fields.length ? 'exchangeTimeSeries_adjusted' : 'exchangeTimeSeries';
-	return injector.get(alphaVantageInterface).data[func]({ ...required({ symbol, interval }), ...rest })
+  const func = adj_fields.length
+    ? "exchangeTimeSeries_adjusted"
+    : "exchangeTimeSeries";
+  return injector
+    .get(alphaVantageInterface)
+    .data[func]({ ...required({ symbol, interval }), ...rest });
 }
 
 function getStockQuote(parent, args, { injector }, info) {
-	const { symbol, ...rest } = { ...parent, ...args };
-	return injector.get(alphaVantageInterface).data.quote({ symbol: required({ symbol }), ...rest })// .then(setType("StockQuote"));
+  const { symbol, ...rest } = { ...parent, ...args };
+  return injector
+    .get(alphaVantageInterface)
+    .data.quote({ symbol: required({ symbol }), ...rest }); // .then(setType("StockQuote"));
 }
 
 export default {
-	...fragmentResolver(getStockQuote, undefined, fields(snaps.data.quote)),
-	...fragmentResolver(getStockTimeSeries, undefined, fields(snaps.data.exchangeTimeSeries))
-}
+  ...fragmentResolver(getStockQuote, undefined, fields(snaps.data.quote)),
+  ...fragmentResolver(
+    getStockTimeSeries,
+    undefined,
+    fields(snaps.data.exchangeTimeSeries),
+  ),
+};
