@@ -5,9 +5,9 @@
 */
 
 import {
-  generatedQueries,
-  queryTesterFactory,
-  variablesFieldsTupleByPath,
+	generatedQueries,
+	queryTesterFactory,
+	variablesFieldsTupleByPath
 } from "./utils";
 
 const { symbolSearch } = generatedQueries;
@@ -15,4 +15,4 @@ const { symbolSearch } = generatedQueries;
 const test = queryTesterFactory(symbolSearch);
 
 describe("data.search", () =>
-  test(...variablesFieldsTupleByPath("data.search")));
+	test(...variablesFieldsTupleByPath("data.search")));

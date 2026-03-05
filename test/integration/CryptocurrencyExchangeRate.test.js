@@ -5,9 +5,9 @@
 */
 
 import {
-  generatedQueries,
-  queryTesterFactory,
-  variablesFieldsTupleByPath,
+	generatedQueries,
+	queryTesterFactory,
+	variablesFieldsTupleByPath
 } from "./utils";
 
 const { cryptocurrencyExchangeRate } = generatedQueries;
@@ -15,4 +15,4 @@ const { cryptocurrencyExchangeRate } = generatedQueries;
 const test = queryTesterFactory(cryptocurrencyExchangeRate);
 
 describe("crypto.exchangeRates", () =>
-  test(...variablesFieldsTupleByPath("crypto.exchangeRates")));
+	test(...variablesFieldsTupleByPath("crypto.exchangeRates")));
