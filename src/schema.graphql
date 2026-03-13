@@ -5,18 +5,20 @@ scalar Interval
 
 type Query {
 	stock(symbol: String!, outputsize: String, datatype: String, interval: Interval): Stock
-	symbolSearch(keywords: String!,datatype: String): [SymbolSearchResult]
-	cryptocurrencyExchangeRate(from_currency: String!, to_currency: String!): CryptocurrencyExchangeRate!
-	cryptocurrency(symbol: String!,market:String!, interval: Interval): Cryptocurrency!
-	foreignExchange(from_symbol: String!,to_symbol: String!,interval:String): ForeignExchange!
-	technical(symbol: String, interval: Interval, time_period: String, series_type: String): Technical!
+	symbolSearch(keywords: String!, datatype: String): [SymbolSearchResult]
+	cryptocurrencyExchangeRate(
+		from_currency: String!
+		to_currency: String!
+	): CryptocurrencyExchangeRate!
+	cryptocurrency(symbol: String!, market: String!, interval: Interval): Cryptocurrency!
+	foreignExchange(from_symbol: String!, to_symbol: String!, interval: String): ForeignExchange!
+	technical(symbol: String, interval: Interval, time_period: Int, series_type: String): Technical!
 	sectorPerformance: Performance!
 }
 
 type Company {
 	stock(symbol: String, outputsize: String, datatype: String, interval: Interval): Stock
 }
-
 
 type Cryptocurrency {
 	exchangeRate(from_currency: String, to_currency: String!): CryptocurrencyExchangeRate
@@ -52,10 +54,10 @@ type Cryptocurrency {
 	digital_currency_name: String!
 	market_code: String!
 	market_name: String!
-	data:[CryptocurrencyData]
+	data: [CryptocurrencyData]
 
-	last_refreshed:Date!
-	time_zone:String!
+	last_refreshed: Date!
+	time_zone: String!
 }
 type CryptocurrencyExchangeRate { #} implements ExchangeRate {
 	#	{
@@ -83,7 +85,6 @@ type CryptocurrencyExchangeRate { #} implements ExchangeRate {
 	ask_price: String
 }
 type CryptocurrencyData {
-
 	#	{
 	#	  "Meta Data": {
 	#	    "1. Information": null
@@ -125,31 +126,29 @@ type CryptocurrencyData {
 	#            "cap": "1735781.66703230"
 	#        }
 
-	date:Date!
-	from_close:Float
-	from_high:Float
-	from_low:Float
-	from_open:Float!
-	market_cap:Float!
-	to_close:Float!
-	to_high:Float!
-	to_low:Float!
-	to_open:Float!
-	volume:Float!
+	date: Date!
+	from_close: Float
+	from_high: Float
+	from_low: Float
+	from_open: Float!
+	market_cap: Float!
+	to_close: Float!
+	to_high: Float!
+	to_low: Float!
+	to_open: Float!
+	volume: Float!
 }
 type ExchangeRates {
-	ask_price:Float!
-	bid_price:Float!
-	exchange_rate:Float!
-	from_currency_code:String!
-	from_currency_name:String!
-	last_refreshed:Timestamp!
-	time_zone:String!
-	to_currency_code:String!
-	to_currency_name:String!
+	ask_price: Float!
+	bid_price: Float!
+	exchange_rate: Float!
+	from_currency_code: String!
+	from_currency_name: String!
+	last_refreshed: Timestamp!
+	time_zone: String!
+	to_currency_code: String!
+	to_currency_name: String!
 }
-
-
 
 type Stock {
 	#	{
@@ -165,20 +164,20 @@ type Stock {
 	#	    "10. change percent": "0.5381%"
 	#	}
 
-	change:Float!
-	change_percent:String!
-	close:Float
-	date:Date!
-	high:Float!
-	low:Float!
-	open:Float!
-	previous_close:Float!
-	price:Float!
-	volume:Float!
+	change: Float!
+	change_percent: String!
+	close: Float
+	date: Date!
+	high: Float!
+	low: Float!
+	open: Float!
+	previous_close: Float!
+	price: Float!
+	volume: Float!
 
-	adjusted_close:Float
-	dividend_amount:Float
-	split_coefficient:Float
+	adjusted_close: Float
+	dividend_amount: Float
+	split_coefficient: Float
 
 	#	{
 	#	    "1. Information": "Daily Prices (open, high, low, close) and Volumes"
@@ -201,15 +200,13 @@ type Stock {
 	symbol: String!
 
 	# TimeSeriesMetaData
-	information:String
-	last_refreshed:DateTime
-	output_size:String
-	time_zone:String
-	interval:Interval
+	information: String
+	last_refreshed: DateTime
+	output_size: String
+	time_zone: String
+	interval: Interval
 
-
-
-	data:[StockData]
+	data: [StockData]
 }
 
 type StockData {
@@ -223,17 +220,17 @@ type StockData {
 	#	    "7. dividend amount": "0.0000"
 	#	}
 
-	close:Float
-	date:Date!
-	high:Float!
-	low:Float!
-	open:Float!
-	volume:Float!
+	close: Float
+	date: Date!
+	high: Float!
+	low: Float!
+	open: Float!
+	volume: Float!
 
-	adjusted_close:Float
-	dividend_amount:Float
+	adjusted_close: Float
+	dividend_amount: Float
 
-	split_coefficient:String
+	split_coefficient: String
 }
 
 type SymbolSearchResult {
@@ -249,18 +246,16 @@ type SymbolSearchResult {
 	#		"9. matchScore": "1.0000"
 	#	}
 
-	currency:String!
-	marketclose:String!
-	marketopen:String!
-	matchscore:Float!
-	name:String!
-	region:String!
-	symbol:String!
-	timezone:String!
-	type:String!
+	currency: String!
+	marketclose: String!
+	marketopen: String!
+	matchscore: Float!
+	name: String!
+	region: String!
+	symbol: String!
+	timezone: String!
+	type: String!
 }
-
-
 
 type ForeignExchange {
 	from_currency_code: String
@@ -271,39 +266,37 @@ type ForeignExchange {
 	bid_price: String
 	ask_price: String
 
-	data:[ForeignExchangeData]
-	from_symbol:String!
-	information:String!
-	interval:Interval!
-	last_refreshed:Timestamp!
-	output_size:String
-	time_zone:String!
-	to_symbol:String!
+	data: [ForeignExchangeData]
+	from_symbol: String!
+	information: String!
+	interval: Interval!
+	last_refreshed: Timestamp!
+	output_size: String
+	time_zone: String!
+	to_symbol: String!
 }
 
 type ForeignExchangeData {
-	close:Float!
-	date:DateTime!
-	high:Float!
-	low:Float!
-	open:Float!
+	close: Float!
+	date: DateTime!
+	high: Float!
+	low: Float!
+	open: Float!
 }
 
-
-
 type Performance {
-	information:String!
-	last_refreshed:String!
-	rank_a_real_time_performance:PerformanceSectorRank!
-	rank_b_day_performance:PerformanceSectorRank!
-	rank_c_day_performance:PerformanceSectorRank!
-	rank_d_month_performance:PerformanceSectorRank!
-	rank_e_month_performance:PerformanceSectorRank!
-	rank_f_year_to_date_ytd_performance:PerformanceSectorRank!
-	rank_g_year_performance:PerformanceSectorRank!
-	rank_h_year_performance:PerformanceSectorRankYear!
-	rank_i_year_performance:PerformanceSectorRankYear!
-	rank_j_year_performance:PerformanceSectorRankYear!
+	information: String!
+	last_refreshed: String!
+	rank_a_real_time_performance: PerformanceSectorRank!
+	rank_b_day_performance: PerformanceSectorRank!
+	rank_c_day_performance: PerformanceSectorRank!
+	rank_d_month_performance: PerformanceSectorRank!
+	rank_e_month_performance: PerformanceSectorRank!
+	rank_f_year_to_date_ytd_performance: PerformanceSectorRank!
+	rank_g_year_performance: PerformanceSectorRank!
+	rank_h_year_performance: PerformanceSectorRankYear!
+	rank_i_year_performance: PerformanceSectorRankYear!
+	rank_j_year_performance: PerformanceSectorRankYear!
 }
 interface PerformanceSectorRank_Interface {
 	communication_services: String!
@@ -318,80 +311,234 @@ interface PerformanceSectorRank_Interface {
 	utilities: String!
 }
 type PerformanceSectorRank implements PerformanceSectorRank_Interface {
-	communication_services:String!
-	consumer_discretionary:String!
-	consumer_staples:String!
-	energy:String!
-	financials:String!
-	health_care:String!
-	industrials:String!
-	information_technology:String!
-	materials:String!
-	real_estate:String!
-	utilities:String!
+	communication_services: String!
+	consumer_discretionary: String!
+	consumer_staples: String!
+	energy: String!
+	financials: String!
+	health_care: String!
+	industrials: String!
+	information_technology: String!
+	materials: String!
+	real_estate: String!
+	utilities: String!
 }
 type PerformanceSectorRankYear implements PerformanceSectorRank_Interface {
-	communication_services:String!
-	consumer_discretionary:String!
-	consumer_staples:String!
-	energy:String!
-	financials:String!
-	health_care:String!
-	industrials:String!
-	information_technology:String!
-	materials:String!
-	utilities:String!
+	communication_services: String!
+	consumer_discretionary: String!
+	consumer_staples: String!
+	energy: String!
+	financials: String!
+	health_care: String!
+	industrials: String!
+	information_technology: String!
+	materials: String!
+	utilities: String!
 }
-
-
 
 type Technical {
 	sma(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
 	ema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
 	wma(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	dema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	tema(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	trima(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
+	dema(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndexA
+	tema(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndexA
+	trima(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndexA
 	kama(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	mama(symbol: String, interval: Interval, series_type: String, fastlimit: Float, slowlimit: Float): TechnicalIndexMama
+	mama(
+		symbol: String
+		interval: Interval
+		series_type: String
+		fastlimit: Float
+		slowlimit: Float
+	): TechnicalIndexMama
 	vwap(symbol: String, interval: Interval): TechnicalIndexB
 	t3(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexT3
-	macd(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): TechnicalIndexMacd
-	macdext(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, signalperiod: Float, fastmatype: String, slowmatype: String, signalmatype: String): TechnicalIndexMacdext
-	stoch(symbol: String, interval: Interval, fastkperiod: String, slowkperiod: String, slowdperiod: String, slowkmatype: String, slowdmatype: String): TechnicalIndexStoch
-	stochf(symbol: String, interval: Interval, fastkperiod: String, fastdperiod: String, fastdmatype: String): TechnicalIndexStochf
+	macd(
+		symbol: String
+		interval: Interval
+		series_type: String
+		fastperiod: Float
+		slowperiod: Float
+		signalperiod: Float
+		fastmatype: String
+		slowmatype: String
+		signalmatype: String
+	): TechnicalIndexMacd
+	macdext(
+		symbol: String
+		interval: Interval
+		series_type: String
+		fastperiod: Float
+		slowperiod: Float
+		signalperiod: Float
+		fastmatype: String
+		slowmatype: String
+		signalmatype: String
+	): TechnicalIndexMacdext
+	stoch(
+		symbol: String
+		interval: Interval
+		fastkperiod: String
+		slowkperiod: String
+		slowdperiod: String
+		slowkmatype: String
+		slowdmatype: String
+	): TechnicalIndexStoch
+	stochf(
+		symbol: String
+		interval: Interval
+		fastkperiod: String
+		fastdperiod: String
+		fastdmatype: String
+	): TechnicalIndexStochf
 	rsi(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	stochrsi(symbol: String, interval: Interval, time_period: String, series_type: String, fastkperiod: String, fastdperiod: String, fastdmatype: String): TechnicalIndexStochrsi
-	willr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	stochrsi(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+		fastkperiod: String
+		fastdperiod: String
+		fastdmatype: String
+	): TechnicalIndexStochrsi
+	willr(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
 	adx(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
 	adxr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	apo(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, matype: String): TechnicalIndexC
-	ppo(symbol: String, interval: Interval, series_type: String, fastperiod: Float, slowperiod: Float, matype: String): TechnicalIndexC
+	apo(
+		symbol: String
+		interval: Interval
+		series_type: String
+		fastperiod: Float
+		slowperiod: Float
+		matype: String
+	): TechnicalIndexC
+	ppo(
+		symbol: String
+		interval: Interval
+		series_type: String
+		fastperiod: Float
+		slowperiod: Float
+		matype: String
+	): TechnicalIndexC
 	mom(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
 	bop(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
 	cci(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
 	cmo(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
 	roc(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	rocr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	aroon(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	aroonosc(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	rocr(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndexA
+	aroon(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
+	aroonosc(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
 	mfi(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	trix(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	ultosc(symbol: String, interval: Interval, timeperiod1: String, timeperiod2: String, timeperiod3: String): TechnicalIndex
+	trix(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndexA
+	ultosc(
+		symbol: String
+		interval: Interval
+		timeperiod1: String
+		timeperiod2: String
+		timeperiod3: String
+	): TechnicalIndex
 	dx(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	minus_di(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	plus_di(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	minus_dm(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	plus_dm(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
-	bbands(symbol: String, interval: Interval, time_period: String, series_type: String, nbdevup: String, nbdevdn: String, matype: String): TechnicalIndexBbands
-	midpoint(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexA
-	midprice(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
+	minus_di(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
+	plus_di(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
+	minus_dm(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
+	plus_dm(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
+	bbands(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+		nbdevup: String
+		nbdevdn: String
+		matype: String
+	): TechnicalIndexBbands
+	midpoint(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndexA
+	midprice(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndex
 	sar(symbol: String, interval: Interval, acceleration: String, maximum: String): TechnicalIndexSar
-	trange(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
+	trange(
+		symbol: String
+		interval: Interval
+		time_period: String
+		series_type: String
+	): TechnicalIndexB
 	atr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
 	natr(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndex
 	ad(symbol: String, interval: Interval, time_period: String, series_type: String): TechnicalIndexB
-	adosc(symbol: String, interval: Interval, fastperiod: Float, slowperiod: Float): TechnicalIndexAdosc
+	adosc(
+		symbol: String
+		interval: Interval
+		fastperiod: Float
+		slowperiod: Float
+	): TechnicalIndexAdosc
 	obv(symbol: String, interval: Interval): TechnicalIndexB
 	ht_trendline(symbol: String, interval: Interval, series_type: String): TechnicalIndexHt
 	ht_sine(symbol: String, interval: Interval, series_type: String): TechnicalIndexHtSine
@@ -403,260 +550,258 @@ type Technical {
 }
 
 type TechnicalIndexB {
-	data:[TechnicalIndexData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexAdosc {
-	data:[TechnicalIndexData]
-	fastk_period:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	slowk_period:     String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexData]
+	fastk_period: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	slowk_period: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexData {
-	date:Date!
-	value:Float
+	date: Date!
+	value: Float
 }
 type TechnicalIndexAroonData {
-	aroon_down:Float!
-	aroon_up:Float!
-	date:Date!
+	aroon_down: Float!
+	aroon_up: Float!
+	date: Date!
 }
 interface TechnicalIndex_Interface {
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	symbol:String
-	time_period:String
-	time_zone:String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	symbol: String
+	time_period: String
+	time_zone: String
 }
-type TechnicalIndex implements TechnicalIndex_Interface{
-	data:[TechnicalIndexData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	symbol:String
-	time_period:     String
-	time_zone:String
+type TechnicalIndex implements TechnicalIndex_Interface {
+	data: [TechnicalIndexData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	symbol: String
+	time_period: String
+	time_zone: String
 }
-type TechnicalIndexAroon implements TechnicalIndex_Interface{
-	data:[TechnicalIndexAroonData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	symbol:String
-	time_period:String
-	time_zone:String
+type TechnicalIndexAroon implements TechnicalIndex_Interface {
+	data: [TechnicalIndexAroonData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	symbol: String
+	time_period: String
+	time_zone: String
 }
 type TechnicalIndexC {
-	data:[TechnicalIndexData]
-	fast_period:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	ma_type:     String
-	series_type:String
-	slow_period:     String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexData]
+	fast_period: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	ma_type: String
+	series_type: String
+	slow_period: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexBbandsData {
-	date:Date!
-	real_lower_band:Float!
-	real_middle_band:Float!
-	real_upper_band:Float!
+	date: Date!
+	real_lower_band: Float!
+	real_middle_band: Float!
+	real_upper_band: Float!
 }
 type TechnicalIndexBbands {
-	data:[TechnicalIndexBbandsData]
-	deviation_multiplier_for_lower_band:     String
-	deviation_multiplier_for_upper_band:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	ma_type:     String
-	series_type:String
-	symbol:String
-	time_period:     String
-	time_zone:String
+	data: [TechnicalIndexBbandsData]
+	deviation_multiplier_for_lower_band: String
+	deviation_multiplier_for_upper_band: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	ma_type: String
+	series_type: String
+	symbol: String
+	time_period: String
+	time_zone: String
 }
 type TechnicalIndexA {
-	data:[TechnicalIndexData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	symbol:String
-	time_period:     String
-	time_zone:String
+	data: [TechnicalIndexData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	symbol: String
+	time_period: String
+	time_zone: String
 }
 type TechnicalIndexHtPhasorData {
-	date:Date!
-	phase:Float!
-	quadrature:Float!
+	date: Date!
+	phase: Float!
+	quadrature: Float!
 }
 type TechnicalIndexHtSineData {
-	date:Date!
-	lead_sine:Float!
-	sine:Float!
+	date: Date!
+	lead_sine: Float!
+	sine: Float!
 }
 interface TechnicalIndexHt_Interface {
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	symbol:String
-	time_zone:String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexHt implements TechnicalIndexHt_Interface {
-	data:[TechnicalIndexData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexHtPhasor implements TechnicalIndexHt_Interface {
-	data:[TechnicalIndexHtPhasorData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexHtPhasorData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexHtSine implements TechnicalIndexHt_Interface {
-	data:[TechnicalIndexHtSineData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexHtSineData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexDataA {
-	date:Date!
-	macd:Float!
-	macd_hist:Float!
-	macd_signal:Float!
+	date: Date!
+	macd: Float!
+	macd_hist: Float!
+	macd_signal: Float!
 }
 type TechnicalIndexMacd {
-	data:[TechnicalIndexDataA]
-	fast_period:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	signal_period:     String
-	slow_period:     String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexDataA]
+	fast_period: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	signal_period: String
+	slow_period: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexMacdext {
-	data:[TechnicalIndexDataA]
-	fast_ma_type:     String
-	fast_period:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	signal_ma_type:     String
-	signal_period:     String
-	slow_ma_type:     String
-	slow_period:     String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexDataA]
+	fast_ma_type: String
+	fast_period: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	signal_ma_type: String
+	signal_period: String
+	slow_ma_type: String
+	slow_period: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexMamaData {
-	date:Date!
-	fama:Float!
-	mama:Float!
+	date: Date!
+	fama: Float!
+	mama: Float!
 }
 type TechnicalIndexMama {
-	data:[TechnicalIndexMamaData]
-	fast_limit:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	slow_limit:     String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexMamaData]
+	fast_limit: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	slow_limit: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexSar {
-	acceleration:String
-	data:[TechnicalIndexData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	maximum:     String
-	symbol:String
-	time_zone:String
+	acceleration: String
+	data: [TechnicalIndexData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	maximum: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexStochData {
-	date:Date!
-	slowd:Float!
-	slowk:Float!
+	date: Date!
+	slowd: Float!
+	slowk: Float!
 }
 type TechnicalIndexStoch {
-	data:[TechnicalIndexStochData]
-	fastk_period:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	slowd_ma_type:     String
-	slowd_period:     String
-	slowk_ma_type:     String
-	slowk_period:     String
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexStochData]
+	fastk_period: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	slowd_ma_type: String
+	slowd_period: String
+	slowk_ma_type: String
+	slowk_period: String
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexDataB {
-	date:Date!
-	fastd:Float!
-	fastk:Float!
+	date: Date!
+	fastd: Float!
+	fastk: Float!
 }
 type TechnicalIndexStochf {
-	data:[TechnicalIndexDataB]
-	fastd_ma_type:     String
-	fastd_period:     String
-	fastk_period:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	symbol:String
-	time_zone:String
+	data: [TechnicalIndexDataB]
+	fastd_ma_type: String
+	fastd_period: String
+	fastk_period: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	symbol: String
+	time_zone: String
 }
 type TechnicalIndexStochrsi {
-	data:[TechnicalIndexDataB]
-	fastd_ma_type:     String
-	fastd_period:     String
-	fastk_period:     String
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	symbol:String
-	time_period:     String
-	time_zone:String
+	data: [TechnicalIndexDataB]
+	fastd_ma_type: String
+	fastd_period: String
+	fastk_period: String
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	symbol: String
+	time_period: String
+	time_zone: String
 }
 type TechnicalIndexT3 {
-	data:[TechnicalIndexData]
-	indicator:String
-	interval:Interval
-	last_refreshed:Date!
-	series_type:String
-	symbol:String
-	time_period:     String
-	time_zone:String
-	volume_factor_vfactor:     String
+	data: [TechnicalIndexData]
+	indicator: String
+	interval: Interval
+	last_refreshed: Date!
+	series_type: String
+	symbol: String
+	time_period: String
+	time_zone: String
+	volume_factor_vfactor: String
 }
-
-

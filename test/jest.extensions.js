@@ -9,27 +9,24 @@ import {
 	GraphQLNonNull,
 	GraphQLObjectType,
 	GraphQLScalarType,
-	GraphQLSchema
+	GraphQLSchema,
 } from 'graphql';
 
 const okObject = {
-	message: () => "Ok",
-	pass: true
+	message: () => 'Ok',
+	pass: true,
 };
 expect.extend({
 	toBeType(received, argument) {
-		if (argument === String && typeof received === 'string')
-			return okObject;
-		if (argument === Number && typeof received === 'number')
-			return okObject;
+		if (argument === String && typeof received === 'string') return okObject;
+		if (argument === Number && typeof received === 'number') return okObject;
 		if (received instanceof argument) {
 			return okObject;
 		}
 		return {
 			message: () => `expected ${received} to be ${argument} type or null`,
-			pass: false
+			pass: false,
 		};
-
 	},
 
 	toBeTypeOrNull(received, argument) {
@@ -41,7 +38,7 @@ expect.extend({
 	},
 
 	nothing() {
-		return okObject
+		return okObject;
 	},
 
 	customObjectContaining(recived, target) {
@@ -57,50 +54,58 @@ expect.extend({
 		const { data } = received;
 		const queriesNames = Object.keys(data);
 		const queriesSchemas = node.getQueryType().getFields();
-		queriesNames.forEach(queryName => {
+		queriesNames.forEach((queryName) => {
 			expect(queriesSchemas).toHaveProperty(queryName);
 			expect(data[queryName]).toMatchSchema(queriesSchemas[queryName], {
 				...options,
-				path: options.path.concat([queryName])
+				path: options.path.concat([queryName]),
 			});
 		});
-		return okObject
+		return okObject;
 	},
 	toMatchGraphQLList(received, node, options) {
-		if (received !== null) expect(received).toEqual(expect.arrayContaining([expect.toMatchSchema(node.ofType, options)]));
-		return okObject
+		if (received !== null)
+			expect(received).toEqual(
+				expect.arrayContaining([expect.toMatchSchema(node.ofType, options)])
+			);
+		return okObject;
 	},
 	toMatchGraphQLObjectType(received, node, options = {}) {
 		const fragment = {};
 		let schemaFields = Object.entries(node.getFields());
 		const fieldsOfInterest = options.customFields.shift();
-		if (fieldsOfInterest) schemaFields = schemaFields.filter(([k]) => fieldsOfInterest.indexOf(k) !== -1);
+		if (fieldsOfInterest)
+			schemaFields = schemaFields.filter(([k]) => fieldsOfInterest.indexOf(k) !== -1);
 		schemaFields.forEach(([name, field]) => {
 			fragment[name] = expect.toMatchSchema(field, {
 				...options,
-				path: options.path.concat(name)
-			})
+				path: options.path.concat(name),
+			});
 		});
 		expect(received).toEqual(expect.customObjectContaining(fragment)); // return undefined or throws
-		return okObject
+		return okObject;
 	},
 	toMatchGraphQLNonNull(received, node, options = {}) {
 		if (received === null) throw Error(`Found null in field of type ${node.inspect()}`);
 		expect(received).toMatchSchema(node.ofType, options);
-		return okObject
+		return okObject;
 	},
 	toMatchGraphQLScalarType(received, node, { path = [] } = {}) {
-		if (received === null) console.warn(`Field of type ${node} has value equal null`, path);
+		if (received === null) {
+			console.warn(`Field of type ${node} has value equal null`, path);
+			return okObject;
+		}
 		node.parseValue(received);
-		return okObject
+		return okObject;
 	},
 	toMatchGraphQLInterfaceType(received, node, options = {}) {
 		expect(received).toMatchSchema(node.getFields(), options);
-		return okObject
+		return okObject;
 	},
 	toMatchSchema(received, node, { depth, path = [], customFields = [] } = {}) {
 		// schema.getQueryType().getFields().Stock.type.getFields().data.type.ofType.getFields().adjustedClose.type.name
-		if (!(--depth < 0)) { // for >=0 or undefined true
+		if (!(--depth < 0)) {
+			// for >=0 or undefined true
 			const options = { depth, path, customFields };
 			const e = expect(received);
 
@@ -114,6 +119,6 @@ expect.extend({
 				e.toMatchSchema(node.type, options);
 			}
 		}
-		return okObject
-	}
+		return okObject;
+	},
 });
