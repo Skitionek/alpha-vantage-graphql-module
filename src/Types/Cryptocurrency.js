@@ -14,11 +14,7 @@ export function exchangeRatesWrapper(parent, args, ctx, info) {
 }
 
 export function exchangeTimeSeries(parent, args, { injector }, info) {
-	const {
-		symbol,
-		market,
-		interval = 'daily',
-	} = {
+	const { symbol, market, interval = 'daily' } = {
 		...parent,
 		...args,
 	};

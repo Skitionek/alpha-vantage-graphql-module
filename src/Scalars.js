@@ -45,7 +45,7 @@ export const DateTime = new GraphQLScalarType({
 			? this.parseValue(ast)
 			: new Error(
 					`Could not parse ${ast}, dateTime should be written in format 'YYYY-MM-DD hh:mm:ss'`
-				);
+			  );
 	},
 });
 
