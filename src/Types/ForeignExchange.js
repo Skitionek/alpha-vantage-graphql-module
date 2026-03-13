@@ -22,12 +22,7 @@ function requestExchangeRates(parent, args, { injector }, info) {
 }
 
 function requestTimeSeries(parent, args, { injector }, info) {
-	const {
-		from_symbol,
-		to_symbol,
-		interval = 'daily',
-		outputsize,
-	} = {
+	const { from_symbol, to_symbol, interval = 'daily', outputsize } = {
 		...parent,
 		...args,
 	};
