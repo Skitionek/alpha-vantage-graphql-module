@@ -93,7 +93,7 @@
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.8.7",
-		"alpha-vantage-data-source": "2.2.38",
+		"alpha-vantage-data-source": "2.3.1",
 		"babel-plugin-import-graphql": "^2.8.1",
 		"d3-time-format": "^2.2.3",
 		"dotenv": "^8.0.0",
