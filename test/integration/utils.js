@@ -14,9 +14,41 @@ import { generateAll as gqlGenerator } from 'gql-generator-node'
 import '../jest.extensions'
 import { alphaVantageInterface, fields, snaps } from '../../src/constants'
 
-import { AlphaVantageAPIMock as AlphaVantageMock, demoVariableSets as variables } from 'alpha-vantage-data-source/mocks'
+import { AlphaVantageAPIMock as AlphaVantageMock, demoVariableSets as rawVariables } from 'alpha-vantage-data-source/mocks'
 
 export { generateQuery } from 'gql-generator-node'
+
+function normalizeTechnicalVariables (technicalVariables) {
+  const keepNumeric = new Set([
+    'fastlimit',
+    'slowlimit',
+    'fastperiod',
+    'slowperiod',
+    'signalperiod'
+  ])
+
+  const normalize = value => {
+    if (Array.isArray(value)) return value.map(normalize)
+    if (value && typeof value === 'object') {
+      return Object.fromEntries(
+        Object.entries(value).map(([key, innerValue]) => {
+          if (typeof innerValue === 'number' && !keepNumeric.has(key)) {
+            return [key, String(innerValue)]
+          }
+          return [key, normalize(innerValue)]
+        })
+      )
+    }
+    return value
+  }
+
+  return normalize(technicalVariables)
+}
+
+const variables = {
+  ...rawVariables,
+  technical: normalizeTechnicalVariables(rawVariables.technical)
+}
 
 export { variables, AlphaVantageMock }
 
