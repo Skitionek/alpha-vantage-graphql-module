@@ -30,7 +30,7 @@
 		}
 	],
 	"contributors": [
-		"Zack Urben <zackurben@gmail.com> (http://zackurben.com)"
+		"Zack Urben <zackurben@gmail.com> (https://zackurben.com)"
 	],
 	"license": "MIT",
 	"homepage": "https://github.com/Skitionek/alpha-vantage-graphql-module",
@@ -102,6 +102,9 @@
 	},
 	"peerDependencies": {
 		"graphql": "^14.2.1"
+	},
+	"overrides": {
+		"node-fetch": "^2.7.0"
 	},
 	"jshintConfig": {
 		"node": true,
