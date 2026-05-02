@@ -7,24 +7,30 @@ on:
   release:
     types: [created]
   push:
-    branches: 
+    branches:
       - master
+
+permissions: read-all
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
       - run: npm ci
       - run: npm test
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
@@ -35,9 +41,12 @@ jobs:
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci

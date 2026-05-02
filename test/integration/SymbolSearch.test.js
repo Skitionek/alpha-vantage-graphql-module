@@ -5,13 +5,13 @@
 */
 
 import {
-	generatedQueries,
-	queryTesterFactory,
-	variablesFieldsTupleByPath
-} from "./utils";
+  generatedQueries,
+  queryTesterFactory,
+  variablesFieldsTupleByPath
+} from './utils'
 
-const { symbolSearch } = generatedQueries;
+const { symbolSearch } = generatedQueries
 
-const test = queryTesterFactory(symbolSearch);
+const test = queryTesterFactory(symbolSearch)
 
-describe("data.search", () => test(...variablesFieldsTupleByPath('data.search')));
+describe('data.search', () => test(...variablesFieldsTupleByPath('data.search')))

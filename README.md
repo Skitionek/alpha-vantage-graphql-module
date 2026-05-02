@@ -19,10 +19,10 @@ import { GraphQLModule } from '@graphql-modules/core';
 import alphaVantage from 'alpha-vantage-graphql-module';
 
 export const AppModule = new GraphQLModule({
-	imports: [
-		alphaVantage,
-		//your modules	
-	]
+ imports: [
+  alphaVantage,
+  //your modules 
+ ]
 });
 ```
 or as standalone application:
@@ -32,12 +32,12 @@ import alphaVantage from 'alpha-vantage-graphql-module';
 const {schema} = alphaVantage;
 
 const server = new GraphQLServer({
-	schema,
-	context: r => r
+ schema,
+ context: r => r
 });
 
 server.start(graphQL_options, ({ port }) =>
-	console.log(`Server is running on http://localhost:${  port}`)
+ console.log(`Server is running on http://localhost:${  port}`)
 );
 ```
 

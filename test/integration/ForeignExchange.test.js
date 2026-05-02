@@ -4,10 +4,10 @@
 	- Created:  23/04/2019
 */
 
-import { generatedQueries, queryTesterFactory, variablesFieldsTupleByPath } from "./utils";
+import { generatedQueries, queryTesterFactory, variablesFieldsTupleByPath } from './utils'
 
-const { foreignExchange } = generatedQueries;
+const { foreignExchange } = generatedQueries
 
-const test = queryTesterFactory(foreignExchange);
+const test = queryTesterFactory(foreignExchange)
 
-describe("forex.exchangeTimeSeries", ()=>test(...variablesFieldsTupleByPath('forex.exchangeTimeSeries')));
+describe('forex.exchangeTimeSeries', () => test(...variablesFieldsTupleByPath('forex.exchangeTimeSeries')))
