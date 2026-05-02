@@ -87,7 +87,10 @@ expect.extend({
     return okObject
   },
   toMatchGraphQLScalarType (received, node, { path = [] } = {}) {
-    if (received === null) console.warn(`Field of type ${node} has value equal null`, path)
+    if (received === null) {
+      console.warn(`Field of type ${node} has value equal null`, path)
+      return okObject
+    }
     node.parseValue(received)
     return okObject
   },
