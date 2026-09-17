@@ -9,12 +9,12 @@ import {
 	GraphQLNonNull,
 	GraphQLObjectType,
 	GraphQLScalarType,
-	GraphQLSchema
+	GraphQLSchema,
 } from 'graphql';
 
 const okObject = {
 	message: () => 'Ok',
-	pass: true
+	pass: true,
 };
 expect.extend({
 	toBeType(received, argument) {
@@ -25,7 +25,7 @@ expect.extend({
 		}
 		return {
 			message: () => `expected ${received} to be ${argument} type or null`,
-			pass: false
+			pass: false,
 		};
 	},
 
@@ -58,7 +58,7 @@ expect.extend({
 			expect(queriesSchemas).toHaveProperty(queryName);
 			expect(data[queryName]).toMatchSchema(queriesSchemas[queryName], {
 				...options,
-				path: options.path.concat([queryName])
+				path: options.path.concat([queryName]),
 			});
 		});
 		return okObject;
@@ -79,7 +79,7 @@ expect.extend({
 		schemaFields.forEach(([name, field]) => {
 			fragment[name] = expect.toMatchSchema(field, {
 				...options,
-				path: options.path.concat(name)
+				path: options.path.concat(name),
 			});
 		});
 		expect(received).toEqual(expect.customObjectContaining(fragment)); // return undefined or throws
@@ -91,7 +91,10 @@ expect.extend({
 		return okObject;
 	},
 	toMatchGraphQLScalarType(received, node, { path = [] } = {}) {
-		if (received === null) console.warn(`Field of type ${node} has value equal null`, path);
+		if (received === null) {
+			console.warn(`Field of type ${node} has value equal null`, path);
+			return okObject;
+		}
 		node.parseValue(received);
 		return okObject;
 	},
@@ -117,5 +120,5 @@ expect.extend({
 			}
 		}
 		return okObject;
-	}
+	},
 });

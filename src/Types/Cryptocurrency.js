@@ -16,7 +16,7 @@ export function exchangeRatesWrapper(parent, args, ctx, info) {
 export function exchangeTimeSeries(parent, args, { injector }, info) {
 	const { symbol, market, interval = 'daily' } = {
 		...parent,
-		...args
+		...args,
 	};
 	if (!interval) return null;
 	return injector
@@ -25,12 +25,12 @@ export function exchangeTimeSeries(parent, args, { injector }, info) {
 			required({
 				symbol,
 				market,
-				interval
+				interval,
 			})
 		)
 		.then((d) => d);
 }
 
 export default Object.assign(exchangeTimeSeries, {
-	exchangeRate: exchangeRatesWrapper
+	exchangeRate: exchangeRatesWrapper,
 });

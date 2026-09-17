@@ -11,7 +11,7 @@ import {
 	responseMatchesSchema,
 	returnNoErrors,
 	schema,
-	variables
+	variables,
 } from './utils';
 
 describe.each(Object.entries(variables.technical))('%s', (key, queryVariables) => {
@@ -23,10 +23,10 @@ describe.each(Object.entries(variables.technical))('%s', (key, queryVariables) =
 			query: generateQuery({
 				field,
 				skeleton: {
-					[key]: false
-				}
+					[key]: false,
+				},
 			}),
-			variables: queryVariables
+			variables: queryVariables,
 		});
 	});
 	it(returnNoErrors(queryVariables), () =>
@@ -38,9 +38,9 @@ describe.each(Object.entries(variables.technical))('%s', (key, queryVariables) =
 			expect.customObjectContaining({
 				data: {
 					technical: expect.customObjectContaining({
-						[key]: expect.toMatchSchema(getNextLevelFields(field)[key])
-					})
-				}
+						[key]: expect.toMatchSchema(getNextLevelFields(field)[key]),
+					}),
+				},
 			})
 		));
 });

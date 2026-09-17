@@ -10,7 +10,7 @@ import {
 	queryTesterFactory,
 	schema,
 	variables,
-	variablesFieldsTupleByPath
+	variablesFieldsTupleByPath,
 } from './utils';
 import mapValues from 'lodash.mapvalues';
 import { snaps } from '../../src/constants';
@@ -21,7 +21,7 @@ const cryptocurrencySchemaHook = schema.getQueryType().getFields().cryptocurrenc
 
 const exchangeTimeSeriesQuery = generateQuery({
 	field: cryptocurrencySchemaHook,
-	skeleton: mapValues(snaps.crypto.exchangeTimeSeries, () => false)
+	skeleton: mapValues(snaps.crypto.exchangeTimeSeries, () => false),
 });
 const test = queryTesterFactory(cryptocurrency);
 
@@ -35,7 +35,7 @@ describe('crypto combined', () =>
 		describe.each(variables.crypto.exchangeTimeSeries)('%j', (exchangeTimeSeries) =>
 			test({
 				...exchangeRates,
-				...exchangeTimeSeries
+				...exchangeTimeSeries,
 			})
 		)
 	));

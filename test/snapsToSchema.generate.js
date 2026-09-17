@@ -28,7 +28,7 @@ function shallowMapStructureToType(obj, key) {
 		const type = jsonic.stringify(obj, {
 			depth: 1,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		});
 		if (!types[type]) {
 			types[type] = new Map([[key, obj]]);
@@ -67,7 +67,7 @@ const ordered_types = types;
 				name: typeName,
 				v,
 				used: 65,
-				interfaces: new Set()
+				interfaces: new Set(),
 			};
 			names.set(typeName, ordered_types[k]);
 		}
@@ -95,7 +95,7 @@ const ordered_types = types;
 					const type = jsonic.stringify(obj[param][0], {
 						depth: 1,
 						maxitems: Infinity,
-						maxchars: Infinity
+						maxchars: Infinity,
 					});
 					if (!ordered_types[type]) {
 						console.error('type does not exist', type);
@@ -106,7 +106,7 @@ const ordered_types = types;
 					const type = jsonic.stringify(obj[param], {
 						depth: 1,
 						maxitems: Infinity,
-						maxchars: Infinity
+						maxchars: Infinity,
 					});
 					if (!ordered_types[type]) {
 						console.error('type does not exist', type);
@@ -158,7 +158,7 @@ let interfaces = {};
 						interfaces[key] = {
 							types: new Set([a.name, b.name]),
 							multiplier: 1,
-							fields: sim
+							fields: sim,
 						};
 						a.interfaces.add(key);
 						b.interfaces.add(key);
@@ -169,7 +169,7 @@ let interfaces = {};
 	});
 	interfaces = mapValues(interfaces, (o) => ({
 		...o,
-		name: Array.from(o.types).join('_')
+		name: Array.from(o.types).join('_'),
 	}));
 })(ordered_types);
 
@@ -193,7 +193,7 @@ Object.values(interfaceList).forEach((inter) => {
 		.stringify(inter.fields, {
 			depth: 1,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		})
 		.replace(/\[/g, '{\n\t')
 		.replace(/,/g, ':\t String,\n\t')
@@ -211,7 +211,7 @@ Object.values(ordered_types).forEach((type) => {
 		.stringify(type.keyRecalculated, {
 			depth: 1,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		})
 		.replace(/([{,])/g, '$1\n\t')
 		.replace(/null/g, '\t String')

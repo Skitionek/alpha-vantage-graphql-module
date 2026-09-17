@@ -16,7 +16,7 @@ import { alphaVantageInterface, fields, snaps } from '../../src/constants';
 
 import {
 	AlphaVantageAPIMock as AlphaVantageMock,
-	demoVariableSets as variables
+	demoVariableSets as variables,
 } from 'alpha-vantage-data-source/mocks';
 
 export { generateQuery } from 'gql-generator-node';
@@ -28,7 +28,7 @@ export const { schema, injector } = alphaVantageModule;
 injector.provide({
 	provide: alphaVantageInterface,
 	useFactory: () => new AlphaVantageMock(),
-	overwrite: true
+	overwrite: true,
 });
 
 // create a test server to test against, using our production typeDefs,
@@ -41,7 +41,7 @@ const server = new ApolloServer({
 	},
 	formatError: (r) => {
 		return r; // hook for debugging
-	}
+	},
 });
 // use the test server to create a query function
 export const graphql = createTestClient(server).query;
@@ -76,7 +76,7 @@ export function queryTesterFactory(query) {
 			);
 			it(responseMatchesSchema(testVariables), () =>
 				expect(response).resolves.toMatchSchema(schema, {
-					customFields: [customFields]
+					customFields: [customFields],
 				})
 			);
 		}

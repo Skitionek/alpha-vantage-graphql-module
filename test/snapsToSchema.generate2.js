@@ -31,7 +31,7 @@ function mapStructureToType(obj, key) {
 		const type = jsonic.stringify(obj, {
 			depth: Infinity,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		});
 		if (!types[type]) {
 			types[type] = new Map([[key, obj]]);
@@ -69,7 +69,7 @@ const names = new Map();
 				name: typeName,
 				v,
 				used: 65,
-				interfaces: new Set()
+				interfaces: new Set(),
 			};
 			names.set(typeName, ordered_types[k]);
 		}
@@ -90,7 +90,7 @@ const FIELD_TYPES = {
 	STRING: 'String',
 	FLOAT: 'Float',
 	DATE: 'Date',
-	INTERVAL: 'Interval'
+	INTERVAL: 'Interval',
 };
 
 const relations = [];
@@ -113,7 +113,7 @@ function typeDescToObject(field) {
 				const key = jsonic.stringify(field, {
 					depth: Infinity,
 					maxitems: Infinity,
-					maxchars: Infinity
+					maxchars: Infinity,
 				});
 				const type = ordered_types[key];
 				// eslint-disable-next-line no-return-assign
@@ -122,8 +122,8 @@ function typeDescToObject(field) {
 					new GraphQLObjectType({
 						name: type.name,
 						fields: mapValues(type.v.values().next().value, (inner_field) => ({
-							type: typeDescToObject(inner_field)
-						}))
+							type: typeDescToObject(inner_field),
+						})),
 					}));
 			}
 			console.warn('no reach');
@@ -136,8 +136,8 @@ let graphQLObjectTypes = mapValues(
 		new GraphQLObjectType({
 			name: type.name,
 			fields: mapValues(type.v.values().next().value, (field) => ({
-				type: typeDescToObject(field)
-			}))
+				type: typeDescToObject(field),
+			})),
 		})
 );
 
@@ -161,7 +161,7 @@ function resolveNestedTypes(graphQLObjectTypes) {
 		const type = jsonic.stringify(obj, {
 			depth: Infinity,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		});
 		if (!graphQLObjectTypes[type]) {
 			console.error('type does not exist', type);
@@ -205,7 +205,7 @@ let interfaces = {};
 						interfaces[key] = {
 							types: new Set([a.name, b.name]),
 							multiplier: 1,
-							fields: sim
+							fields: sim,
 						};
 						a.interfaces.add(key);
 						b.interfaces.add(key);
@@ -216,7 +216,7 @@ let interfaces = {};
 	});
 	interfaces = mapValues(interfaces, (o) => ({
 		...o,
-		name: Array.from(o.types).join('_')
+		name: Array.from(o.types).join('_'),
 	}));
 })(ordered_types);
 
@@ -240,7 +240,7 @@ Object.values(interfaceList).forEach((inter) => {
 		.stringify(inter.fields, {
 			depth: 1,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		})
 		.replace(/\[/g, '{\n\t')
 		.replace(/,/g, ':\t String,\n\t')
@@ -258,7 +258,7 @@ Object.values(ordered_types).forEach((type) => {
 		.stringify(type.keyRecalculated, {
 			depth: 1,
 			maxitems: Infinity,
-			maxchars: Infinity
+			maxchars: Infinity,
 		})
 		.replace(/([{,])/g, '$1\n\t')
 		.replace(/null/g, '\t String')

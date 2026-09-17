@@ -11,7 +11,7 @@ import graphqlFields from 'graphql-fields';
 function getStockTimeSeries(parent, args, { injector }, info) {
 	const { symbol, interval, ...rest } = {
 		...parent,
-		...args
+		...args,
 	};
 	if (!interval) return null;
 	const adj_fields = Object.keys(graphqlFields(info)).filter((e) =>
@@ -31,5 +31,5 @@ function getStockQuote(parent, args, { injector }, info) {
 
 export default {
 	...fragmentResolver(getStockQuote, undefined, fields(snaps.data.quote)),
-	...fragmentResolver(getStockTimeSeries, undefined, fields(snaps.data.exchangeTimeSeries))
+	...fragmentResolver(getStockTimeSeries, undefined, fields(snaps.data.exchangeTimeSeries)),
 };

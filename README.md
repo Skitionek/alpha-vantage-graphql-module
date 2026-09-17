@@ -20,9 +20,9 @@ import alphaVantage from 'alpha-vantage-graphql-module';
 
 export const AppModule = new GraphQLModule({
 	imports: [
-		alphaVantage
+		alphaVantage,
 		//your modules
-	]
+	],
 });
 ```
 
@@ -35,7 +35,7 @@ const { schema } = alphaVantage;
 
 const server = new GraphQLServer({
 	schema,
-	context: (r) => r
+	context: (r) => r,
 });
 
 server.start(graphQL_options, ({ port }) =>

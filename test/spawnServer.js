@@ -16,7 +16,7 @@ export const { schema, injector } = alphaVantageModule;
 injector.provide({
 	provide: alphaVantageInterface,
 	useFactory: () => new AlphaVantageMock(),
-	overwrite: true
+	overwrite: true,
 });
 
 // create a test server to test against, using our production typeDefs,
@@ -29,7 +29,7 @@ const server = new ApolloServer({
 	},
 	formatError: (r) => {
 		return r; // hook for debugging
-	}
+	},
 });
 
 server.listen().then(({ url }) => {

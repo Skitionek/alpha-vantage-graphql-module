@@ -16,7 +16,7 @@ import Performance from './Types/Performance';
 export const alphaVantageProviderFactory = (API_TOKEN, params) => ({
 	provide: alphaVantageInterface,
 	useFactory: () => new AlphaVantage({ key: API_TOKEN }), // Init database connector
-	...params
+	...params,
 });
 export const alphaVantageProvider = alphaVantageProviderFactory();
 
@@ -32,20 +32,20 @@ export const alphaVantageModuleFactory = (options) =>
 				cryptocurrencyExchangeRate: CryptocurrencyExchangeRate,
 				foreignExchange: forward,
 				technical: forward,
-				sectorPerformance: Performance
+				sectorPerformance: Performance,
 			},
 			Company: {
-				stock: forward
+				stock: forward,
 			},
 			Technical,
 			Performance,
 			Cryptocurrency,
 			ForeignExchange,
 			Stock,
-			CryptocurrencyExchangeRate
+			CryptocurrencyExchangeRate,
 		},
 		providers: [alphaVantageProvider],
-		...options
+		...options,
 	});
 
 export default alphaVantageModuleFactory();

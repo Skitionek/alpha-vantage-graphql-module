@@ -23,7 +23,7 @@ export const Date_Scalar = new GraphQLScalarType({
 		return ast.match(/\d{4}-\d{2}-\d{2}/)
 			? this.parseValue(ast)
 			: new Error(`Could not parse ${ast}, date should be written in format 'YYYY-MM-DD'`);
-	}
+	},
 });
 const formatDateTime = timeFormat('%Y-%m-%d %H:%M:%S');
 class CustomDate extends Date {
@@ -46,7 +46,7 @@ export const DateTime = new GraphQLScalarType({
 			: new Error(
 					`Could not parse ${ast}, dateTime should be written in format 'YYYY-MM-DD hh:mm:ss'`
 			  );
-	}
+	},
 });
 
 const INTERVALS = ['1min', '5min', '15min', '30min', '60min', 'daily', 'weekly', 'monthly'];
@@ -62,11 +62,11 @@ export const Interval = new GraphQLScalarType({
 	parseValue: intervalValue,
 	parseLiteral(ast) {
 		return intervalValue(ast.value);
-	}
+	},
 });
 
 export default {
 	Date: Date_Scalar,
 	DateTime,
-	Interval
+	Interval,
 };

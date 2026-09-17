@@ -54,6 +54,7 @@
 		"test:examples": "node examples/",
 		"cover": "jest --coverage",
 		"lint": "eslint src test",
+		"lint:fix": "eslint --fix src test",
 		"build": "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
 		"prepublish": "npm run build"
 	},
@@ -93,7 +94,7 @@
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.8.7",
-		"alpha-vantage-data-source": "2.3.1",
+		"alpha-vantage-data-source": "2.2.38",
 		"babel-plugin-import-graphql": "^2.8.1",
 		"d3-time-format": "^2.2.3",
 		"dotenv": "^8.0.0",
@@ -140,9 +141,8 @@
 	},
 	"eslintConfig": {
 		"extends": [
-			"eslint-config-prettier",
 			"eslint-config-uber-es2015",
-			"prettier"
+			"eslint-config-prettier"
 		],
 		"env": {
 			"es6": true,
@@ -152,7 +152,6 @@
 		"parser": "babel-eslint",
 		"plugins": [
 			"babel",
-			"prettier",
 			"jest"
 		],
 		"rules": {
@@ -164,14 +163,12 @@
 			"quote-props": 1,
 			"spaced-comment": 1,
 			"max-params": 0,
-			"no-multiple-empty-lines": 1,
 			"no-process-env": 0,
 			"no-inline-comments": 0,
 			"no-invalid-this": 0,
 			"no-unused-expressions": 0,
 			"camelcase": 0,
 			"consistent-return": 0,
-			"comma-dangle": 1,
 			"no-magic-numbers": [
 				"error",
 				{
@@ -188,10 +185,10 @@
 	},
 	"jest": {
 		"transform": {
-			".*\\.js": "babel-jest"
+			".*\\.js$": "babel-jest"
 		},
 		"transformIgnorePatterns": [
-			"node_modules/(?!(apollo-server)/)"
+			"node_modules/(?!(apollo-server))"
 		],
 		"reporters": [
 			"default",
