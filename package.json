@@ -183,10 +183,6 @@
 					],
 					"enforceConst": true
 				}
-			],
-			"indent": [
-				"error",
-				"tab"
 			]
 		}
 	},
@@ -194,7 +190,9 @@
 		"transform": {
 			".*\\.js": "babel-jest"
 		},
-  		"transformIgnorePatterns": ["node_modules/?!(apollo-server)"],
+		"transformIgnorePatterns": [
+			"node_modules/(?!(apollo-server)/)"
+		],
 		"reporters": [
 			"default",
 			[

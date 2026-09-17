@@ -11,9 +11,9 @@ import {
 	schema,
 	variables,
 	variablesFieldsTupleByPath
-} from "./utils";
-import mapValues from "lodash.mapvalues";
-import { snaps } from "../../src/constants";
+} from './utils';
+import mapValues from 'lodash.mapvalues';
+import { snaps } from '../../src/constants';
 
 const { cryptocurrency } = generatedQueries;
 
@@ -25,15 +25,17 @@ const exchangeTimeSeriesQuery = generateQuery({
 });
 const test = queryTesterFactory(cryptocurrency);
 
-describe("crypto.exchangeTimeSeries", () => queryTesterFactory(exchangeTimeSeriesQuery)(...variablesFieldsTupleByPath('crypto.exchangeTimeSeries')));
+describe('crypto.exchangeTimeSeries', () =>
+	queryTesterFactory(exchangeTimeSeriesQuery)(
+		...variablesFieldsTupleByPath('crypto.exchangeTimeSeries')
+	));
 
-describe("crypto combined", () =>
-	describe.each(variables.crypto.exchangeRates)("%j", exchangeRates =>
-		describe.each(variables.crypto.exchangeTimeSeries)("%j", exchangeTimeSeries =>
+describe('crypto combined', () =>
+	describe.each(variables.crypto.exchangeRates)('%j', (exchangeRates) =>
+		describe.each(variables.crypto.exchangeTimeSeries)('%j', (exchangeTimeSeries) =>
 			test({
 				...exchangeRates,
 				...exchangeTimeSeries
 			})
 		)
-	)
-);
+	));
