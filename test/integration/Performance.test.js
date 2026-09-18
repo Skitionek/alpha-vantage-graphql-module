@@ -4,11 +4,14 @@
 	- Created:  23/04/2019
 */
 
-import { generatedQueries, queryTesterFactory, variablesFieldsTupleByPath } from './utils';
+import {
+  generatedQueries,
+  queryTesterFactory, variablesFieldsTupleByPath
+} from './utils'
 
 // get all queries to be tested
-const { sectorPerformance } = generatedQueries;
+const { sectorPerformance } = generatedQueries
 
-const test = queryTesterFactory(sectorPerformance);
+const test = queryTesterFactory(sectorPerformance)
 
-describe('performance', () => test(...variablesFieldsTupleByPath('performance.sector')));
+describe('performance', () => test(...variablesFieldsTupleByPath('performance.sector')))

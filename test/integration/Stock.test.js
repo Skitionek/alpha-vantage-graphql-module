@@ -4,15 +4,16 @@
 	- Created:  23/04/2019
 */
 
-import { generatedQueries, queryTesterFactory, variablesFieldsTupleByPath } from './utils';
+import {
+  generatedQueries,
+  queryTesterFactory, variablesFieldsTupleByPath
+} from './utils'
 
 // get all queries to be tested
-const { stock } = generatedQueries;
+const { stock } = generatedQueries
 
-const test = queryTesterFactory(stock);
+const test = queryTesterFactory(stock)
 
-describe('quote', () => test(...variablesFieldsTupleByPath('data.quote')));
-describe('exchangeTimeSeries', () =>
-	test(...variablesFieldsTupleByPath('data.exchangeTimeSeries')));
-describe('exchangeTimeSeries_adjusted', () =>
-	test(...variablesFieldsTupleByPath('data.exchangeTimeSeries_adjusted')));
+describe('quote', () => test(...variablesFieldsTupleByPath('data.quote')))
+describe('exchangeTimeSeries', () => test(...variablesFieldsTupleByPath('data.exchangeTimeSeries')))
+describe('exchangeTimeSeries_adjusted', () => test(...variablesFieldsTupleByPath('data.exchangeTimeSeries_adjusted')))
