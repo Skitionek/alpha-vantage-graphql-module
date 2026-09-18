@@ -176,9 +176,9 @@ Object.values(interfaceList).forEach(inter => {
 	} ${
 		jsonic.stringify(inter.fields,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
-			.replace(/\[/g, '{\n\t')
-			.replace(/,/g, ':\t String,\n\t')
-			.replace(/]/, ':\t String\n}')
+			.replace(/\[/g, '{\n	')
+			.replace(/,/g, ':	 String,\n	')
+			.replace(/]$/, ':	 String\n}')
 	}\n`
 })
 
@@ -190,9 +190,9 @@ Object.values(ordered_types).forEach(type => {
 	} ${
 		jsonic.stringify(type.keyRecalculated,
 			{ depth: 1, maxitems: Infinity, maxchars: Infinity })
-			.replace(/([{,])/g, '$1\n\t')
-			.replace(/null/g, '\t String')
-			.replace(/}/, '\n}')
+			.replace(/([{,])/g, '$1\n	')
+			.replace(/null/g, '	 String')
+			.replace(/}$/, '\n}')
 	}\n`
 })
 
