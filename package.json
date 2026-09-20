@@ -81,7 +81,7 @@
     "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-prettier": "^3.1.0",
     "gql-generator-node": "^2.1.4",
-    "jest": "^24.8.0",
+    "jest": "^30.5.2",
     "jest-summary-reporter": "0.0.2",
     "jest-transform-graphql": "^2.1.0",
     "jsonic": "^0.3.1",
