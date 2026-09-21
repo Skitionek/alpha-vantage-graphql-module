@@ -3,6 +3,13 @@
 
 # Linters whose errors should not fail the build
 # (pre-existing issues that are out-of-scope for this PR)
+# Install project npm dependencies before linters run so ESLint can
+# resolve the "eslint-config-uber-es2015" config it extends from.
+PRE_COMMANDS:
+  - command: npm ci --no-audit --no-fund
+    cwd: workspace
+    venv: none
+
 DISABLE_ERRORS_LINTERS:
   - COPYPASTE_JSCPD
   - GRAPHQL_GRAPHQL_SCHEMA_LINTER
