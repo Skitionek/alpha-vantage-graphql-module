@@ -78,7 +78,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-uber-es2015": "^3.1.2",
     "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-jest": "^22.15.1",
+    "eslint-plugin-jest": "^29.16.6",
     "eslint-plugin-prettier": "^3.1.0",
     "gql-generator-node": "^2.1.4",
     "jest": "^30.5.2",
