@@ -67,7 +67,7 @@
     "@babel/plugin-proposal-export-default-from": "^8.0.1",
     "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-env": "^8.0.6",
     "@graphql-modules/core": "^0.7.9",
     "apollo-server": "^3.13.0",
     "apollo-server-testing": "^2.8.1",
