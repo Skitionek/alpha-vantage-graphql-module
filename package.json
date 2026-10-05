@@ -84,7 +84,7 @@
     "jest": "^30.5.2",
     "jest-summary-reporter": "0.0.2",
     "jest-transform-graphql": "^2.1.0",
-    "jsonic": "^0.3.1",
+    "jsonic": "^2.28.0",
     "lodash": "latest",
     "lodash.intersection": "^4.4.0",
     "lodash.mapvalues": "^4.6.0",
