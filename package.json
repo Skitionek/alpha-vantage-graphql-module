@@ -98,7 +98,7 @@
     "alpha-vantage-data-source": "2.3.1",
     "babel-plugin-import-graphql": "^2.8.1",
     "d3-time-format": "^4.1.0",
-    "dotenv": "^8.0.0",
+    "dotenv": "^18.0.5",
     "graphql-fields": "^2.0.3",
     "lodash.merge": "^4.6.2"
   },
