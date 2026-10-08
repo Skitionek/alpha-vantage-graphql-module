@@ -1,0 +1,372 @@
+name: Dependabot train
+
+# What this does
+# --------------
+# Keeps Dependabot PRs moving without a human: approves each one, sets it to
+# auto-merge, and brings one at a time up to date so auto-merge can land it.
+# Landing it pushes main, which triggers this workflow again for the next one.
+#
+# Why it has to do all of that in one place
+# -----------------------------------------
+# GitHub will not merge a PR that is not already mergeable, and nothing here
+# gets a PR to that state on its own:
+#
+#   * BEHIND -- where the default branch requires branches to be up to date,
+#     GitHub does not update an auto-merge PR when the base moves (a merge
+#     queue is the feature that does). Dependabot rebases on conflict, not on
+#     staleness, so the PR waits indefinitely until asked.
+#
+# Both stale states are handled by asking Dependabot to rebase, rather than by
+# merging main in through the update-branch API. Updating the branch is
+# quicker and needs nothing from Dependabot, but it leaves a merge commit
+# authored by this app inside the PR, and the squash folds that into main as a
+# `Co-authored-by: <app>[bot]` trailer on the bump. A Dependabot rebase leaves
+# the PR holding only Dependabot's own commit, so main stays clean. The cost
+# is latency -- Dependabot answers in its own time -- and a dependency on it
+# honouring a command from this app.
+#   * DIRTY -- bumps in one ecosystem edit the same lockfile
+#     (a yarn.lock, a requirements.txt, a uv.lock), so one landing can
+#     conflict the rest. Dependabot re-resolves those, but only on its next
+#     scheduled run, which is weekly for most ecosystems here.
+#
+# Every action this takes is refused to secrets.GITHUB_TOKEN, which is why the
+# approve-and-auto-merge half used to live in its own workflow and no longer
+# can:
+#
+#   * A branch update pushed with GITHUB_TOKEN emits no
+#     `pull_request: synchronize`, so the required checks never re-run and
+#     auto-merge waits on checks that will never report.
+#   * Dependabot only accepts `@dependabot rebase` from an account it credits
+#     with push access, and rejects github-actions[bot] with "only users with
+#     push access can use that command".
+#   * A merge performed by GITHUB_TOKEN pushes main without triggering
+#     anything -- no Tests, no Lint, no Docker, no CodeQL, and no next run of
+#     this workflow. Whoever turns auto-merge ON performs the eventual merge,
+#     so auto-merge enabled by github-actions[bot] silently broke the chain
+#     and left main's own CI unrun after every bump. Enabling it as this app
+#     is what makes the merge a real push.
+#
+# All three failures look like a passing job, so this needs its own identity:
+# a GitHub App (preferred) or a fine-grained PAT. Running on push/schedule,
+# and on pull_request_target rather than pull_request, is what gives it access
+# to the secrets at all -- a Dependabot-triggered `pull_request` run gets a
+# read-only token and cannot see Actions secrets.
+
+on:
+  push:
+    branches:
+      - master
+  # pull_request_target, not pull_request: a Dependabot-triggered pull_request
+  # run has a read-only token and no Actions secrets, so it could not mint the
+  # app token. This runs in the base repo's context instead. That is only safe
+  # because this job never checks out or executes the PR's code -- it makes API
+  # calls and nothing else. Do not add a checkout of the PR head here.
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+  # Safety net for anything the events miss.
+  schedule:
+    - cron: '37 */3 * * *'
+  workflow_dispatch:
+
+permissions: read-all
+
+concurrency:
+  group: dependabot-train
+  cancel-in-progress: false
+
+jobs:
+  train:
+    name: Advance the next Dependabot PR
+    runs-on: ubuntu-latest
+    # Skip human PRs outright on the PR event; the script would filter them
+    # out anyway, but there is no reason to start a runner for them.
+    if: >
+      github.event_name != 'pull_request_target' ||
+      startsWith(github.event.pull_request.user.login, 'dependabot')
+
+    # Every write goes through the app token below, so the job's own token
+    # needs nothing.
+    permissions:
+      contents: read
+
+    # Resolved here rather than in the step's `if`, because the `secrets`
+    # context is not available to an `if` expression -- a workflow that
+    # references it there fails to parse, producing a run with no jobs at all.
+    # `env` may read secrets, and `if` may read `env`.
+    env:
+      APP_ID: ${{ vars.DEPENDABOT_TRAIN_APP_ID || secrets.DEPENDABOT_TRAIN_APP_ID }}
+
+    steps:
+      # continue-on-error so a failed mint does not skip the step below: the
+      # action reports a token failure as a raw API stack trace, and the next
+      # step is the only thing that can say what to do about it.
+      - name: Mint a GitHub App token
+        id: app-token
+        if: ${{ env.APP_ID != '' }}
+        continue-on-error: true
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ env.APP_ID }}
+          private-key: ${{ secrets.DEPENDABOT_TRAIN_APP_PRIVATE_KEY }}
+
+      - name: Approve, arm auto-merge, and advance one PR
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.DEPENDABOT_TRAIN_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ] && [ -n "${APP_ID:-}" ]; then
+            # The app is configured but minting failed. Authenticating as the
+            # app happens before any repository lookup, so reaching this point
+            # means the id and private key are almost certainly fine and the
+            # app's installation on this repository is what is missing.
+            echo "::error::App $APP_ID is configured, but no token was minted."
+            echo "Check, in order:"
+            echo "  1. the app is installed at all --"
+            echo "     https://github.com/settings/installations"
+            echo "  2. its Repository access covers THIS repository; an app"
+            echo "     installed with 'Only select repositories' and this repo"
+            echo "     left unticked fails exactly like this (404 on"
+            echo "     /repos/OWNER/REPO/installation)"
+            echo "  3. the app is installed on the account that owns this repo"
+            echo "The 'Mint a GitHub App token' step above has the API error."
+            exit 1
+          fi
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            # Nothing configured at all. On a repo where this has just been
+            # rolled out that is the expected state, not a fault, and failing
+            # would leave a red scheduled run every few hours until someone
+            # finishes the setup. Say what is missing and stop. A configured
+            # app whose token will not mint is the error case, handled above.
+            echo "::notice::The Dependabot train is not configured here; doing nothing."
+            echo "To switch it on, set up ONE of the following:"
+            echo "  * a GitHub App with pull-request write + contents write on"
+            echo "    this repo -- store its id in the DEPENDABOT_TRAIN_APP_ID"
+            echo "    variable and its key in the"
+            echo "    DEPENDABOT_TRAIN_APP_PRIVATE_KEY secret (preferred), or"
+            echo "  * a fine-grained PAT with pull-request write + contents"
+            echo "    write, in the DEPENDABOT_TRAIN_TOKEN secret."
+            echo "secrets.GITHUB_TOKEN cannot do this job: its branch pushes"
+            echo "and merges trigger no workflows, and Dependabot refuses its"
+            echo "commands."
+            echo "The app must also have this repository in its access list,"
+            echo "and the repository must allow auto-merge."
+            exit 0
+          fi
+
+          # mergeStateStatus is computed lazily: GitHub answers UNKNOWN while
+          # it works out the merge commit, so poll until every PR has a real
+          # value.
+          for attempt in 1 2 3 4 5 6; do
+            # shellcheck disable=SC2016  # $owner/$name are GraphQL variables
+            # and the jq programs use jq's own $pr -- neither is a shell
+            # expansion, so both must stay in single quotes.
+            raw=$(gh api graphql \
+              -f owner="$OWNER" -f name="$REPO" \
+              -f query='
+                query($owner: String!, $name: String!) {
+                  repository(owner: $owner, name: $name) {
+                    pullRequests(states: OPEN, first: 100,
+                                 orderBy: {field: CREATED_AT, direction: ASC}) {
+                      nodes {
+                        number
+                        isDraft
+                        mergeStateStatus
+                        reviewDecision
+                        author { login }
+                        autoMergeRequest { enabledBy { login } }
+                        commits(last: 1) {
+                          nodes {
+                            commit {
+                              oid
+                              committedDate
+                              statusCheckRollup { state }
+                            }
+                          }
+                        }
+                        comments(last: 20) {
+                          nodes { body createdAt author { login } }
+                        }
+                      }
+                    }
+                  }
+                }')
+
+            # Match both spellings of the author: GraphQL reports a bot's login
+            # without the "[bot]" suffix that REST appends, so matching only
+            # "dependabot[bot]" here selected nothing at all and the job went
+            # green having skipped every PR.
+            prs=$(jq '
+              [ .data.repository.pullRequests.nodes[]
+                | select((.author.login == "dependabot"
+                          or .author.login == "dependabot[bot]")
+                         and .isDraft == false)
+                | {
+                    number,
+                    state: .mergeStateStatus,
+                    approved: (.reviewDecision == "APPROVED"),
+                    automerge: (.autoMergeRequest != null),
+                    automerge_by: (.autoMergeRequest.enabledBy.login // ""),
+                    checks: (.commits.nodes[0].commit.statusCheckRollup.state // "NONE"),
+                    head: .commits.nodes[0].commit.oid,
+                    head_date: .commits.nodes[0].commit.committedDate,
+                    nudges: [ .comments.nodes[]
+                              | select(.body | startswith("@dependabot rebase"))
+                              | .createdAt ]
+                  }
+              ]' <<<"$raw")
+
+            if [ "$(jq 'map(select(.state == "UNKNOWN")) | length' <<<"$prs")" = 0 ]; then
+              break
+            fi
+            echo "Merge state still being computed (attempt $attempt); waiting."
+            sleep 10
+          done
+
+          echo "Open Dependabot PRs:"
+          jq -r '.[] | "  #\(.number) \(.state) checks=\(.checks)"
+                       + " approved=\(.approved) automerge=\(.automerge)"
+                       + (if .automerge then " (by \(.automerge_by))" else "" end)' <<<"$prs"
+
+          if [ "$(jq 'length' <<<"$prs")" = 0 ]; then
+            echo "No open Dependabot PRs; nothing to do."
+            # An empty match and an empty backlog look identical in the log,
+            # which is how a mismatched author filter passed for a whole
+            # afternoon. Name the authors actually seen so the next such
+            # mismatch is visible in the run that suffers it.
+            echo "Authors of the open PRs considered:"
+            jq -r '[.data.repository.pullRequests.nodes[].author.login]
+                   | unique
+                   | if length == 0 then "  (no open PRs at all)"
+                     else "  " + join(", ") end' <<<"$raw"
+            exit 0
+          fi
+
+          # ── Approve and arm auto-merge, as this app ──────────────────────
+          # Both are idempotent and cost no CI, so every open bump gets them
+          # on every run: a PR opened between runs is armed here rather than
+          # waiting for a workflow of its own.
+          merged=""
+          for number in $(jq -r '.[].number' <<<"$prs"); do
+            pr=$(jq --argjson n "$number" 'map(select(.number == $n))[0]' <<<"$prs")
+
+            if [ "$(jq -r '.approved' <<<"$pr")" != "true" ]; then
+              echo "#$number: approving."
+              if ! gh pr review "$number" --repo "$OWNER/$REPO" --approve; then
+                echo "#$number: approve failed; continuing."
+              fi
+            fi
+
+            automerge=$(jq -r '.automerge' <<<"$pr")
+            enabled_by=$(jq -r '.automerge_by' <<<"$pr")
+
+            # Auto-merge enabled by github-actions[bot] is worse than none: it
+            # merges, but the merge pushes main without triggering any
+            # workflow, so main's CI never runs on the bump and this train
+            # never starts its next car. Hand it over to the app.
+            if [ "$automerge" = "true" ] && [ "$enabled_by" = "github-actions" ]; then
+              echo "#$number: auto-merge is held by github-actions, whose merge triggers nothing; taking it over."
+              if gh pr merge "$number" --repo "$OWNER/$REPO" --disable-auto; then
+                automerge="false"
+              else
+                echo "#$number: could not release it; leaving as is."
+              fi
+            fi
+
+            if [ "$automerge" != "true" ]; then
+              if gh pr merge "$number" --repo "$OWNER/$REPO" --auto --squash 2>arm.log; then
+                echo "#$number: auto-merge armed."
+              else
+                cat arm.log
+                if grep -qi "clean status" arm.log; then
+                  # GitHub refuses auto-merge on a PR that is mergeable right
+                  # now. Merging it is precisely what auto-merge would have
+                  # done a moment later.
+                  echo "#$number: already mergeable; squashing it now."
+                  gh pr merge "$number" --repo "$OWNER/$REPO" --squash
+                  merged="$number"
+                  break
+                fi
+                echo "#$number: could not arm auto-merge; continuing."
+              fi
+            fi
+          done
+
+          if [ -n "$merged" ]; then
+            echo "Merged #$merged; its push to main starts the next car."
+            exit 0
+          fi
+
+          # ── Advance one PR ──────────────────────────────────────────────
+          # A car is already on the track: a PR current with main that is
+          # either merging or still running its checks. Leave it be -- its
+          # merge pushes main and triggers the next run. A PR that is current
+          # but BLOCKED or failing is not about to merge, so it does not hold
+          # the train up.
+          in_flight=$(jq -r '
+            [ .[]
+              | select(.state != "BEHIND" and .state != "DIRTY")
+              | select(.checks == "PENDING" or .state == "CLEAN" or .state == "HAS_HOOKS")
+              | .number
+            ] | first // empty' <<<"$prs")
+
+          if [ -n "$in_flight" ]; then
+            echo "#$in_flight is current and on its way in; not starting another."
+            exit 0
+          fi
+
+          # Oldest stale PR first, so the queue drains in the order it formed,
+          # except that PRs whose checks already failed go last: a bump that
+          # genuinely breaks the build (a major upgrade needing code changes)
+          # must not sit at the head of the queue holding up the ones that can
+          # actually merge.
+          #
+          # Skip any PR already nudged since its last commit -- Dependabot has
+          # not acted on that nudge yet, and asking twice only spams the
+          # thread, so move on to one we can still help.
+          target=$(jq -r '
+            [ .[]
+              | select(.state == "BEHIND" or .state == "DIRTY")
+              | select(. as $pr
+                       | [ $pr.nudges[] | select(. > $pr.head_date) ]
+                       | length == 0)
+            ]
+            | sort_by([
+                (if .checks == "FAILURE" or .checks == "ERROR" then 1 else 0 end),
+                .number
+              ])
+            | first // empty' <<<"$prs")
+
+          if [ -z "$target" ]; then
+            echo "Every stale PR is already waiting on Dependabot; nothing to advance."
+            exit 0
+          fi
+
+          number=$(jq -r '.number' <<<"$target")
+          state=$(jq -r '.state' <<<"$target")
+
+          # Behind or conflicting, the answer is the same: Dependabot rebases
+          # the branch onto main. It re-resolves its own lockfiles, and the PR
+          # keeps a single commit of its own, so nothing of this app's ends up
+          # in main through the squash. The body is the bare command; trailing
+          # prose can stop Dependabot from recognising one.
+          case "$state" in
+            BEHIND)
+              echo "#$number is behind main; asking Dependabot to rebase."
+              ;;
+            DIRTY)
+              echo "#$number conflicts with main; asking Dependabot to rebase."
+              ;;
+            *)
+              echo "#$number is $state; nothing to do for that state."
+              exit 0
+              ;;
+          esac
+          gh pr comment "$number" --repo "$OWNER/$REPO" --body "@dependabot rebase"
