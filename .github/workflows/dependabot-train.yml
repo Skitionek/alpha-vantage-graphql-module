@@ -54,7 +54,7 @@ name: Dependabot train
 #     anything -- no Tests, no Lint, no Docker, no CodeQL, and no next run of
 #     this workflow. Whoever turns auto-merge ON performs the eventual merge,
 #     so auto-merge enabled by github-actions[bot] silently broke the chain
-#     and left main's own CI unrun after every bump. Enabling it as this app
+#     and left main's own CI never run after any bump. Enabling it as this app
 #     is what makes the merge a real push.
 #
 # All three failures look like a passing job, so this needs its own identity:
@@ -153,7 +153,7 @@ jobs:
             echo "     https://github.com/settings/installations"
             echo "  2. its Repository access covers THIS repository; an app"
             echo "     installed with 'Only select repositories' and this repo"
-            echo "     left unticked fails exactly like this (404 on"
+            echo "     left un-ticked fails exactly like this (404 on"
             echo "     /repos/OWNER/REPO/installation)"
             echo "  3. the app is installed on the account that owns this repo"
             echo "The 'Mint a GitHub App token' step above has the API error."
