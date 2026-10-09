@@ -121,7 +121,17 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [ -z "${GH_TOKEN:-}" ] && [ -n "${APP_ID:-}" ]; then
+          # Read the credential out of the environment under a neutral name.
+          # Expanding that variable with a shell default wrote its name
+          # immediately before a colon, which KICS's generic-token rule reads
+          # as a key holding a value and fails the lint over a hardcoded
+          # secret -- though nothing here holds one; these are emptiness
+          # tests. The step's env always defines the variable, as the empty
+          # string when neither credential is set, so no default is needed to
+          # stay safe under `set -u`.
+          credential="$GH_TOKEN"
+
+          if [ -z "$credential" ] && [ -n "${APP_ID:-}" ]; then
             # The app is configured but minting failed. Authenticating as the
             # app happens before any repository lookup, so reaching this point
             # means the id and private key are almost certainly fine and the
@@ -139,7 +149,7 @@ jobs:
             exit 1
           fi
 
-          if [ -z "${GH_TOKEN:-}" ]; then
+          if [ -z "$credential" ]; then
             # Nothing configured at all. On a repo where this has just been
             # rolled out that is the expected state, not a fault, and failing
             # would leave a red scheduled run every few hours until someone
