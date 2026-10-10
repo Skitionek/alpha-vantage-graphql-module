@@ -62,11 +62,8 @@
     "@babel/cli": "^8.0.6",
     "@babel/core": "^8.0.6",
     "@babel/node": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^8.0.2",
     "@babel/plugin-proposal-export-default-from": "^8.0.1",
-    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/preset-env": "^8.0.6",
     "@graphql-modules/core": "^0.7.9",
     "apollo-server": "^3.13.0",
@@ -126,20 +123,12 @@
     ],
     "plugins": [
       "import-graphql",
-      "@babel/plugin-proposal-object-rest-spread",
       [
         "@babel/plugin-proposal-decorators",
         {
-          "legacy": true
+          "version": "legacy"
         }
       ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ],
-      "@babel/plugin-proposal-export-namespace-from",
       "@babel/plugin-proposal-export-default-from"
     ]
   },
@@ -200,8 +189,11 @@
       "^.+\\.js$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "node_modules/?!(apollo-server)"
+      "node_modules/(?!(apollo-server))"
     ],
+    "moduleNameMapper": {
+      "^d3-time-format$": "<rootDir>/node_modules/d3-time-format/dist/d3-time-format.js"
+    },
     "testPathIgnorePatterns": [
       "<rootDir>/megalinter-reports/"
     ],
