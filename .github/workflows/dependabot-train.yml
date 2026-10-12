@@ -119,7 +119,7 @@ jobs:
         id: app-token
         if: ${{ env.APP_ID != '' }}
         continue-on-error: true
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ env.APP_ID }}
           private-key: ${{ secrets.DEPENDABOT_TRAIN_APP_PRIVATE_KEY }}
